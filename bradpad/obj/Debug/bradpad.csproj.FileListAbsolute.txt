@@ -1,0 +1,15 @@
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.csprojResolveAssemblyReference.cache
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\MainWindow.g.cs
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\App.g.cs
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad_MarkupCompile.cache
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad_MarkupCompile.lref
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\bin\Debug\bradpad.exe.config
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\bin\Debug\bradpad.exe
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\bin\Debug\bradpad.pdb
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\MainWindow.baml
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.g.resources
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.Properties.Resources.resources
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.csproj.GenerateResource.Cache
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.csproj.CoreCompileInputs.cache
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.exe
+C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\obj\Debug\bradpad.pdb
