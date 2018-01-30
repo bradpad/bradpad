@@ -13,32 +13,35 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace bradpad
-{
+namespace bradpad {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
+    public partial class MainWindow : Window {
+        public MainWindow() {
             InitializeComponent();
         }
 
-        public void settingsButton_Clicked(object sender, RoutedEventArgs e)
-        {
+        public void settingsButton_Clicked(object sender, RoutedEventArgs e) {
             this.mainCanvas.Visibility = System.Windows.Visibility.Visible;
             this.settingsCanvas.Visibility = System.Windows.Visibility.Hidden;
             //count++;
             //this.settingsButton.Content = count;
         }
 
-        public void mainButton_Clicked(object sender, RoutedEventArgs e)
-        {
+        public void mainButton_Clicked(object sender, RoutedEventArgs e) {
             this.mainCanvas.Visibility = System.Windows.Visibility.Hidden;
             this.settingsCanvas.Visibility = System.Windows.Visibility.Visible;
             //count2++;
             //this.mainButton.Content = count2;
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e) {
+            System.Diagnostics.Debug.WriteLine(e.Key);
+            //if (e.Key == Key.Return)
+            //{
+            //    textBlock1.Text = "You Entered: " + textBox1.Text;
+            //}
         }
     }
 }
