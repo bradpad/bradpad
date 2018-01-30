@@ -35,13 +35,5 @@ namespace bradpad {
             //count2++;
             //this.mainButton.Content = count2;
         }
-
-        private void OnKeyDownHandler(object sender, KeyEventArgs e) {
-            System.Diagnostics.Debug.WriteLine(e.Key);
-            //if (e.Key == Key.Return)
-            //{
-            //    textBlock1.Text = "You Entered: " + textBox1.Text;
-            //}
-        }
     }
 }
