@@ -26,7 +26,6 @@ namespace bradpad {
             //    Console.WriteLine(args.Key.ToString());
             //}
             Console.WriteLine(args.Key.ToString());
-            Console.WriteLine(System.Windows.Input.Key.Separator);
             switch (args.Key) {
                 case System.Windows.Input.Key.F22:
                     System.Windows.Forms.SendKeys.SendWait("^t");

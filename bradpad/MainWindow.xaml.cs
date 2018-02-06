@@ -22,18 +22,23 @@ namespace bradpad {
             InitializeComponent();
         }
 
-        public void settingsButton_Clicked(object sender, RoutedEventArgs e) {
+        public void mainButton_Clicked(object sender, RoutedEventArgs e) {
             this.mainCanvas.Visibility = System.Windows.Visibility.Visible;
             this.settingsCanvas.Visibility = System.Windows.Visibility.Hidden;
             //count++;
             //this.settingsButton.Content = count;
         }
 
-        public void mainButton_Clicked(object sender, RoutedEventArgs e) {
+        public void settingsButton_Clicked(object sender, RoutedEventArgs e) {
             this.mainCanvas.Visibility = System.Windows.Visibility.Hidden;
             this.settingsCanvas.Visibility = System.Windows.Visibility.Visible;
             //count2++;
             //this.mainButton.Content = count2;
+        }
+        
+        public void f22Button_Clicked(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.SendKeys.SendWait("^t");
         }
     }
 }
