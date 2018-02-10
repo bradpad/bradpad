@@ -18,27 +18,32 @@ namespace bradpad {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+
         public MainWindow() {
             InitializeComponent();
         }
 
-        public void MainButtonClicked(object sender, RoutedEventArgs e) {
+        private void MainButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Visible;
             settingsPanel.Visibility = Visibility.Hidden;
-            //count++;
-            //this.settingsButton.Content = count;
         }
 
-        public void SettingsButtonClicked(object sender, RoutedEventArgs e) {
+        private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
-            //count2++;
-            //this.mainButton.Content = count2;
         }
         
-        public void F22ButtonClicked(object sender, RoutedEventArgs e)
+        internal void F22ButtonClicked(object sender, RoutedEventArgs e)
         {
-            ((App)Application.Current).SendKeyPress(Key.F);
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F22);
+        }
+
+        private void F23ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
+        }
+
+        private void F24ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F24);
         }
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using Ownskit.Utils;
@@ -15,47 +17,69 @@ namespace bradpad {
     /// </summary>
     public partial class App : Application {
 
+        // We want keyMap as a member variable rather than a function so we can change the mappings at runtime.
         Dictionary<Key, string> keyMap = new Dictionary<Key, string>() {
-            {Key.F, "^t"},
-            {Key.F23, "^t"},
-            {Key.F24, "^t"},
+            {Key.F22, "^t"},
+            {Key.F23, "a"},
+            {Key.F24, "b"},
         };
         KeyboardListener KListener = new KeyboardListener();
 
 
-        public void SendKeyPress(Key key) {
+        // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
+        internal void ButtonClickedKeyPress(Key key) {
             if (keyMap.ContainsKey(key)) {
-                System.Windows.Forms.SendKeys.SendWait(keyMap[key]);
+                SendKeyPress(key);
             }
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
             KListener.KeyDown += new RawKeyEventHandler(KListenerKeyDown);
+            KListener.KeyUp += new RawKeyEventHandler(KListenerKeyUp);
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e) {
             KListener.Dispose();
         }
 
-        void KListenerKeyDown(object sender, RawKeyEventArgs args) {
-            //if (args.ToString().Length > 0 && char.IsLower(args.ToString().ToCharArray()[0])) {
-            //    key=args.ToString(); // Prints the text of pressed button, takes in account big and small letters. E.g. "Shift+a" => "A"
-            //} else {
-            //    Console.WriteLine(args.Key.ToString());
-            //}
+        private void HighlightButton(Key button, bool setPressed) {
+            Button pressedButton = null;
+            switch (button) {
+                case Key.F22:
+                    pressedButton = ((MainWindow)Current.MainWindow).F22;
+                    break;
+                case Key.F:
+                    pressedButton = ((MainWindow)Current.MainWindow).F23;
+                    break;
+                case Key.F24:
+                    pressedButton = ((MainWindow)Current.MainWindow).F24;
+                    break;
+                default:
+                    // We should never enter this state.
+                    throw new Exception();
+            }
+            
+            // Use reflection to make the button appear to be pressed on keypress.  Kind of hacky but I can't find a better way to do this.
+            typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(pressedButton, new object[] { setPressed });
+        }
+
+        private void KListenerKeyDown(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
-            SendKeyPress(args.Key);
-            //switch (args.Key) {
-            //    case System.Windows.Input.Key.F22:
-            //        System.Windows.Forms.SendKeys.SendWait("^t");
-            //        break;
-            //    case System.Windows.Input.Key.F23:
-            //        System.Windows.Forms.SendKeys.SendWait("^t");
-            //        break;
-            //    case System.Windows.Input.Key.F24:
-            //        System.Windows.Forms.SendKeys.SendWait("^t");
-            //        break;
-            //}
+
+            if (keyMap.ContainsKey(args.Key)) {
+                HighlightButton(args.Key, true);
+                SendKeyPress(args.Key);
+            }
+        }
+
+        private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
+            if (keyMap.ContainsKey(args.Key)) {
+                HighlightButton(args.Key, false);
+            }
+        }
+
+        private void SendKeyPress(Key key) {
+            System.Windows.Forms.SendKeys.SendWait(keyMap[key]);
         }
     }
 }

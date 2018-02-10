@@ -34,17 +34,36 @@
                     Content="Settings"
                     DockPanel.Dock="Bottom" />
 
-            <!--StackPanel is the last child because last child fills the rest of the window in DockPanel-->
-            <StackPanel Orientation="Horizontal">
+            <!--Grid is the last child because last child fills the rest of the window in DockPanel-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
                 <Button Name="F22"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Width="159"
                         Click="F22ButtonClicked"
-                        Content="F22" />
+                        Content="F22"
+                        Grid.Column="0" />
 
-            </StackPanel>
+                <Button Name="F23"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="F23ButtonClicked"
+                        Content="F23"
+                        Grid.Column="1" />
+
+                <Button Name="F24"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="F24ButtonClicked"
+                        Content="F24"
+                        Grid.Column="2" />
+
+            </Grid>
 
         </DockPanel>
 
