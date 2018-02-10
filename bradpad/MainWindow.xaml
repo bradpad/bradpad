@@ -6,47 +6,48 @@
         xmlns:local="clr-namespace:bradpad"
         mc:Ignorable="d"
         Title="bradpad" Height="350" Width="525">
-    <Grid>
-        <Canvas Name="settingsCanvas"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Margin="0,0,0,0"
-            Background="#FF6781F0"
-            Visibility="Hidden">
-            <Button Name="mainButton"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Height="68"
-                Width="159"
-                Click="mainButton_Clicked"
-                Content="Main">
-            </Button>
-        </Canvas>
-        <Canvas Name="mainCanvas"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
-            Margin="0,0,0,0"
-            Background="#FF9CF067"
-            Visibility="Visible">
 
-            <Grid>
-                <Button Name="settingsButton"
+    <Grid>
+
+        <StackPanel Name="settingsPanel"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="0,0,0,0"
+                    Background="#FF6781F0"
+                    Visibility="Hidden">
+
+            <Button Name="mainButton"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Height="68"
                     Width="159"
-                    Click="settingsButton_Clicked"
-                    Content="Settings">
-                </Button>
+                    Click="MainButtonClicked"
+                    Content="Main" />
+
+        </StackPanel>
+
+        <DockPanel Name="mainPanel">
+
+            <Button Name="settingsButton"
+                    Height="68"
+                    Click="SettingsButtonClicked"
+                    Content="Settings"
+                    DockPanel.Dock="Bottom" />
+
+            <!--StackPanel is the last child because last child fills the rest of the window in DockPanel-->
+            <StackPanel Orientation="Horizontal">
+
                 <Button Name="F22"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Height="68"
-                    Width="159"
-                    Click="f22Button_Clicked"
-                    Content="F22" Margin="159,0,-158.8,0">
-                </Button>
-            </Grid>
-        </Canvas>
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Width="159"
+                        Click="F22ButtonClicked"
+                        Content="F22" />
+
+            </StackPanel>
+
+        </DockPanel>
+
     </Grid>
+
 </Window>
