@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bradpad"
         mc:Ignorable="d"
-        Title="bradpad" Height="350" Width="525"
+        Title="bradpad" Height="350"
         Topmost="True">
 
     <Grid>

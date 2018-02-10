@@ -58,7 +58,7 @@ namespace bradpad {
                     // We should never enter this state.
                     throw new Exception();
             }
-            
+
             // Use reflection to make the button appear to be pressed on keypress.  Kind of hacky but I can't find a better way to do this.
             typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(pressedButton, new object[] { setPressed });
         }

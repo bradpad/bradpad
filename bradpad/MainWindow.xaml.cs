@@ -32,9 +32,8 @@ namespace bradpad {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
         }
-        
-        internal void F22ButtonClicked(object sender, RoutedEventArgs e)
-        {
+
+        internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
             ((App)Application.Current).ButtonClickedKeyPress(Key.F22);
         }
 
