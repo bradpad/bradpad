@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Diagnostics;
 
 using Ownskit.Utils;
 
@@ -19,16 +20,27 @@ namespace bradpad {
 
         // We want keyMap as a member variable rather than a function so we can change the mappings at runtime.
         Dictionary<Key, string> keyMap = new Dictionary<Key, string>() {
-            {Key.F22, "^t"},
-            {Key.F23, "a"},
-            {Key.F24, "b"},
+            {Key.F10, ""},
+            {Key.F11, "^c"},
+            {Key.F12, "^v"},
         };
         KeyboardListener KListener = new KeyboardListener();
 
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
-        internal void ButtonClickedKeyPress(Key key) {
+        internal void ButtonClickedKeyPress(Key key, string pname) {
             if (keyMap.ContainsKey(key)) {
+                SendKeyPress(key);
+                Process p = new Process();
+                p.StartInfo.FileName = pname;
+                p.Start();
+            }
+        }
+
+        internal void ButtonClickedKeyPress(Key key)
+        {
+            if (keyMap.ContainsKey(key))
+            {
                 SendKeyPress(key);
             }
         }
@@ -45,14 +57,14 @@ namespace bradpad {
         private void HighlightButton(Key button, bool setPressed) {
             Button pressedButton = null;
             switch (button) {
-                case Key.F22:
-                    pressedButton = ((MainWindow)Current.MainWindow).F22;
+                case Key.F10:
+                    pressedButton = ((MainWindow)Current.MainWindow).F10;
                     break;
-                case Key.F:
-                    pressedButton = ((MainWindow)Current.MainWindow).F23;
+                case Key.F11:
+                    pressedButton = ((MainWindow)Current.MainWindow).F11;
                     break;
-                case Key.F24:
-                    pressedButton = ((MainWindow)Current.MainWindow).F24;
+                case Key.F12:
+                    pressedButton = ((MainWindow)Current.MainWindow).F12;
                     break;
                 default:
                     // We should never enter this state.
@@ -68,7 +80,22 @@ namespace bradpad {
 
             if (keyMap.ContainsKey(args.Key)) {
                 HighlightButton(args.Key, true);
-                SendKeyPress(args.Key);
+
+                MainWindow window = (bradpad.MainWindow)Application.Current.MainWindow;
+                object o = new object();
+                RoutedEventArgs e = new RoutedEventArgs();
+                if (args.Key == Key.F10)
+                {   
+                    window.F10ButtonClicked(o, e);
+                }
+                if (args.Key == Key.F11)
+                {
+                    window.F11ButtonClicked(o, e);
+                }
+                if (args.Key == Key.F12)
+                {
+                    window.F12ButtonClicked(o, e);
+                }
             }
         }
 

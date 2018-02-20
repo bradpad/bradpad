@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace bradpad {
     /// <summary>
@@ -19,8 +20,12 @@ namespace bradpad {
     /// </summary>
     public partial class MainWindow : Window {
 
+        Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
+        string recentName;
+
         public MainWindow() {
             InitializeComponent();
+            recentName = "";
         }
 
         private void MainButtonClicked(object sender, RoutedEventArgs e) {
@@ -31,18 +36,55 @@ namespace bradpad {
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
+            applicationsPanel.Visibility = Visibility.Hidden;
+            if(recentName != "")
+            {
+                F10.Content = recentName;
+            }
+
         }
 
-        internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F22);
+        internal void F10ButtonClicked(object sender, RoutedEventArgs e) {
+            if (applicationInfo.ContainsKey((string)F10.Content))
+            {
+                ((App)Application.Current).ButtonClickedKeyPress(Key.F10, applicationInfo[(string)F10.Content]);
+            }
         }
 
-        private void F23ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
+        internal void F11ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F11);
         }
 
-        private void F24ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F24);
+        internal void F12ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F12);
         }
+        
+        private void foreGroundButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if(foreGroundCheck.IsChecked == false)
+            {
+                this.Topmost = false;
+            }
+            else
+            {
+                this.Topmost = true;
+            }
+        }
+        private void appButtonClicked(object sender, RoutedEventArgs e)
+        {
+            string t = addAppText.Text;
+            string tt = addAppLocation.Text;
+            addAppText.Text = "Enter Application Name";
+            addAppLocation.Text = "Enter Application Location";
+            applicationInfo[t] = tt;
+            recentName = t;
+
+        }
+        private void applicationsButtonClick(object sender, RoutedEventArgs e)
+        {
+            applicationsPanel.Visibility = Visibility.Visible;
+            settingsPanel.Visibility = Visibility.Hidden;
+        }
+        
     }
 }

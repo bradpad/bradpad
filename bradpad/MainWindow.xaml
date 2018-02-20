@@ -14,8 +14,8 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Margin="0,0,0,0"
-                    Background="#FF6781F0"
-                    Visibility="Hidden">
+                    Visibility="Hidden"
+                    Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
 
             <Button Name="mainButton"
                     HorizontalAlignment="Center"
@@ -25,9 +25,37 @@
                     Click="MainButtonClicked"
                     Content="Main" />
 
+            <Button Name="applicationsButton" Height="44" Click="applicationsButtonClick" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Applications Page</TextBlock>
+            </Button>
+
+            <CheckBox Name="foreGroundCheck" Content="Application Always In Foreground" HorizontalAlignment="Left"
+                        VerticalAlignment="Top" Click="foreGroundButtonClicked" IsChecked="True" Height="20"/>
+
+
         </StackPanel>
 
-        <DockPanel Name="mainPanel">
+        <StackPanel Name="applicationsPanel"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="0,0,0,0"
+                    Orientation="Horizontal"
+                    Visibility="Visible"
+                    Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
+            <TextBox Name ="addAppText" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Name" Width="200" Background="#FFEDEFF6"/>
+            <TextBox Name ="addAppLocation" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Width="390" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Location" Background="#FFEDEFF6"/>
+            <Button Name="appButton" Height="39" Width="100" VerticalAlignment="Top" Click="appButtonClicked" Margin="0,0,0,0">
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Enter</TextBlock>
+            </Button>
+
+            
+
+            <Button Content="Settings" Click ="SettingsButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="54" Margin="0,0,0,0" Width="56"/>
+
+        </StackPanel>
+
+        <DockPanel Name="mainPanel"
+                   Visibility="Hidden">
 
             <Button Name="settingsButton"
                     Height="68"
@@ -43,25 +71,25 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Name="F22"
+                <Button Name="F10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="F22ButtonClicked"
-                        Content="F22"
+                        Click="F10ButtonClicked"
+                        Content="Left none"
                         Grid.Column="0" />
 
-                <Button Name="F23"
+                <Button Name="F11"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="F23ButtonClicked"
-                        Content="F23"
+                        Click="F11ButtonClicked"
+                        Content="Middle none"
                         Grid.Column="1" />
 
-                <Button Name="F24"
+                <Button Name="F12"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="F24ButtonClicked"
-                        Content="F24"
+                        Click="F12ButtonClicked"
+                        Content="Right none"
                         Grid.Column="2" />
 
             </Grid>
