@@ -32,31 +32,37 @@ namespace bradpad {
             mainPanel.Visibility = Visibility.Visible;
             settingsPanel.Visibility = Visibility.Hidden;
         }
+        private void HelpButtonClicked(object sender, RoutedEventArgs e)
+        {
+            settingsPanel.Visibility = Visibility.Hidden;
+            helpPanel.Visibility = Visibility.Visible;
+        }
 
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
             applicationsPanel.Visibility = Visibility.Hidden;
-            if(recentName != "")
+            helpPanel.Visibility = Visibility.Hidden;
+            if (recentName != "")
             {
-                F10.Content = recentName;
+                F22.Content = recentName;
             }
 
         }
 
-        internal void F10ButtonClicked(object sender, RoutedEventArgs e) {
-            if (applicationInfo.ContainsKey((string)F10.Content))
+        internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
+            if (applicationInfo.ContainsKey((string)F22.Content))
             {
-                ((App)Application.Current).ButtonClickedKeyPress(Key.F10, applicationInfo[(string)F10.Content]);
+                ((App)Application.Current).ButtonClickedKeyPress(Key.F22, applicationInfo[(string)F22.Content]);
             }
         }
 
-        internal void F11ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F11);
+        internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
         }
 
-        internal void F12ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F12);
+        internal void F24ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F24);
         }
         
         private void foreGroundButtonClicked(object sender, RoutedEventArgs e)

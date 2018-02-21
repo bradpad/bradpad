@@ -20,9 +20,9 @@ namespace bradpad {
 
         // We want keyMap as a member variable rather than a function so we can change the mappings at runtime.
         Dictionary<Key, string> keyMap = new Dictionary<Key, string>() {
-            {Key.F10, ""},
-            {Key.F11, "^c"},
-            {Key.F12, "^v"},
+            {Key.F22, ""},
+            {Key.F23, "^c"},
+            {Key.F24, "^v"},
         };
         KeyboardListener KListener = new KeyboardListener();
 
@@ -57,14 +57,14 @@ namespace bradpad {
         private void HighlightButton(Key button, bool setPressed) {
             Button pressedButton = null;
             switch (button) {
-                case Key.F10:
-                    pressedButton = ((MainWindow)Current.MainWindow).F10;
+                case Key.F22:
+                    pressedButton = ((MainWindow)Current.MainWindow).F22;
                     break;
-                case Key.F11:
-                    pressedButton = ((MainWindow)Current.MainWindow).F11;
+                case Key.F23:
+                    pressedButton = ((MainWindow)Current.MainWindow).F23;
                     break;
-                case Key.F12:
-                    pressedButton = ((MainWindow)Current.MainWindow).F12;
+                case Key.F24:
+                    pressedButton = ((MainWindow)Current.MainWindow).F24;
                     break;
                 default:
                     // We should never enter this state.
@@ -84,17 +84,17 @@ namespace bradpad {
                 MainWindow window = (bradpad.MainWindow)Application.Current.MainWindow;
                 object o = new object();
                 RoutedEventArgs e = new RoutedEventArgs();
-                if (args.Key == Key.F10)
+                if (args.Key == Key.F22)
                 {   
-                    window.F10ButtonClicked(o, e);
+                    window.F22ButtonClicked(o, e);
                 }
-                if (args.Key == Key.F11)
+                if (args.Key == Key.F23)
                 {
-                    window.F11ButtonClicked(o, e);
+                    window.F23ButtonClicked(o, e);
                 }
-                if (args.Key == Key.F12)
+                if (args.Key == Key.F24)
                 {
-                    window.F12ButtonClicked(o, e);
+                    window.F24ButtonClicked(o, e);
                 }
             }
         }

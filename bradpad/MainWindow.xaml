@@ -24,6 +24,13 @@
                     Width="159"
                     Click="MainButtonClicked"
                     Content="Main" />
+            <Button Name="helpButton"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Height="68"
+                    Width="159"
+                    Click="HelpButtonClicked"
+                    Content="Help" />
 
             <Button Name="applicationsButton" Height="44" Click="applicationsButtonClick" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Applications Page</TextBlock>
@@ -35,12 +42,54 @@
 
         </StackPanel>
 
+        <StackPanel Name="helpPanel"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="0,0,0,0"
+                    Orientation="Vertical"
+                    Visibility="Visible">
+            <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="bradpad Help Screen and Tutorial" FontSize="20"/>
+            <!--<ListView Height="138" Margin="0,20,0,0" VerticalAlignment="Top" Width="348" HorizontalAlignment="Center">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn/>
+                    </GridView>
+                </ListView.View>
+            </ListView>-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width=".1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height=".1*" />
+                    <RowDefinition Height=".1*" />
+                    <RowDefinition Height=".1*" />
+                    <RowDefinition Height=".1*" />
+                    
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" TextBlock.FontSize="16" VerticalAlignment="Top" Height="auto" TextAlignment="Center" TextWrapping="Wrap" Text="Welcome to the alpha release of bradpad! Right now, this product is designed to do copy and paste instructions as well as opening a desired application- using buttons on an Arduino hardware. Step by step tutorial is below. In the upcoming releases, we hope to be able to have more functionality, as well as being able to add custom commands." Margin="0,0,0,0"/>
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="auto" TextAlignment="Left" TextWrapping="Wrap" TextBlock.FontSize="14" TextBlock.FontWeight="Bold" Text="Opening an Application through bradpad" Margin="0,10,0,0"/>
+                <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="auto" TextAlignment="Left" TextWrapping="Wrap" Text="The first function is the ability to open up applications. In the settings window, input a name for the application (this can be anything), and the absolute file path. This can be found by opening the application location through file explorer, and right clicking the address. Copy this and paste it into the application where it says &quot;Enter Application Location&quot;. " Margin="0,5,0,0"/>
+                <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="auto" TextAlignment="Left" TextWrapping="Wrap" Text="Enter Application Name" Margin="0,0,0,0"/>
+            </Grid>
+            <!--<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Name" Width="200" Background="#FFEDEFF6"/>-->
+
+            <Button Content="Settings" Click ="SettingsButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="54" Margin="0,0,0,0" Width="56"/>
+
+           
+
+
+
+        </StackPanel>
+
         <StackPanel Name="applicationsPanel"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     Margin="0,0,0,0"
                     Orientation="Horizontal"
-                    Visibility="Visible"
+                    Visibility="Hidden"
                     Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
             <TextBox Name ="addAppText" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Name" Width="200" Background="#FFEDEFF6"/>
             <TextBox Name ="addAppLocation" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Width="390" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Location" Background="#FFEDEFF6"/>
@@ -48,7 +97,7 @@
                 <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Enter</TextBlock>
             </Button>
 
-            
+
 
             <Button Content="Settings" Click ="SettingsButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="54" Margin="0,0,0,0" Width="56"/>
 
@@ -71,24 +120,24 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button Name="F10"
+                <Button Name="F22"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="F10ButtonClicked"
+                        Click="F22ButtonClicked"
                         Content="Left none"
                         Grid.Column="0" />
 
-                <Button Name="F11"
+                <Button Name="F23"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="F11ButtonClicked"
+                        Click="F23ButtonClicked"
                         Content="Middle none"
                         Grid.Column="1" />
 
-                <Button Name="F12"
+                <Button Name="F24"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="F12ButtonClicked"
+                        Click="F24ButtonClicked"
                         Content="Right none"
                         Grid.Column="2" />
 
