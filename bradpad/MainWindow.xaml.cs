@@ -53,12 +53,19 @@ namespace bradpad {
         internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
             if (applicationInfo.ContainsKey((string)F22.Content))
             {
-                ((App)Application.Current).ButtonClickedKeyPress(Key.F22, applicationInfo[(string)F22.Content]);
+                ((App)Application.Current).ButtonClickedKeyPress(Key.F22, applicationInfo[(string)F22.Content]+ "\\" + (string)F22.Content);
             }
         }
 
         internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
             ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
+        }
+
+        public void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.GotFocus -= TextBox_GotFocus;
         }
 
         internal void F24ButtonClicked(object sender, RoutedEventArgs e) {
@@ -84,7 +91,10 @@ namespace bradpad {
             addAppLocation.Text = "Enter Application Location";
             applicationInfo[t] = tt;
             recentName = t;
-
+            addAppLocation.GotFocus += TextBox_GotFocus;
+            addAppText.GotFocus += TextBox_GotFocus;
+            currentName.Text = "Current Application Name: " + t;
+            currentLocation.Text = "Current Application Location: " + tt;
         }
         private void applicationsButtonClick(object sender, RoutedEventArgs e)
         {

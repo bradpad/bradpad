@@ -31,9 +31,16 @@ namespace bradpad {
         internal void ButtonClickedKeyPress(Key key, string pname) {
             if (keyMap.ContainsKey(key)) {
                 SendKeyPress(key);
-                Process p = new Process();
-                p.StartInfo.FileName = pname;
-                p.Start();
+                try
+                {
+                    Process p = new Process();
+                    p.StartInfo.FileName = pname;
+                    p.Start();
+                }
+                catch
+                {
+                    Console.WriteLine("Application opening error.");
+                }
             }
         }
 
