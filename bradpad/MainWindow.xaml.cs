@@ -20,22 +20,30 @@ namespace bradpad {
     /// </summary>
     public partial class MainWindow : Window {
 
-        Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
-        string recentName;
+        //Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
+        //string recentName;
 
         public MainWindow() {
             InitializeComponent();
-            recentName = "";
+            foreGroundCheckBox.IsChecked = Topmost;
+            //recentName = "";
         }
 
-        private void MainButtonClicked(object sender, RoutedEventArgs e) {
-            mainPanel.Visibility = Visibility.Visible;
-            settingsPanel.Visibility = Visibility.Hidden;
+        // Main Panel
+        internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F22);
+            //if (applicationInfo.ContainsKey((string)F22.Content))
+            //{
+            //    ((App)Application.Current).ButtonClickedKeyPress(Key.F22, applicationInfo[(string)F22.Content]+ "\\" + (string)F22.Content);
+            //}
         }
-        private void HelpButtonClicked(object sender, RoutedEventArgs e)
-        {
-            settingsPanel.Visibility = Visibility.Hidden;
-            helpPanel.Visibility = Visibility.Visible;
+
+        internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
+        }
+
+        internal void F24ButtonClicked(object sender, RoutedEventArgs e) {
+            ((App)Application.Current).ButtonClickedKeyPress(Key.F24);
         }
 
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
@@ -43,44 +51,28 @@ namespace bradpad {
             settingsPanel.Visibility = Visibility.Visible;
             applicationsPanel.Visibility = Visibility.Hidden;
             helpPanel.Visibility = Visibility.Hidden;
-            if (recentName != "")
-            {
-                F22.Content = recentName;
-            }
-
+            //if (recentName != "")
+            //{
+            //    F22.Content = recentName;
+            //}
         }
 
-        internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
-            if (applicationInfo.ContainsKey((string)F22.Content))
-            {
-                ((App)Application.Current).ButtonClickedKeyPress(Key.F22, applicationInfo[(string)F22.Content]+ "\\" + (string)F22.Content);
-            }
+        private void MainButtonClicked(object sender, RoutedEventArgs e) {
+            mainPanel.Visibility = Visibility.Visible;
+            settingsPanel.Visibility = Visibility.Hidden;
         }
 
-        internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
-        }
-
-        public void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void HelpButtonClicked(object sender, RoutedEventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            tb.Text = string.Empty;
-            tb.GotFocus -= TextBox_GotFocus;
-        }
-
-        internal void F24ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F24);
+            settingsPanel.Visibility = Visibility.Hidden;
+            helpPanel.Visibility = Visibility.Visible;
         }
         
-        private void foreGroundButtonClicked(object sender, RoutedEventArgs e)
-        {
-            if(foreGroundCheck.IsChecked == false)
-            {
-                this.Topmost = false;
-            }
-            else
-            {
-                this.Topmost = true;
+        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
+            if(foreGroundCheckBox.IsChecked == false) {
+                Topmost = false;
+            } else {
+                Topmost = true;
             }
         }
         private void appButtonClicked(object sender, RoutedEventArgs e)
@@ -89,8 +81,8 @@ namespace bradpad {
             string tt = addAppLocation.Text;
             addAppText.Text = "Enter Application Name";
             addAppLocation.Text = "Enter Application Location";
-            applicationInfo[t] = tt;
-            recentName = t;
+            //applicationInfo[t] = tt;
+            //recentName = t;
             addAppLocation.GotFocus += TextBox_GotFocus;
             addAppText.GotFocus += TextBox_GotFocus;
             currentName.Text = "Current Application Name: " + t;
@@ -101,6 +93,11 @@ namespace bradpad {
             applicationsPanel.Visibility = Visibility.Visible;
             settingsPanel.Visibility = Visibility.Hidden;
         }
-        
+
+        public void TextBox_GotFocus(object sender, RoutedEventArgs e) {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.GotFocus -= TextBox_GotFocus;
+        }
     }
 }

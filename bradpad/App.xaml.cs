@@ -18,38 +18,50 @@ namespace bradpad {
     /// </summary>
     public partial class App : Application {
 
-        // We want keyMap as a member variable rather than a function so we can change the mappings at runtime.
-        Dictionary<Key, string> keyMap = new Dictionary<Key, string>() {
-            {Key.F22, ""},
-            {Key.F23, "^c"},
-            {Key.F24, "^v"},
-        };
+        internal const Key F22 = Key.F;
+        internal const Key F23 = Key.X;
+        internal const Key F24 = Key.B;
+
+        class KeyMap {
+            Dictionary<Key, bool> isApp = new Dictionary<Key, bool>() {
+                {F22, true},
+                {F23, false},
+                {F24, false},
+            };
+                Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
+                {F22, "winword.exe"},
+                {F23, "^c"},
+                {F24, "^v"},
+            };
+
+            internal bool ContainsKey(Key key) {
+                return key == F22 || key == F23 || key == F24;
+            }
+
+            internal string GetVal(Key key) {
+                return keyDict[key];
+            }
+
+            internal bool IsApp(Key key) {
+                return isApp[key];
+            }
+
+            internal void SetMapping(Key key, string val, bool appFlag) {
+                isApp[key] = appFlag;
+                keyDict[key] = val;
+            }
+        }
+
+
+        // We want member variable dictionaries rather than a functions so we can change the mappings at runtime.
+        Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
+        KeyMap keyMap = new KeyMap();
         KeyboardListener KListener = new KeyboardListener();
 
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
-        internal void ButtonClickedKeyPress(Key key, string pname) {
-            if (keyMap.ContainsKey(key)) {
-                SendKeyPress(key);
-                try
-                {
-                    Process p = new Process();
-                    p.StartInfo.FileName = pname;
-                    p.Start();
-                }
-                catch
-                {
-                    Console.WriteLine("Application opening error.");
-                }
-            }
-        }
-
-        internal void ButtonClickedKeyPress(Key key)
-        {
-            if (keyMap.ContainsKey(key))
-            {
-                SendKeyPress(key);
-            }
+        internal void ButtonClickedKeyPress(Key key) {
+            SendKeyPress(key);
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
@@ -64,13 +76,13 @@ namespace bradpad {
         private void HighlightButton(Key button, bool setPressed) {
             Button pressedButton = null;
             switch (button) {
-                case Key.F22:
+                case F22:
                     pressedButton = ((MainWindow)Current.MainWindow).F22;
                     break;
-                case Key.F23:
+                case F23:
                     pressedButton = ((MainWindow)Current.MainWindow).F23;
                     break;
-                case Key.F24:
+                case F24:
                     pressedButton = ((MainWindow)Current.MainWindow).F24;
                     break;
                 default:
@@ -87,22 +99,7 @@ namespace bradpad {
 
             if (keyMap.ContainsKey(args.Key)) {
                 HighlightButton(args.Key, true);
-
-                MainWindow window = (bradpad.MainWindow)Application.Current.MainWindow;
-                object o = new object();
-                RoutedEventArgs e = new RoutedEventArgs();
-                if (args.Key == Key.F22)
-                {   
-                    window.F22ButtonClicked(o, e);
-                }
-                if (args.Key == Key.F23)
-                {
-                    window.F23ButtonClicked(o, e);
-                }
-                if (args.Key == Key.F24)
-                {
-                    window.F24ButtonClicked(o, e);
-                }
+                SendKeyPress(args.Key);
             }
         }
 
@@ -113,7 +110,18 @@ namespace bradpad {
         }
 
         private void SendKeyPress(Key key) {
-            System.Windows.Forms.SendKeys.SendWait(keyMap[key]);
+            if (keyMap.IsApp(key)) {
+                try {
+                    Process.Start(keyMap.GetVal(key));
+                    //Process p = new Process();
+                    //p.StartInfo.FileName = keyMap.GetVal(key);
+                    //p.Start();
+                } catch {
+                    Console.WriteLine("Application opening error.");
+                }
+            } else {
+                System.Windows.Forms.SendKeys.SendWait(keyMap.GetVal(key));
+            }
         }
     }
 }

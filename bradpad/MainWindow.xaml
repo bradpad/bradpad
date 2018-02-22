@@ -6,51 +6,55 @@
         xmlns:local="clr-namespace:bradpad"
         mc:Ignorable="d"
         Title="bradpad"
-        Topmost="False">
-    <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+        Height="350"
+        Topmost="True">
+
     <Grid>
 
-        <StackPanel Name="settingsPanel"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="0,0,0,0"
-                    Visibility="Hidden"
-                    Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
+        <Grid ScrollViewer.CanContentScroll="True">
+
+            <StackPanel Name="settingsPanel"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="0,0,0,0"
+                        Visibility="Hidden"
+                        Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
+
                 <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Settings View" FontSize="20"/>
                 <Button Name="mainButton"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Height="68"
-                    Width="159"
-                    Click="MainButtonClicked"
-                    Content="Main" />
-            <Button Name="helpButton"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Height="68"
-                    Width="159"
-                    Click="HelpButtonClicked"
-                    Content="Help" />
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="68"
+                Width="159"
+                Click="MainButtonClicked"
+                Content="Main" />
+                <Button Name="helpButton"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="68"
+                Width="159"
+                Click="HelpButtonClicked"
+                Content="Help" />
 
-            <Button Name="applicationsButton" Height="44" Click="applicationsButtonClick" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Applications Page</TextBlock>
-            </Button>
+                <Button Name="applicationsButton" Height="44" Click="applicationsButtonClick" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Applications Page</TextBlock>
+                </Button>
 
-            <CheckBox Name="foreGroundCheck" Content="Application Always In Foreground" HorizontalAlignment="Left"
-                        VerticalAlignment="Top" Click="foreGroundButtonClicked" IsChecked="False" Height="20"/>
+                <CheckBox Name="foreGroundCheckBox" Content="Application Always In Foreground" HorizontalAlignment="Left"
+                    VerticalAlignment="Top" Click="ForegroundCheckBoxClicked" IsChecked="False" Height="20"/>
 
 
-        </StackPanel>
+            </StackPanel>
 
-        <StackPanel Name="helpPanel"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="0,0,0,0"
-                    Orientation="Vertical"
-                    Visibility="Hidden">
-            
-             <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="bradpad Help Screen and Tutorial" FontSize="20"/>
-            
+            <StackPanel Name="helpPanel"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="0,0,0,0"
+                Orientation="Vertical"
+                Visibility="Hidden">
+
+                <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="bradpad Help Screen and Tutorial" FontSize="20"/>
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width=".1*"/>
@@ -72,60 +76,53 @@
                     <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="auto" TextAlignment="Left" TextWrapping="Wrap" Text="1. The middle pedal corresponds to copy (the ctrl+c shortcut). &#x0a;2. The right pedal corresponds to paste (the ctrl+v shortcut)." Margin="0,0,0,0"/>
                 </Grid>
                 <!--<TextBox HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Name" Width="200" Background="#FFEDEFF6"/>-->
-            
-            <Button Content="Settings" Click ="SettingsButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="54" Margin="0,0,0,0" Width="56"/>
-            
-            
 
+                <Button Content="Settings" Click ="SettingsButtonClicked" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="54" Margin="0,0,0,0" Width="56"/>
 
+            </StackPanel>
 
-        </StackPanel>
+            <StackPanel Name="applicationsPanel"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="0,0,0,0"
+                Orientation="Horizontal"
+                Visibility="Hidden"
+                Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
 
-        <StackPanel Name="applicationsPanel"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="0,0,0,0"
-                    Orientation="Horizontal"
-                    Visibility="Hidden"
-                    Background="#FFEDEFF6" RenderTransformOrigin="0.5,0.5">
-                
                 <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width=".1*"/>
-                    <ColumnDefinition Width=".1*"/>
-                    <ColumnDefinition Width=".1*"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".1*"/>
+                        <ColumnDefinition Width=".1*"/>
+                        <ColumnDefinition Width=".1*"/>
                     </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height=".1*" />
-                    <RowDefinition Height=".1*" />
-                    <RowDefinition Height=".9*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Applications View" FontSize="20"/>
-                <TextBox Grid.Row="1" Grid.Column="0" Name ="addAppText" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Name" GotFocus="TextBox_GotFocus" Width="200" Background="#FFEDEFF6"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Name ="addAppLocation" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Location" GotFocus="TextBox_GotFocus" Width="400" Background="#FFEDEFF6"/>
-                <Button Grid.Row="1" Grid.Column="2" Name="appButton" Height="39"  VerticalAlignment="Top" Click="appButtonClicked" Width="60" Margin="0,0,0,0">
-                    <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Enter</TextBlock>
-                </Button>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".1*" />
+                        <RowDefinition Height=".1*" />
+                        <RowDefinition Height=".9*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" HorizontalAlignment="Center" Text="Applications View" FontSize="20"/>
+                    <TextBox Grid.Row="1" Grid.Column="0" Name ="addAppText" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Name" GotFocus="TextBox_GotFocus" Width="200" Background="#FFEDEFF6"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name ="addAppLocation" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="35" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" Text="Enter Application Location" GotFocus="TextBox_GotFocus" Width="400" Background="#FFEDEFF6"/>
+                    <Button Grid.Row="1" Grid.Column="2" Name="appButton" Height="39"  VerticalAlignment="Top" Click="appButtonClicked" Width="60" Margin="0,0,0,0">
+                        <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Enter</TextBlock>
+                    </Button>
                     <Button Grid.Row="2" Grid.Column="2" Content="Settings" Click ="SettingsButtonClicked" VerticalAlignment="Top" Height="39" Width="60" Margin="0,0,0,0"/>
-                <TextBox Grid.Row="2" Grid.Column="0" Name="currentName" VerticalAlignment="Top" Text="Current Application Name: N/A" Background="#FFEDEFF6"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Name="currentLocation" VerticalAlignment="Top" Text="Current Application Location: N/A" Background="#FFEDEFF6"/>
-            </Grid>
+                    <TextBox Grid.Row="2" Grid.Column="0" Name="currentName" VerticalAlignment="Top" Text="Current Application Name: N/A" Background="#FFEDEFF6"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="currentLocation" VerticalAlignment="Top" Text="Current Application Location: N/A" Background="#FFEDEFF6"/>
+                </Grid>
 
+            </StackPanel>
 
-
-                
-
-        </StackPanel>
+        </Grid>
 
         <DockPanel Name="mainPanel"
-                   Visibility="Visible">
-                <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Height="60" HorizontalAlignment="Stretch" Text="Main View" FontSize="20" DockPanel.Dock="Top" TextBlock.TextAlignment="Center"/>
+                    Visibility="Visible">
+
             <Button Name="settingsButton"
-                    Height="68"
-                    Click="SettingsButtonClicked"
-                    Content="Settings"
-                    DockPanel.Dock="Top"/>
-             
+                Height="68"
+                Click="SettingsButtonClicked"
+                Content="Open Settings"
+                DockPanel.Dock="Top"/>
 
             <!--Grid is the last child because last child fills the rest of the window in DockPanel-->
             <Grid>
@@ -139,7 +136,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Click="F22ButtonClicked"
-                        Content="No application selected"
+                        Content="Microsoft Word"
                         Grid.Column="0" 
                         Background="#FF55B35A"/>
 
@@ -164,6 +161,5 @@
         </DockPanel>
 
     </Grid>
-    </ScrollViewer>
 
 </Window>
