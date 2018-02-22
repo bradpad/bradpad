@@ -29,17 +29,17 @@ namespace bradpad {
             recentName = "";
             MessageBox.Show(
                 "Welcome to the alpha release of bradpad! Right now, this product is designed to do copy and paste instructions and open a desired application. The buttons on the Arduino hardware expedite this procedure. A step-by-step tutorial is below. In the upcoming releases, we hope to be able to have more functionality, as well as being able to add custom commands. We hope you enjoy!\n\n" +
+                "1. Pressing the left pedal will open Microsoft Word.\n" +
+                "2. Pressing the middle pedal corresponds to a copy (CTRL + C shortcut) command.\n" +
+                "3. Pressing the right pedal corresponds to a paste (CTRL + V shortcut) command.\n\n" +
+                "If you get lost, you can press the Help button in the Settings view to view these instructions again.\n" +
+                "The application also has the capability to customize the application that is mapped to the left pedal, but the UI is a undeveloped because this flow will be changed in the future.\n\n" +
                 "Opening an Application\n" +
-                "1. The first function is the ability to open up applications.\n" +
-                "2. In the settings view, navigate to the applications view.\n" +
-                "3. Input a name for the application in the \"Enter Application Name\" field.\n" +
-                "4. Enter the application location. This can be found by opening the application location through file explorer, and right clicking the address. Copy this and paste it into the application where it says \"Enter Application Location\".\n" +
-                "5. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
-                "6. The process can be repeated to change the desired application.\n\n" +
-                "Copy and Paste\n" +
-                "1. The middle pedal corresponds to copy (the ctrl+c shortcut).\n" +
-                "2. The right pedal corresponds to paste (the ctrl+v shortcut).\n\n" +
-                "If you get lost, you can press the Help button in the Settings view to view these instructions again.",
+                "1. In the settings view, navigate to the applications view.\n" +
+                "2. Input a name for the application in the \"Enter Application Name\" field.\n" +
+                "3. Enter the application location. This can be found by opening the application location through file explorer, and right clicking the address. Copy this and paste it into the application where it says \"Enter Application Location\".\n" +
+                "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
+                "5. The process can be repeated to change the desired application.",
                 "bradpad Help Screen and Tutorial"
             );
         }
