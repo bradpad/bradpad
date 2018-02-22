@@ -18,9 +18,9 @@ namespace bradpad {
     /// </summary>
     public partial class App : Application {
 
-        internal const Key F22 = Key.F;
-        internal const Key F23 = Key.X;
-        internal const Key F24 = Key.B;
+        internal const Key F22 = Key.F22;
+        internal const Key F23 = Key.F23;
+        internal const Key F24 = Key.F24;
 
         class KeyMap {
             Dictionary<Key, bool> isApp = new Dictionary<Key, bool>() {
