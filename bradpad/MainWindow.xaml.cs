@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -21,12 +20,13 @@ namespace bradpad {
     public partial class MainWindow : Window {
 
         //Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
-        //string recentName;
+        string recentName;
+        private App app = ((App)Application.Current);
 
         public MainWindow() {
             InitializeComponent();
             foreGroundCheckBox.IsChecked = Topmost;
-            //recentName = "";
+            recentName = "";
             MessageBox.Show(
                 "Welcome to the alpha release of bradpad! Right now, this product is designed to do copy and paste instructions and open a desired application. The buttons on the Arduino hardware expedite this procedure. A step-by-step tutorial is below. In the upcoming releases, we hope to be able to have more functionality, as well as being able to add custom commands. We hope you enjoy!\n\n" +
                 "Opening an Application\n" +
@@ -46,19 +46,19 @@ namespace bradpad {
 
         // Main Panel
         internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F22);
+            app.ButtonClickedKeyPress(App.F22);
             //if (applicationInfo.ContainsKey((string)F22.Content))
             //{
-            //    ((App)Application.Current).ButtonClickedKeyPress(Key.F22, applicationInfo[(string)F22.Content]+ "\\" + (string)F22.Content);
+            //    app.ButtonClickedKeyPress(App.F22, applicationInfo[(string)F22.Content]+ "\\" + (string)F22.Content);
             //}
         }
 
         internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F23);
+            app.ButtonClickedKeyPress(App.F23);
         }
 
         internal void F24ButtonClicked(object sender, RoutedEventArgs e) {
-            ((App)Application.Current).ButtonClickedKeyPress(Key.F24);
+            app.ButtonClickedKeyPress(App.F24);
         }
 
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
@@ -96,8 +96,10 @@ namespace bradpad {
             string tt = addAppLocation.Text;
             addAppText.Text = "Enter Application Name";
             addAppLocation.Text = "Enter Application Location";
+            app.SetMapping(App.F22, tt, true);
+            F22.Content = t;
             //applicationInfo[t] = tt;
-            //recentName = t;
+            recentName = t;
             addAppLocation.GotFocus += TextBox_GotFocus;
             addAppText.GotFocus += TextBox_GotFocus;
             currentName.Text = "Current Application Name: " + t;

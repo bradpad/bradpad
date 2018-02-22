@@ -107,8 +107,8 @@
                         <TextBlock TextWrapping="Wrap" TextAlignment="Center" >Enter</TextBlock>
                     </Button>
                     <Button Grid.Row="2" Grid.Column="2" Content="Settings" Click ="SettingsButtonClicked" VerticalAlignment="Top" Height="39" Width="60" Margin="0,0,0,0"/>
-                    <TextBox Grid.Row="2" Grid.Column="0" Name="currentName" VerticalAlignment="Top" Text="Current Application Name: N/A" Background="#FFEDEFF6"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Name="currentLocation" VerticalAlignment="Top" Text="Current Application Location: N/A" Background="#FFEDEFF6"/>
+                    <TextBox Grid.Row="2" Grid.Column="0" Name="currentName" VerticalAlignment="Top" Text="Current Application Name: N/A" IsReadOnly="True" Background="#FFEDEFF6"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Name="currentLocation" VerticalAlignment="Top" Text="Current Application Location: N/A" IsReadOnly="True" Background="#FFEDEFF6"/>
                 </Grid>
 
             </StackPanel>

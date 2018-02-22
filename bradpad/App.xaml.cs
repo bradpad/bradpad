@@ -64,6 +64,10 @@ namespace bradpad {
             SendKeyPress(key);
         }
 
+        internal void SetMapping(Key key, string val, bool appFlag) {
+            keyMap.SetMapping(key, val, appFlag);
+        }
+
         private void ApplicationStartup(object sender, StartupEventArgs e) {
             KListener.KeyDown += new RawKeyEventHandler(KListenerKeyDown);
             KListener.KeyUp += new RawKeyEventHandler(KListenerKeyUp);
