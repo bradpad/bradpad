@@ -122,6 +122,7 @@
                 Height="68"
                 Click="SettingsButtonClicked"
                 Content="Open Settings"
+                TextBlock.FontSize="20"
                 DockPanel.Dock="Top"/>
 
             <!--Grid is the last child because last child fills the rest of the window in DockPanel-->
@@ -138,6 +139,7 @@
                         Click="F22ButtonClicked"
                         Content="Microsoft Word"
                         Grid.Column="0" 
+                        TextBlock.FontSize="32"
                         Background="#FF55B35A"/>
 
                 <Button Name="F23"
@@ -146,6 +148,7 @@
                         Click="F23ButtonClicked"
                         Content="Copy"
                         Grid.Column="1" 
+                        TextBlock.FontSize="32"
                         Background="#FF559DB3"/>
 
                 <Button Name="F24"
@@ -154,6 +157,7 @@
                         Click="F24ButtonClicked"
                         Content="Paste"
                         Grid.Column="2" 
+                        TextBlock.FontSize="32"
                         Background="#FFB5B7B3"/>
 
             </Grid>
