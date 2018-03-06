@@ -54,7 +54,6 @@ namespace bradpad {
 
 
         // We want member variable dictionaries rather than a functions so we can change the mappings at runtime.
-        Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
         KeyMap keyMap = new KeyMap();
         KeyboardListener KListener = new KeyboardListener();
 

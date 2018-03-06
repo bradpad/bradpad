@@ -19,8 +19,6 @@ namespace bradpad {
     /// </summary>
     public partial class MainWindow : Window {
 
-        //Dictionary<string, string> applicationInfo = new Dictionary<string, string>();
-        //string recentName;
         private App app = ((App)Application.Current);
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
@@ -42,17 +40,12 @@ namespace bradpad {
         public MainWindow() {
             InitializeComponent();
             foreGroundCheckBox.IsChecked = Topmost;
-            //recentName = "";
             MessageBox.Show(tutorialText, tutorialCaption);
         }
 
         // Main Panel
         internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
             app.ButtonClickedKeyPress(App.F22);
-            //if (applicationInfo.ContainsKey((string)F22.Content))
-            //{
-            //    app.ButtonClickedKeyPress(App.F22, applicationInfo[(string)F22.Content]+ "\\" + (string)F22.Content);
-            //}
         }
 
         internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
@@ -66,12 +59,7 @@ namespace bradpad {
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
-            applicationsPanel.Visibility = Visibility.Hidden;
-            helpPanel.Visibility = Visibility.Hidden;
-            //if (recentName != "")
-            //{
-            //    F22.Content = recentName;
-            //}
+            //applicationsPanel.Visibility = Visibility.Hidden;
         }
 
         private void MainButtonClicked(object sender, RoutedEventArgs e) {
@@ -81,43 +69,38 @@ namespace bradpad {
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e)
         {
-            //settingsPanel.Visibility = Visibility.Hidden;
-            //helpPanel.Visibility = Visibility.Visible;
             MessageBox.Show(tutorialText, tutorialCaption);
         }
         
         private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
-            if(foreGroundCheckBox.IsChecked == false) {
-                Topmost = false;
-            } else {
-                Topmost = true;
-            }
-        }
-        private void appButtonClicked(object sender, RoutedEventArgs e)
-        {
-            string t = addAppText.Text;
-            string tt = addAppLocation.Text;
-            addAppText.Text = "Enter Application Name";
-            addAppLocation.Text = "Enter Application Location";
-            app.SetMapping(App.F22, tt, true);
-            F22.Content = t;
-            //applicationInfo[t] = tt;
-            //recentName = t;
-            addAppLocation.GotFocus += TextBox_GotFocus;
-            addAppText.GotFocus += TextBox_GotFocus;
-            currentName.Text = "Current Application Name: " + t;
-            currentLocation.Text = "Current Application Location: " + tt;
-        }
-        private void applicationsButtonClick(object sender, RoutedEventArgs e)
-        {
-            applicationsPanel.Visibility = Visibility.Visible;
-            settingsPanel.Visibility = Visibility.Hidden;
+            Topmost = (bool)foreGroundCheckBox.IsChecked;
         }
 
-        public void TextBox_GotFocus(object sender, RoutedEventArgs e) {
-            TextBox tb = (TextBox)sender;
-            tb.Text = string.Empty;
-            tb.GotFocus -= TextBox_GotFocus;
-        }
+        //private void appButtonClicked(object sender, RoutedEventArgs e)
+        //{
+        //    string t = addAppText.Text;
+        //    string tt = addAppLocation.Text;
+        //    addAppText.Text = "Enter Application Name";
+        //    addAppLocation.Text = "Enter Application Location";
+        //    app.SetMapping(App.F22, tt, true);
+        //    F22.Content = t;
+        //    //applicationInfo[t] = tt;
+        //    addAppLocation.GotFocus += TextBox_GotFocus;
+        //    addAppText.GotFocus += TextBox_GotFocus;
+        //    currentName.Text = "Current Application Name: " + t;
+        //    currentLocation.Text = "Current Application Location: " + tt;
+        //}
+
+        //private void applicationsButtonClick(object sender, RoutedEventArgs e)
+        //{
+        //    applicationsPanel.Visibility = Visibility.Visible;
+        //    settingsPanel.Visibility = Visibility.Hidden;
+        //}
+
+        //public void TextBox_GotFocus(object sender, RoutedEventArgs e) {
+        //    TextBox tb = (TextBox)sender;
+        //    tb.Text = string.Empty;
+        //    tb.GotFocus -= TextBox_GotFocus;
+        //}
     }
 }
