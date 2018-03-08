@@ -62,6 +62,10 @@ namespace bradpad {
             //applicationsPanel.Visibility = Visibility.Hidden;
         }
 
+        // Settings Panel
+        internal void FSettingsClicked(object sender, RoutedEventArgs e) {
+        }
+
         private void MainButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Visible;
             settingsPanel.Visibility = Visibility.Hidden;

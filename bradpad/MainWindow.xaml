@@ -21,7 +21,8 @@
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
 
-            <ComboBox HorizontalAlignment="Center"
+            <ComboBox Name="appDropdown"
+                      HorizontalAlignment="Center"
                       Grid.Row="0"
                       Margin="12"
                       VerticalContentAlignment="Center">
@@ -37,27 +38,27 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button HorizontalAlignment="Stretch"
+                <Button Name="F22Settings"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="#FF55B35A"
-                        Click="F22ButtonClicked"
-                        Content="Microsoft Word"
+                        Click="FSettingsClicked"
                         Grid.Column="0" 
                         TextBlock.FontSize="32" />
 
-                <Button HorizontalAlignment="Stretch"
+                <Button Name="F23Settings"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="#FF559DB3"
-                        Click="F23ButtonClicked"
-                        Content="Copy"
+                        Click="FSettingsClicked"
                         Grid.Column="1" 
                         TextBlock.FontSize="32" />
 
-                <Button HorizontalAlignment="Stretch"
+                <Button Name="F24Settings"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="#FFB5B7B3"
-                        Click="F24ButtonClicked"
-                        Content="Paste"
+                        Click="FSettingsClicked"
                         Grid.Column="2" 
                         TextBlock.FontSize="32" />
 
@@ -188,7 +189,7 @@
                         Background="#FFB5B7B3"
                         Click="F24ButtonClicked"
                         Content="Paste"
-                        Grid.Column="2" 
+                        Grid.Column="2"
                         TextBlock.FontSize="32" />
 
             </Grid>
