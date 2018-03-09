@@ -44,15 +44,15 @@ namespace bradpad {
         }
 
         // Main Panel
-        internal void F22ButtonClicked(object sender, RoutedEventArgs e) {
+        private void F22ButtonClicked(object sender, RoutedEventArgs e) {
             app.ButtonClickedKeyPress(App.F22);
         }
 
-        internal void F23ButtonClicked(object sender, RoutedEventArgs e) {
+        private void F23ButtonClicked(object sender, RoutedEventArgs e) {
             app.ButtonClickedKeyPress(App.F23);
         }
 
-        internal void F24ButtonClicked(object sender, RoutedEventArgs e) {
+        private void F24ButtonClicked(object sender, RoutedEventArgs e) {
             app.ButtonClickedKeyPress(App.F24);
         }
 
@@ -63,7 +63,33 @@ namespace bradpad {
         }
 
         // Settings Panel
-        internal void FSettingsClicked(object sender, RoutedEventArgs e) {
+        private void ActionCancelButtonClicked(object sender, RoutedEventArgs e) {
+            settingsActionFooter.Visibility = Visibility.Hidden;
+            settingsFooter.Visibility = Visibility.Visible;
+            F22Settings.Opacity = 1;
+            F23Settings.Opacity = 1;
+            F24Settings.Opacity = 1;
+        }
+
+        private void F22SettingsClicked(object sender, RoutedEventArgs e) {
+            F22Settings.Opacity = 1;
+            F23Settings.Opacity = 0.2;
+            F24Settings.Opacity = 0.2;
+            ShowActionFooter();
+        }
+
+        private void F23SettingsClicked(object sender, RoutedEventArgs e) {
+            F22Settings.Opacity = 0.2;
+            F23Settings.Opacity = 1;
+            F24Settings.Opacity = 0.2;
+            ShowActionFooter();
+        }
+
+        private void F24SettingsClicked(object sender, RoutedEventArgs e) {
+            F22Settings.Opacity = 0.2;
+            F23Settings.Opacity = 0.2;
+            F24Settings.Opacity = 1;
+            ShowActionFooter();
         }
 
         private void MainButtonClicked(object sender, RoutedEventArgs e) {
@@ -78,6 +104,13 @@ namespace bradpad {
         
         private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
             Topmost = (bool)foreGroundCheckBox.IsChecked;
+        }
+
+        private void ShowActionFooter() {
+            settingsFooter.Visibility = Visibility.Hidden;
+            settingsActionFooter.Visibility = Visibility.Visible;
+            //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
+            //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }
 
         //private void appButtonClicked(object sender, RoutedEventArgs e)

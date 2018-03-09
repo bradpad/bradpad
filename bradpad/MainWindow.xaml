@@ -17,8 +17,10 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
-                <RowDefinition Height="6*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Name="settingsRowFButtons"
+                               Height="6*" />
+                <RowDefinition Name ="settingsRowFooter"
+                               Height="3*" />
             </Grid.RowDefinitions>
 
             <ComboBox Name="appDropdown"
@@ -42,7 +44,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="#FF55B35A"
-                        Click="FSettingsClicked"
+                        Click="F22SettingsClicked"
                         Grid.Column="0" 
                         TextBlock.FontSize="32" />
 
@@ -50,7 +52,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="#FF559DB3"
-                        Click="FSettingsClicked"
+                        Click="F23SettingsClicked"
                         Grid.Column="1" 
                         TextBlock.FontSize="32" />
 
@@ -58,13 +60,14 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Background="#FFB5B7B3"
-                        Click="FSettingsClicked"
+                        Click="F24SettingsClicked"
                         Grid.Column="2" 
                         TextBlock.FontSize="32" />
 
             </Grid>
 
-            <Grid Grid.Row="2">
+            <Grid Name="settingsFooter"
+                  Grid.Row="2">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*" />
@@ -103,6 +106,43 @@
                           Click="ForegroundCheckBoxClicked"
                           Content="Application Always In Foreground"
                           IsChecked="False" />
+            </Grid>
+
+            <Grid Name="settingsActionFooter"
+                  Grid.Row="2"
+                  Visibility="Hidden">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Name="actionDropdown"
+                      HorizontalAlignment="Center"
+                      Grid.Column="1"
+                      Margin="16"
+                      VerticalContentAlignment="Center">
+                    <ComboBoxItem IsSelected="True">Select an Action</ComboBoxItem>
+                    <ComboBoxItem>1</ComboBoxItem>
+                </ComboBox>
+
+                <Button Name="saveButton"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="16"
+                        Content="Save"
+                        Grid.Column="2" />
+
+                <Button Name="cancelButton"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="16"
+                        Click="ActionCancelButtonClicked"
+                        Content="Cancel"
+                        Grid.Column="3" />
+
             </Grid>
 
             <!--<StackPanel Name="applicationsPanel"
