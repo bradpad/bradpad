@@ -46,9 +46,8 @@
                         Background="#FF55B35A"
                         Click="F22SettingsClicked"
                         Grid.Column="0" 
-                        TextBlock.FontSize="32" >
-                    <TextBlock Name="F22SettingsCommand"></TextBlock>
-                </Button>
+                        TextBlock.FontSize="32" />
+
 
                 <Button Name="F23Settings"
                         HorizontalAlignment="Stretch"
@@ -56,9 +55,7 @@
                         Background="#FF559DB3"
                         Click="F23SettingsClicked"
                         Grid.Column="1" 
-                        TextBlock.FontSize="32" >
-                    <TextBlock Name="F23SettingsCommand"></TextBlock>
-                </Button>
+                        TextBlock.FontSize="32" />
 
                 <Button Name="F24Settings"
                         HorizontalAlignment="Stretch"
@@ -66,9 +63,7 @@
                         Background="#FFB5B7B3"
                         Click="F24SettingsClicked"
                         Grid.Column="2" 
-                        TextBlock.FontSize="32" >
-                    <TextBlock Name="F24SettingsCommand"></TextBlock>
-                </Button>
+                        TextBlock.FontSize="32" />
 
             </Grid>
 
@@ -129,9 +124,7 @@
                       HorizontalAlignment="Center"
                       Grid.Column="1"
                       Margin="16"
-                      VerticalContentAlignment="Center">
-                    <ComboBoxItem Name ="selectAnAction" IsSelected="True">Select an Action</ComboBoxItem>
-                </ComboBox>
+                      VerticalContentAlignment="Center" />
 
                 <Button Name="saveButton"
                         HorizontalAlignment="Stretch"
@@ -145,7 +138,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Margin="16"
-                        Click="ActionCancelButtonClicked"
+                        Click="ReturnToSettings"
                         Content="Cancel"
                         Grid.Column="3" />
 

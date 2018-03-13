@@ -39,16 +39,15 @@ namespace bradpad {
 
         public void UpdateMainWindow()
         {
-            F22.Content = app.keyMap.keyDict[App.F22];
-            F23.Content = app.keyMap.keyDict[App.F23];
-            F24.Content = app.keyMap.keyDict[App.F24];
+            F22.Content = app.GetAction(App.F22);
+            F23.Content = app.GetAction(App.F23);
+            F24.Content = app.GetAction(App.F24);
         }
 
-        public void UpdateSettingsButtonsContent()
-        {
-            F22SettingsCommand.Text = app.keyMap.keyDict[App.F22];
-            F23SettingsCommand.Text = app.keyMap.keyDict[App.F23];
-            F24SettingsCommand.Text = app.keyMap.keyDict[App.F24];
+        public void UpdateSettingsButtonsContent() {
+            F22Settings.Content = app.GetAction(App.F22);
+            F23Settings.Content = app.GetAction(App.F23);
+            F24Settings.Content = app.GetAction(App.F24);
         }
 
         public MainWindow() {
@@ -70,17 +69,7 @@ namespace bradpad {
         private void F24ButtonClicked(object sender, RoutedEventArgs e) {
             app.ButtonClickedKeyPress(App.F24);
         }
-        private void FillDropDownCommands()
-        {
-            foreach(var v in app.keyMap.unListedCommands)
-            {
-                actionDropdown.Items.Add(v);
-            }
-            app.keyMap.unListedCommands = new List<string>();
-            F22.Content = app.keyMap.GetVal(System.Windows.Input.Key.F22);
-            F23.Content = app.keyMap.GetVal(System.Windows.Input.Key.F23);
-            F24.Content = app.keyMap.GetVal(System.Windows.Input.Key.F24);
-        }
+
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
@@ -93,31 +82,30 @@ namespace bradpad {
         private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e)
         {
             string s = actionDropdown.Text;
-            if(F22Settings.Opacity == 1)
-            {
-                app.keyMap.keyDict[System.Windows.Input.Key.F22] = s;
+
+            if(F22Settings.Opacity == 1) {
+                app.SetAction(App.F22, s);
             }
-            if (F23Settings.Opacity == 1)
-            {
-                app.keyMap.keyDict[System.Windows.Input.Key.F23] = s;
+
+            if (F23Settings.Opacity == 1) {
+                app.SetAction(App.F23, s);
             }
-            if (F24Settings.Opacity == 1)
-            {
-                app.keyMap.keyDict[System.Windows.Input.Key.F24] = s;
+
+            if (F24Settings.Opacity == 1) {
+                app.SetAction(App.F23, s);
             }
             
             UpdateMainWindow();
             UpdateSettingsButtonsContent();
-            ActionCancelButtonClicked(sender, e);
+            ReturnToSettings(sender, e);
         }
 
-        private void ActionCancelButtonClicked(object sender, RoutedEventArgs e) {
+        private void ReturnToSettings(object sender, RoutedEventArgs e) {
             settingsActionFooter.Visibility = Visibility.Hidden;
             settingsFooter.Visibility = Visibility.Visible;
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 1;
             F24Settings.Opacity = 1;
-            selectAnAction.IsSelected = true;
         }
 
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
@@ -139,6 +127,19 @@ namespace bradpad {
             F23Settings.Opacity = 0.2;
             F24Settings.Opacity = 1;
             ShowActionFooter();
+        }
+
+        private void FillDropDownCommands() {
+            actionDropdown.Items.Clear();
+            ComboBoxItem selectAnAction = new ComboBoxItem();
+            selectAnAction.Content = "Select an Action";
+            selectAnAction.IsSelected = true;
+            selectAnAction.Visibility = Visibility.Collapsed;
+            actionDropdown.Items.Add(selectAnAction);
+            //((ComboBoxItem)actionDropdown.Items[0]).Visibility = Visibility.Collapsed;
+            foreach (string action in App.ACTIONS) {
+                actionDropdown.Items.Add(action);
+            }
         }
 
         private void MainButtonClicked(object sender, RoutedEventArgs e) {

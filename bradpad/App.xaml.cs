@@ -18,26 +18,27 @@ namespace bradpad {
     /// </summary>
     public partial class App : Application {
 
+        internal static List<string> ACTIONS = new List<string>() {
+                {"Open Word"},
+                {"Copy"},
+                {"Paste"},
+                {"Open Chrome"},
+                {"New Tab"},
+        };
+
         internal const Key F22 = Key.F22;
         internal const Key F23 = Key.F23;
         internal const Key F24 = Key.F24;
-        public
+
         class KeyMap {
-            /*Dictionary<Key, bool> isApp = new Dictionary<Key, bool>() {
-                {F22, true},
-                {F23, false},
-                {F24, false},
-            };*/
-            public
             Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
                 {F22, "Open Word"},
                 {F23, "Copy"},
                 {F24, "Paste"},
             };
 
-            //Command name, plus pair of command and whether it is an App
-            public
-            Dictionary<string, Tuple<string, bool>> allCommands = new Dictionary<string, Tuple<string, bool>>()
+            // Action name, plus pair of action and whether it is an app
+            Dictionary<string, Tuple<string, bool>> allActions = new Dictionary<string, Tuple<string, bool>>()
             {
                 {"Open Word", Tuple.Create("winword.exe", true)},
                 {"Copy", Tuple.Create("^c", false)},
@@ -45,44 +46,39 @@ namespace bradpad {
                 {"Open Chrome", Tuple.Create("chrome.exe", true)},
                 {"New Tab", Tuple.Create("^t", false)},
             };
-            public
-            List<string> unListedCommands = new List<string>()
-            {
-                {"Open Word"},
-                {"Copy"},
-                {"Paste"},
-                {"Open Chrome"},
-                {"New Tab"},
-            };
 
+
+            internal void AddAction(string name, string val, bool appFlag) {
+                ACTIONS.Add(name);
+                allActions[name] = Tuple.Create(val, appFlag);
+            }
 
             internal bool ContainsKey(Key key) {
                 return key == F22 || key == F23 || key == F24;
             }
 
+            internal string GetAction(Key key) {
+                return keyDict[key];
+            }
+
             internal string GetVal(Key key) {
-                return allCommands[keyDict[key]].Item1;
+                return allActions[keyDict[key]].Item1;
             }
 
             internal bool IsApp(Key key) {
-                return allCommands[keyDict[key]].Item2;
+                return allActions[keyDict[key]].Item2;
             }
 
-            internal void AddCommand(string name, string val, bool appFlag) {
-                unListedCommands.Add(name);
-                allCommands[name] = Tuple.Create(val, appFlag);
-            }
-            internal void SetShortcut(Key key, string name)
+            internal void SetAction(Key key, string val)
             {
-                keyDict[key] = name;
+                keyDict[key] = val;
             }
         }
 
 
         // We want member variable dictionaries rather than a functions so we can change the mappings at runtime.
-        public
         KeyMap keyMap = new KeyMap();
-        
+
         KeyboardListener KListener = new KeyboardListener();
 
 
@@ -91,8 +87,16 @@ namespace bradpad {
             SendKeyPress(key);
         }
 
-        internal void AddCommand(string name, string val, bool appFlag) {
-            keyMap.AddCommand(name, val, appFlag);
+        internal void AddAction(string name, string val, bool appFlag) {
+            keyMap.AddAction(name, val, appFlag);
+        }
+
+        internal string GetAction(Key key) {
+            return keyMap.GetAction(key);
+        }
+
+        internal void SetAction(Key key, string action) {
+            keyMap.SetAction(key, action);
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
@@ -141,14 +145,14 @@ namespace bradpad {
         }
 
         private void SendKeyPress(Key key) {
-            if (keyMap.allCommands[keyMap.keyDict[key]].Item2) {
+            if (keyMap.IsApp(key)) {
                 try {
-                    Process.Start(keyMap.allCommands[keyMap.keyDict[key]].Item1);
+                    Process.Start(keyMap.GetVal(key));
                 } catch {
                     Console.WriteLine("Application opening error.");
                 }
             } else {
-                System.Windows.Forms.SendKeys.SendWait(keyMap.allCommands[keyMap.keyDict[key]].Item1);
+                System.Windows.Forms.SendKeys.SendWait(keyMap.GetVal(key));
             }
         }
     }
