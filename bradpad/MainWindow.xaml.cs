@@ -37,10 +37,25 @@ namespace bradpad {
                 "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
                 "5. The process can be repeated to change the desired application.";
 
+        public void UpdateMainWindow()
+        {
+            F22.Content = app.keyMap.keyDict[App.F22];
+            F23.Content = app.keyMap.keyDict[App.F23];
+            F24.Content = app.keyMap.keyDict[App.F24];
+        }
+
+        public void UpdateSettingsButtonsContent()
+        {
+            F22SettingsCommand.Text = app.keyMap.keyDict[App.F22];
+            F23SettingsCommand.Text = app.keyMap.keyDict[App.F23];
+            F24SettingsCommand.Text = app.keyMap.keyDict[App.F24];
+        }
+
         public MainWindow() {
             InitializeComponent();
             foreGroundCheckBox.IsChecked = Topmost;
             MessageBox.Show(tutorialText, tutorialCaption);
+            UpdateMainWindow();
         }
 
         // Main Panel
@@ -55,20 +70,54 @@ namespace bradpad {
         private void F24ButtonClicked(object sender, RoutedEventArgs e) {
             app.ButtonClickedKeyPress(App.F24);
         }
-
+        private void FillDropDownCommands()
+        {
+            foreach(var v in app.keyMap.unListedCommands)
+            {
+                actionDropdown.Items.Add(v);
+            }
+            app.keyMap.unListedCommands = new List<string>();
+            F22.Content = app.keyMap.GetVal(System.Windows.Input.Key.F22);
+            F23.Content = app.keyMap.GetVal(System.Windows.Input.Key.F23);
+            F24.Content = app.keyMap.GetVal(System.Windows.Input.Key.F24);
+        }
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
+            FillDropDownCommands();
+            UpdateSettingsButtonsContent();
             //applicationsPanel.Visibility = Visibility.Hidden;
         }
 
         // Settings Panel
+        private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e)
+        {
+            string s = actionDropdown.Text;
+            if(F22Settings.Opacity == 1)
+            {
+                app.keyMap.keyDict[System.Windows.Input.Key.F22] = s;
+            }
+            if (F23Settings.Opacity == 1)
+            {
+                app.keyMap.keyDict[System.Windows.Input.Key.F23] = s;
+            }
+            if (F24Settings.Opacity == 1)
+            {
+                app.keyMap.keyDict[System.Windows.Input.Key.F24] = s;
+            }
+            
+            UpdateMainWindow();
+            UpdateSettingsButtonsContent();
+            ActionCancelButtonClicked(sender, e);
+        }
+
         private void ActionCancelButtonClicked(object sender, RoutedEventArgs e) {
             settingsActionFooter.Visibility = Visibility.Hidden;
             settingsFooter.Visibility = Visibility.Visible;
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 1;
             F24Settings.Opacity = 1;
+            selectAnAction.IsSelected = true;
         }
 
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
@@ -95,6 +144,7 @@ namespace bradpad {
         private void MainButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Visible;
             settingsPanel.Visibility = Visibility.Hidden;
+            UpdateMainWindow();
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e)

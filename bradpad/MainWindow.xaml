@@ -46,7 +46,9 @@
                         Background="#FF55B35A"
                         Click="F22SettingsClicked"
                         Grid.Column="0" 
-                        TextBlock.FontSize="32" />
+                        TextBlock.FontSize="32" >
+                    <TextBlock Name="F22SettingsCommand"></TextBlock>
+                </Button>
 
                 <Button Name="F23Settings"
                         HorizontalAlignment="Stretch"
@@ -54,7 +56,9 @@
                         Background="#FF559DB3"
                         Click="F23SettingsClicked"
                         Grid.Column="1" 
-                        TextBlock.FontSize="32" />
+                        TextBlock.FontSize="32" >
+                    <TextBlock Name="F23SettingsCommand"></TextBlock>
+                </Button>
 
                 <Button Name="F24Settings"
                         HorizontalAlignment="Stretch"
@@ -62,7 +66,9 @@
                         Background="#FFB5B7B3"
                         Click="F24SettingsClicked"
                         Grid.Column="2" 
-                        TextBlock.FontSize="32" />
+                        TextBlock.FontSize="32" >
+                    <TextBlock Name="F24SettingsCommand"></TextBlock>
+                </Button>
 
             </Grid>
 
@@ -124,14 +130,14 @@
                       Grid.Column="1"
                       Margin="16"
                       VerticalContentAlignment="Center">
-                    <ComboBoxItem IsSelected="True">Select an Action</ComboBoxItem>
-                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem Name ="selectAnAction" IsSelected="True">Select an Action</ComboBoxItem>
                 </ComboBox>
 
                 <Button Name="saveButton"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Margin="16"
+                        Click="ActionSubmitButtonClicked"
                         Content="Save"
                         Grid.Column="2" />
 
@@ -210,7 +216,7 @@
                         VerticalAlignment="Stretch"
                         Background="#FF55B35A"
                         Click="F22ButtonClicked"
-                        Content="Microsoft Word"
+                        
                         Grid.Column="0" 
                         TextBlock.FontSize="32" />
 
@@ -219,7 +225,7 @@
                         VerticalAlignment="Stretch"
                         Background="#FF559DB3"
                         Click="F23ButtonClicked"
-                        Content="Copy"
+                        
                         Grid.Column="1" 
                         TextBlock.FontSize="32" />
 
@@ -228,7 +234,7 @@
                         VerticalAlignment="Stretch"
                         Background="#FFB5B7B3"
                         Click="F24ButtonClicked"
-                        Content="Paste"
+                        
                         Grid.Column="2"
                         TextBlock.FontSize="32" />
 

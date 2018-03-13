@@ -21,40 +21,68 @@ namespace bradpad {
         internal const Key F22 = Key.F22;
         internal const Key F23 = Key.F23;
         internal const Key F24 = Key.F24;
-
+        public
         class KeyMap {
-            Dictionary<Key, bool> isApp = new Dictionary<Key, bool>() {
+            /*Dictionary<Key, bool> isApp = new Dictionary<Key, bool>() {
                 {F22, true},
                 {F23, false},
                 {F24, false},
+            };*/
+            public
+            Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
+                {F22, "Open Word"},
+                {F23, "Copy"},
+                {F24, "Paste"},
             };
-                Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
-                {F22, "winword.exe"},
-                {F23, "^c"},
-                {F24, "^v"},
+
+            //Command name, plus pair of command and whether it is an App
+            public
+            Dictionary<string, Tuple<string, bool>> allCommands = new Dictionary<string, Tuple<string, bool>>()
+            {
+                {"Open Word", Tuple.Create("winword.exe", true)},
+                {"Copy", Tuple.Create("^c", false)},
+                {"Paste", Tuple.Create("^v", false)},
+                {"Open Chrome", Tuple.Create("chrome.exe", true)},
+                {"New Tab", Tuple.Create("^t", false)},
             };
+            public
+            List<string> unListedCommands = new List<string>()
+            {
+                {"Open Word"},
+                {"Copy"},
+                {"Paste"},
+                {"Open Chrome"},
+                {"New Tab"},
+            };
+
 
             internal bool ContainsKey(Key key) {
                 return key == F22 || key == F23 || key == F24;
             }
 
             internal string GetVal(Key key) {
-                return keyDict[key];
+                return allCommands[keyDict[key]].Item1;
             }
 
             internal bool IsApp(Key key) {
-                return isApp[key];
+                return allCommands[keyDict[key]].Item2;
             }
 
-            internal void SetMapping(Key key, string val, bool appFlag) {
-                isApp[key] = appFlag;
-                keyDict[key] = val;
+            internal void AddCommand(string name, string val, bool appFlag) {
+                unListedCommands.Add(name);
+                allCommands[name] = Tuple.Create(val, appFlag);
+            }
+            internal void SetShortcut(Key key, string name)
+            {
+                keyDict[key] = name;
             }
         }
 
 
         // We want member variable dictionaries rather than a functions so we can change the mappings at runtime.
+        public
         KeyMap keyMap = new KeyMap();
+        
         KeyboardListener KListener = new KeyboardListener();
 
 
@@ -63,8 +91,8 @@ namespace bradpad {
             SendKeyPress(key);
         }
 
-        internal void SetMapping(Key key, string val, bool appFlag) {
-            keyMap.SetMapping(key, val, appFlag);
+        internal void AddCommand(string name, string val, bool appFlag) {
+            keyMap.AddCommand(name, val, appFlag);
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
@@ -113,17 +141,14 @@ namespace bradpad {
         }
 
         private void SendKeyPress(Key key) {
-            if (keyMap.IsApp(key)) {
+            if (keyMap.allCommands[keyMap.keyDict[key]].Item2) {
                 try {
-                    Process.Start(keyMap.GetVal(key));
-                    //Process p = new Process();
-                    //p.StartInfo.FileName = keyMap.GetVal(key);
-                    //p.Start();
+                    Process.Start(keyMap.allCommands[keyMap.keyDict[key]].Item1);
                 } catch {
                     Console.WriteLine("Application opening error.");
                 }
             } else {
-                System.Windows.Forms.SendKeys.SendWait(keyMap.GetVal(key));
+                System.Windows.Forms.SendKeys.SendWait(keyMap.allCommands[keyMap.keyDict[key]].Item1);
             }
         }
     }
