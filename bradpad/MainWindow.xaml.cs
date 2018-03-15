@@ -79,11 +79,6 @@ namespace bradpad {
         }
 
         // Settings Panel
-        private void AddActionButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e)
         {
             string s = actionDropdown.Text;
@@ -169,21 +164,52 @@ namespace bradpad {
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }
 
+        private void RestoreDefaultForConfigScreen()
+        {
+            openAppCheckBox.IsChecked = false;
+            appSpecificCheckBox.IsChecked = false;
+            customInputTextBox.Text = "Enter Keyboard Shortcut";
+        }
+
+        private void AddActionButtonClick(object sender, RoutedEventArgs e)
+        {
+            RestoreDefaultForConfigScreen();
+            settingsActionFooter.Visibility = Visibility.Hidden;
+            settingsConfigureFooter.Visibility = Visibility.Visible;
+        }
+
         private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e)
         {
-
+            if (openAppCheckBox.IsChecked == true)
+            {
+                customInputTextBox.Text = "Enter Application";
+            }
+            else
+            {
+                customInputTextBox.Text = "Enter Keyboard Shortcut";
+            }
         }
 
         private void AppSpecificCheckBoxClicked(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void CustomInputClick(object sender, RoutedEventArgs e)
         {
-
+            customInputTextBox.Text = "";
         }
 
+        private void CancelCommandButtonClick(object sender, RoutedEventArgs e)
+        {
+            settingsConfigureFooter.Visibility = Visibility.Hidden;
+            settingsActionFooter.Visibility = Visibility.Visible;
+        }
+
+        private void AddCommandButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
         //private void appButtonClicked(object sender, RoutedEventArgs e)
         //{
         //    string t = addAppText.Text;
