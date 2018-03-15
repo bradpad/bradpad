@@ -7,10 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 using System.Diagnostics;
 
 namespace bradpad {
@@ -55,6 +57,27 @@ namespace bradpad {
             foreGroundCheckBox.IsChecked = Topmost;
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();
+        }
+
+        internal void HighlightButton(Key button, bool setPressed) {
+            Button pressedButton = null;
+            switch (button) {
+                case App.F22:
+                    pressedButton = F22;
+                    break;
+                case App.F23:
+                    pressedButton = F23;
+                    break;
+                case App.F24:
+                    pressedButton = F24;
+                    break;
+                default:
+                    // We should never enter this state.
+                    throw new Exception();
+            }
+
+            // Use reflection to make the button appear to be pressed on keypress.  Kind of hacky but I can't find a better way to do this.
+            typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(pressedButton, new object[] { setPressed });
         }
 
         // Main Panel

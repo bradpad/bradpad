@@ -108,39 +108,18 @@ namespace bradpad {
             KListener.Dispose();
         }
 
-        private void HighlightButton(Key button, bool setPressed) {
-            Button pressedButton = null;
-            switch (button) {
-                case F22:
-                    pressedButton = ((MainWindow)Current.MainWindow).F22;
-                    break;
-                case F23:
-                    pressedButton = ((MainWindow)Current.MainWindow).F23;
-                    break;
-                case F24:
-                    pressedButton = ((MainWindow)Current.MainWindow).F24;
-                    break;
-                default:
-                    // We should never enter this state.
-                    throw new Exception();
-            }
-
-            // Use reflection to make the button appear to be pressed on keypress.  Kind of hacky but I can't find a better way to do this.
-            typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(pressedButton, new object[] { setPressed });
-        }
-
         private void KListenerKeyDown(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
 
             if (keyMap.ContainsKey(args.Key)) {
-                HighlightButton(args.Key, true);
+                ((MainWindow)Current.MainWindow).HighlightButton(args.Key, true);
                 SendKeyPress(args.Key);
             }
         }
 
         private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
             if (keyMap.ContainsKey(args.Key)) {
-                HighlightButton(args.Key, false);
+                ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
             }
         }
 
