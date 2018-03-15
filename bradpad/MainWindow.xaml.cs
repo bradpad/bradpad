@@ -79,6 +79,11 @@ namespace bradpad {
         }
 
         // Settings Panel
+        private void AddActionButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e)
         {
             string s = actionDropdown.Text;
@@ -162,6 +167,21 @@ namespace bradpad {
             settingsActionFooter.Visibility = Visibility.Visible;
             //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
+        }
+
+        private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AppSpecificCheckBoxClicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CustomInputClick(object sender, RoutedEventArgs e)
+        {
+
         }
 
         //private void appButtonClicked(object sender, RoutedEventArgs e)
