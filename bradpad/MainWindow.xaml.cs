@@ -79,35 +79,6 @@ namespace bradpad {
         }
 
         // Settings Panel
-        private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e)
-        {
-            string s = actionDropdown.Text;
-
-            if(F22Settings.Opacity == 1) {
-                app.SetAction(App.F22, s);
-            }
-
-            if (F23Settings.Opacity == 1) {
-                app.SetAction(App.F23, s);
-            }
-
-            if (F24Settings.Opacity == 1) {
-                app.SetAction(App.F23, s);
-            }
-            
-            UpdateMainWindow();
-            UpdateSettingsButtonsContent();
-            ReturnToSettings(sender, e);
-        }
-
-        private void ReturnToSettings(object sender, RoutedEventArgs e) {
-            settingsActionFooter.Visibility = Visibility.Hidden;
-            settingsFooter.Visibility = Visibility.Visible;
-            F22Settings.Opacity = 1;
-            F23Settings.Opacity = 1;
-            F24Settings.Opacity = 1;
-        }
-
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 0.2;
@@ -129,6 +100,55 @@ namespace bradpad {
             ShowActionFooter();
         }
 
+        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
+            Topmost = (bool)foreGroundCheckBox.IsChecked;
+        }
+
+        private void HelpButtonClicked(object sender, RoutedEventArgs e) {
+            MessageBox.Show(tutorialText, tutorialCaption);
+        }
+
+        private void MainButtonClicked(object sender, RoutedEventArgs e) {
+            mainPanel.Visibility = Visibility.Visible;
+            settingsPanel.Visibility = Visibility.Hidden;
+            UpdateMainWindow();
+        }
+
+        private void ShowActionFooter() {
+            settingsActionFooter.Visibility = Visibility.Visible;
+            settingsFooter.Visibility = Visibility.Hidden;
+            settingsConfigureFooter.Visibility = Visibility.Hidden;
+            //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
+            //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
+        }
+
+        // settingsActionFooter
+        private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e) {
+            string s = actionDropdown.Text;
+
+            if (F22Settings.Opacity == 1) {
+                app.SetAction(App.F22, s);
+            }
+
+            if (F23Settings.Opacity == 1) {
+                app.SetAction(App.F23, s);
+            }
+
+            if (F24Settings.Opacity == 1) {
+                app.SetAction(App.F23, s);
+            }
+
+            UpdateMainWindow();
+            UpdateSettingsButtonsContent();
+            ReturnToSettings(sender, e);
+        }
+
+        private void AddActionButtonClick(object sender, RoutedEventArgs e) {
+            RestoreDefaultForConfigScreen();
+            settingsActionFooter.Visibility = Visibility.Hidden;
+            settingsConfigureFooter.Visibility = Visibility.Visible;
+        }
+
         private void FillDropDownCommands() {
             actionDropdown.Items.Clear();
             ComboBoxItem selectAnAction = new ComboBoxItem();
@@ -142,99 +162,43 @@ namespace bradpad {
             }
         }
 
-        private void MainButtonClicked(object sender, RoutedEventArgs e) {
-            mainPanel.Visibility = Visibility.Visible;
-            settingsPanel.Visibility = Visibility.Hidden;
-            UpdateMainWindow();
+        private void ReturnToSettings(object sender, RoutedEventArgs e) {
+            settingsActionFooter.Visibility = Visibility.Hidden;
+            settingsFooter.Visibility = Visibility.Visible;
+            F22Settings.Opacity = 1;
+            F23Settings.Opacity = 1;
+            F24Settings.Opacity = 1;
         }
 
-        private void HelpButtonClicked(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(tutorialText, tutorialCaption);
-        }
-        
-        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
-            Topmost = (bool)foreGroundCheckBox.IsChecked;
+        // settingsConfigureFooter
+        private void AppSpecificCheckBoxClicked(object sender, RoutedEventArgs e) {
+
         }
 
-        private void ShowActionFooter() {
-            settingsFooter.Visibility = Visibility.Hidden;
-            settingsActionFooter.Visibility = Visibility.Visible;
-            //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
-            //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
+        private void CancelNewActionButtonClick(object sender, RoutedEventArgs e) {
+            ShowActionFooter();
         }
 
-        private void RestoreDefaultForConfigScreen()
-        {
+        private void CustomInputClick(object sender, RoutedEventArgs e) {
+            customInputTextBox.Text = "";
+        }
+
+        private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e) {
+            if (openAppCheckBox.IsChecked == true) {
+                customInputTextBox.Text = "Enter Application";
+            } else {
+                customInputTextBox.Text = "Enter Keyboard Shortcut";
+            }
+        }
+
+        private void RestoreDefaultForConfigScreen() {
             openAppCheckBox.IsChecked = false;
             appSpecificCheckBox.IsChecked = false;
             customInputTextBox.Text = "Enter Keyboard Shortcut";
         }
 
-        private void AddActionButtonClick(object sender, RoutedEventArgs e)
-        {
-            RestoreDefaultForConfigScreen();
-            settingsActionFooter.Visibility = Visibility.Hidden;
-            settingsConfigureFooter.Visibility = Visibility.Visible;
-        }
-
-        private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e)
-        {
-            if (openAppCheckBox.IsChecked == true)
-            {
-                customInputTextBox.Text = "Enter Application";
-            }
-            else
-            {
-                customInputTextBox.Text = "Enter Keyboard Shortcut";
-            }
-        }
-
-        private void AppSpecificCheckBoxClicked(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void CustomInputClick(object sender, RoutedEventArgs e)
-        {
-            customInputTextBox.Text = "";
-        }
-
-        private void CancelCommandButtonClick(object sender, RoutedEventArgs e)
-        {
-            settingsConfigureFooter.Visibility = Visibility.Hidden;
-            settingsActionFooter.Visibility = Visibility.Visible;
-        }
-
-        private void AddCommandButtonClick(object sender, RoutedEventArgs e)
-        {
+        private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
 
         }
-        //private void appButtonClicked(object sender, RoutedEventArgs e)
-        //{
-        //    string t = addAppText.Text;
-        //    string tt = addAppLocation.Text;
-        //    addAppText.Text = "Enter Application Name";
-        //    addAppLocation.Text = "Enter Application Location";
-        //    app.SetMapping(App.F22, tt, true);
-        //    F22.Content = t;
-        //    //applicationInfo[t] = tt;
-        //    addAppLocation.GotFocus += TextBox_GotFocus;
-        //    addAppText.GotFocus += TextBox_GotFocus;
-        //    currentName.Text = "Current Application Name: " + t;
-        //    currentLocation.Text = "Current Application Location: " + tt;
-        //}
-
-        //private void applicationsButtonClick(object sender, RoutedEventArgs e)
-        //{
-        //    applicationsPanel.Visibility = Visibility.Visible;
-        //    settingsPanel.Visibility = Visibility.Hidden;
-        //}
-
-        //public void TextBox_GotFocus(object sender, RoutedEventArgs e) {
-        //    TextBox tb = (TextBox)sender;
-        //    tb.Text = string.Empty;
-        //    tb.GotFocus -= TextBox_GotFocus;
-        //}
     }
 }

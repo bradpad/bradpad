@@ -28,8 +28,10 @@
                       Grid.Row="0"
                       Margin="12"
                       VerticalContentAlignment="Center">
-                <ComboBoxItem IsSelected="True">Select an Application</ComboBoxItem>
-                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem Content="Select an Application"
+                              IsSelected="True"
+                              Visibility="Collapsed" />
+                <ComboBoxItem Content="1"/>
             </ComboBox>
 
             <Grid Grid.Row="1">
@@ -114,7 +116,6 @@
             <Grid Name="settingsActionFooter"
                   Grid.Row="2"
                   Visibility="Hidden">
-                
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -125,7 +126,7 @@
 
                 <Button Name="addActionButton"
                         Content="Add Action"
-                        Margin="16,10"
+                        Margin="16"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Click="AddActionButtonClick"/>
@@ -157,7 +158,7 @@
             <Grid Name="settingsConfigureFooter"
                   Grid.Row="2"
                   Visibility="Hidden">
-                
+
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width=".5*" />
                     <ColumnDefinition Width=".5*" />
@@ -168,32 +169,30 @@
 
                 <Button Name="savePermanentButton"
                         Margin="16"
-                        Content="Save Permanent"
-                        Grid.Column="0">
-                    
-                </Button>
+                        Content="Save Action Permanently"
+                        Grid.Column="0" />
 
                 <Grid Grid.Column="1">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height ="1*"/>
                         <RowDefinition Height ="1*"/>
                     </Grid.RowDefinitions>
+
                     <CheckBox Name="openAppCheckBox"
                               Grid.Row="0"
                               VerticalAlignment="Center"
                               Click="OpenAppCheckBoxClicked"
                               Content="Open App"
-                              IsChecked="False">
-                        
-                    </CheckBox>
+                              IsChecked="False" />
+
                     <CheckBox Name="appSpecificCheckBox"
                               Grid.Row="1"
                               VerticalAlignment="Center"
                               Click="AppSpecificCheckBoxClicked"
                               Content="App Specific"
-                              IsChecked="False">
+                              IsChecked="False" />
 
-                    </CheckBox>
                 </Grid>
 
                 <TextBox Name="customInputTextBox"
@@ -204,22 +203,19 @@
                            Text="..."
                            TextAlignment="Center"
                            FontSize="18"
-                           GotFocus="CustomInputClick">
-                    
-                </TextBox>
-                <Button Name="addCommandButton"
+                           GotFocus="CustomInputClick" />
+
+                <Button Name="saveNewActionButton"
                         Margin="16"
-                        Content="Add Command"
+                        Content="Save Action"
                         Grid.Column="3"
-                        Click="AddCommandButtonClick"/>
-                <Button Name="cancelCommandButton"
+                        Click="SaveNewActionButtonClick"/>
+
+                <Button Name="cancelNewActionButton"
                         Margin="16"
                         Content="Cancel"
                         Grid.Column="4"
-                        Click="CancelCommandButtonClick"/>
-
-
-
+                        Click="CancelNewActionButtonClick"/>
 
             </Grid>
 
@@ -288,7 +284,6 @@
                         VerticalAlignment="Stretch"
                         Background="#FF55B35A"
                         Click="F22ButtonClicked"
-                        
                         Grid.Column="0" 
                         TextBlock.FontSize="32" />
 
@@ -297,7 +292,6 @@
                         VerticalAlignment="Stretch"
                         Background="#FF559DB3"
                         Click="F23ButtonClicked"
-                        
                         Grid.Column="1" 
                         TextBlock.FontSize="32" />
 
@@ -306,7 +300,6 @@
                         VerticalAlignment="Stretch"
                         Background="#FFB5B7B3"
                         Click="F24ButtonClicked"
-                        
                         Grid.Column="2"
                         TextBlock.FontSize="32" />
 
