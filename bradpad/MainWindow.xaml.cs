@@ -59,6 +59,24 @@ namespace bradpad {
             UpdateMainWindow();
         }
 
+        public void SetActionFromDropDown(string s)
+        {
+            if (F22Settings.Opacity == 1)
+            {
+                app.SetAction(App.F22, s);
+            }
+
+            if (F23Settings.Opacity == 1)
+            {
+                app.SetAction(App.F23, s);
+            }
+
+            if (F24Settings.Opacity == 1)
+            {
+                app.SetAction(App.F24, s);
+            }
+        }
+
         internal void HighlightButton(Key button, bool setPressed) {
             Button pressedButton = null;
             switch (button) {
@@ -96,7 +114,7 @@ namespace bradpad {
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
-            FillDropDownCommands();
+            FillDropDownActions();
             UpdateSettingsButtonsContent();
             //applicationsPanel.Visibility = Visibility.Hidden;
         }
@@ -148,19 +166,7 @@ namespace bradpad {
         // settingsActionFooter
         private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e) {
             string s = actionDropdown.Text;
-
-            if (F22Settings.Opacity == 1) {
-                app.SetAction(App.F22, s);
-            }
-
-            if (F23Settings.Opacity == 1) {
-                app.SetAction(App.F23, s);
-            }
-
-            if (F24Settings.Opacity == 1) {
-                app.SetAction(App.F23, s);
-            }
-
+            SetActionFromDropDown(s);
             UpdateMainWindow();
             UpdateSettingsButtonsContent();
             ReturnToSettings(sender, e);
@@ -172,7 +178,7 @@ namespace bradpad {
             settingsConfigureFooter.Visibility = Visibility.Visible;
         }
 
-        private void FillDropDownCommands() {
+        private void FillDropDownActions() {
             actionDropdown.Items.Clear();
             ComboBoxItem selectAnAction = new ComboBoxItem();
             selectAnAction.Content = "Select an Action";
@@ -181,12 +187,16 @@ namespace bradpad {
             actionDropdown.Items.Add(selectAnAction);
             //((ComboBoxItem)actionDropdown.Items[0]).Visibility = Visibility.Collapsed;
             foreach (string action in App.ACTIONS) {
-                actionDropdown.Items.Add(action);
+                if (app.IsTemp(action) == false)
+                {
+                    actionDropdown.Items.Add(action);
+                }
             }
         }
 
         private void ReturnToSettings(object sender, RoutedEventArgs e) {
             settingsActionFooter.Visibility = Visibility.Hidden;
+            settingsConfigureFooter.Visibility = Visibility.Hidden;
             settingsFooter.Visibility = Visibility.Visible;
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 1;
@@ -220,8 +230,27 @@ namespace bradpad {
             customInputTextBox.Text = "Enter Keyboard Shortcut";
         }
 
-        private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
+        private void NewAction(bool temp)
+        {
+            string name = customInputTextBox.Text;
+            string action = customInputTextBox.Text;
+            app.AddAction(name, action, openAppCheckBox.IsChecked == true);
+            app.AddTemp(name, temp);
+            SetActionFromDropDown(name);
+            UpdateMainWindow();
+            UpdateSettingsButtonsContent();
+            FillDropDownActions();
+            
+        }
 
+        private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
+            NewAction(true);
+            ReturnToSettings(sender, e);
+        }
+
+        private void SavePermanentButtonClick(object sender, RoutedEventArgs e){
+            NewAction(false);
+            ReturnToSettings(sender, e);
         }
     }
 }
