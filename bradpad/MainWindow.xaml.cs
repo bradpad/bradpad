@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace bradpad {
     /// <summary>
@@ -22,6 +23,21 @@ namespace bradpad {
     public partial class MainWindow : Window {
 
         private App app = ((App)Application.Current);
+
+        private const uint WINEVENT_OUTOFCONTEXT = 0;
+        private const uint EVENT_SYSTEM_FOREGROUND = 3;
+        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        static WinEventDelegate dele = null;
+        static IntPtr m_hhook;
+        private static string currentApplication = "";
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
@@ -39,6 +55,46 @@ namespace bradpad {
                 "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
                 "5. The process can be repeated to change the desired application.";
 
+        private static void SetUpApplicationDetector()
+        {
+            dele = new WinEventDelegate(WinEventProc);
+            m_hhook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
+        }
+
+        public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
+        {
+            string newApplication = GetActiveWindowTitle();
+            if (newApplication == null)
+            {
+                return;
+            }
+            if (newApplication.Contains("-"))
+            {
+                string[] newApplicationSplit = newApplication.Split('-');
+                newApplication = newApplicationSplit[newApplicationSplit.Length - 1].Trim();
+            }
+            if (newApplication != currentApplication)
+            {
+                currentApplication = newApplication;
+                Console.WriteLine("Current app: " + currentApplication);
+            }
+            // some kind of switch function that will update buttons based on currentApplication
+        }
+
+        private static string GetActiveWindowTitle()
+        {
+            const int nChars = 512;
+            IntPtr handle = IntPtr.Zero;
+            StringBuilder Buff = new StringBuilder(nChars);
+            handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
+        }
+
         public void UpdateMainWindow()
         {
             F22.Content = app.GetAction(App.F22);
@@ -55,6 +111,7 @@ namespace bradpad {
         public MainWindow() {
             InitializeComponent();
             foreGroundCheckBox.IsChecked = Topmost;
+            SetUpApplicationDetector();
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();
         }
