@@ -164,6 +164,8 @@ namespace bradpad {
         // Detect Active Window
         private const uint WINEVENT_OUTOFCONTEXT = 0;
         private const uint EVENT_SYSTEM_FOREGROUND = 3;
+        private const uint EVENT_SYSTEM_MINIMIZESTART = 22;
+        private const uint EVENT_SYSTEM_MINIMIZEEND = 23;
         delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
         [DllImport("user32.dll")]
@@ -175,13 +177,17 @@ namespace bradpad {
         [DllImport("user32.dll")]
         static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
-        static WinEventDelegate dele = null;
-        static IntPtr m_hhook;
+        static WinEventDelegate dele0 = null;
+        static WinEventDelegate dele1 = null;
+        static IntPtr m_hhook0;
+        static IntPtr m_hhook1;
         private static string currentApplication = "";
 
         public static void SetUpApplicationDetector() {
-            dele = new WinEventDelegate(WinEventProc);
-            m_hhook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
+            dele0 = new WinEventDelegate(WinEventProc);
+            dele1 = new WinEventDelegate(WinEventProc);
+            m_hhook0 = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele0, 0, 0, WINEVENT_OUTOFCONTEXT);
+            m_hhook1 = SetWinEventHook(EVENT_SYSTEM_MINIMIZEEND, EVENT_SYSTEM_MINIMIZEEND, IntPtr.Zero, dele1, 0, 0, WINEVENT_OUTOFCONTEXT);
         }
 
         public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
