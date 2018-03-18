@@ -32,21 +32,6 @@ namespace bradpad {
         internal const Key F23 = Key.F23;
         internal const Key F24 = Key.F24;
 
-        private const uint WINEVENT_OUTOFCONTEXT = 0;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3;
-        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-        static WinEventDelegate dele = null;
-        static IntPtr m_hhook;
-        private static string currentApplication = "";
-
         class KeyMap {
             Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
                 {F22, "Open Word"},
@@ -180,6 +165,25 @@ namespace bradpad {
             }
         }
 
+
+        // Detect Active Window
+        private const uint WINEVENT_OUTOFCONTEXT = 0;
+        private const uint EVENT_SYSTEM_FOREGROUND = 3;
+        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
+        [DllImport("user32.dll")]
+        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+
+        static WinEventDelegate dele = null;
+        static IntPtr m_hhook;
+        private static string currentApplication = "";
+
         public static void SetUpApplicationDetector()
         {
             dele = new WinEventDelegate(WinEventProc);
@@ -188,7 +192,7 @@ namespace bradpad {
 
         public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
         {
-            string newApplication = GetActiveWindowTitle();
+            string newApplication = GetActiveProcessName();
             if (newApplication == null)
             {
                 return;
@@ -206,18 +210,18 @@ namespace bradpad {
             // some kind of switch function that will update buttons based on currentApplication
         }
 
-        private static string GetActiveWindowTitle()
+        private static string GetActiveProcessName()
         {
             const int nChars = 512;
             IntPtr handle = IntPtr.Zero;
             StringBuilder Buff = new StringBuilder(nChars);
             handle = GetForegroundWindow();
 
-            if (GetWindowText(handle, Buff, nChars) > 0)
-            {
-                return Buff.ToString();
-            }
-            return null;
+            uint pid;
+            GetWindowThreadProcessId(handle, out pid);
+            Process p = Process.GetProcessById((int)pid);
+
+            return p.MainModule.FileName;
         }
     }
 }
