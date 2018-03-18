@@ -9,6 +9,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
 
 using Ownskit.Utils;
 
@@ -29,6 +31,21 @@ namespace bradpad {
         internal const Key F22 = Key.F22;
         internal const Key F23 = Key.F23;
         internal const Key F24 = Key.F24;
+
+        private const uint WINEVENT_OUTOFCONTEXT = 0;
+        private const uint EVENT_SYSTEM_FOREGROUND = 3;
+        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+        [DllImport("user32.dll")]
+        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+
+        static WinEventDelegate dele = null;
+        static IntPtr m_hhook;
+        private static string currentApplication = "";
 
         class KeyMap {
             Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
@@ -161,6 +178,46 @@ namespace bradpad {
             } else {
                 System.Windows.Forms.SendKeys.SendWait(keyMap.GetVal(key));
             }
+        }
+
+        public static void SetUpApplicationDetector()
+        {
+            dele = new WinEventDelegate(WinEventProc);
+            m_hhook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
+        }
+
+        public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
+        {
+            string newApplication = GetActiveWindowTitle();
+            if (newApplication == null)
+            {
+                return;
+            }
+            if (newApplication.Contains("-"))
+            {
+                string[] newApplicationSplit = newApplication.Split('-');
+                newApplication = newApplicationSplit[newApplicationSplit.Length - 1].Trim();
+            }
+            if (newApplication != currentApplication)
+            {
+                currentApplication = newApplication;
+                Console.WriteLine("Current app: " + currentApplication);
+            }
+            // some kind of switch function that will update buttons based on currentApplication
+        }
+
+        private static string GetActiveWindowTitle()
+        {
+            const int nChars = 512;
+            IntPtr handle = IntPtr.Zero;
+            StringBuilder Buff = new StringBuilder(nChars);
+            handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
         }
     }
 }

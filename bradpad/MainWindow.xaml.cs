@@ -24,21 +24,6 @@ namespace bradpad {
 
         private App app = ((App)Application.Current);
 
-        private const uint WINEVENT_OUTOFCONTEXT = 0;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3;
-        delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll")]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
-
-        static WinEventDelegate dele = null;
-        static IntPtr m_hhook;
-        private static string currentApplication = "";
-
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
                 "Welcome to the alpha release of bradpad! Right now, this product is designed to be able to open Microsoft Word and execute copy and paste instructions. The buttons on the Arduino hardware act as pedals. A step-by-step tutorial is below. In the upcoming releases, we hope to increase functionality and allow users to add custom commands. We hope you enjoy!\n\n" +
@@ -54,46 +39,6 @@ namespace bradpad {
                 "3. Enter the application location. This can be found by opening the application location through file explorer, and right clicking the address. Copy this and paste it into the application where it says \"Enter Application Location\".\n" +
                 "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
                 "5. The process can be repeated to change the desired application.";
-
-        private static void SetUpApplicationDetector()
-        {
-            dele = new WinEventDelegate(WinEventProc);
-            m_hhook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
-        }
-
-        public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
-        {
-            string newApplication = GetActiveWindowTitle();
-            if (newApplication == null)
-            {
-                return;
-            }
-            if (newApplication.Contains("-"))
-            {
-                string[] newApplicationSplit = newApplication.Split('-');
-                newApplication = newApplicationSplit[newApplicationSplit.Length - 1].Trim();
-            }
-            if (newApplication != currentApplication)
-            {
-                currentApplication = newApplication;
-                Console.WriteLine("Current app: " + currentApplication);
-            }
-            // some kind of switch function that will update buttons based on currentApplication
-        }
-
-        private static string GetActiveWindowTitle()
-        {
-            const int nChars = 512;
-            IntPtr handle = IntPtr.Zero;
-            StringBuilder Buff = new StringBuilder(nChars);
-            handle = GetForegroundWindow();
-
-            if (GetWindowText(handle, Buff, nChars) > 0)
-            {
-                return Buff.ToString();
-            }
-            return null;
-        }
 
         public void UpdateMainWindow()
         {
@@ -111,7 +56,7 @@ namespace bradpad {
         public MainWindow() {
             InitializeComponent();
             foreGroundCheckBox.IsChecked = Topmost;
-            SetUpApplicationDetector();
+            App.SetUpApplicationDetector();
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();
         }
