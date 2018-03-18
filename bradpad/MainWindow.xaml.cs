@@ -40,8 +40,7 @@ namespace bradpad {
                 "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
                 "5. The process can be repeated to change the desired application.";
 
-        public void UpdateMainWindow()
-        {
+        public void UpdateMainWindow() {
             F22.Content = app.GetAction(App.F22);
             F23.Content = app.GetAction(App.F23);
             F24.Content = app.GetAction(App.F24);
@@ -61,20 +60,16 @@ namespace bradpad {
             UpdateMainWindow();
         }
 
-        public void SetActionFromDropDown(string s)
-        {
-            if (F22Settings.Opacity == 1)
-            {
+        public void SetActionFromDropDown(string s) {
+            if (F22Settings.Opacity == 1) {
                 app.SetAction(App.F22, s);
             }
 
-            if (F23Settings.Opacity == 1)
-            {
+            if (F23Settings.Opacity == 1) {
                 app.SetAction(App.F23, s);
             }
 
-            if (F24Settings.Opacity == 1)
-            {
+            if (F24Settings.Opacity == 1) {
                 app.SetAction(App.F24, s);
             }
         }
@@ -189,8 +184,7 @@ namespace bradpad {
             actionDropdown.Items.Add(selectAnAction);
             //((ComboBoxItem)actionDropdown.Items[0]).Visibility = Visibility.Collapsed;
             foreach (string action in App.ACTIONS) {
-                if (app.IsTemp(action) == false)
-                {
+                if (app.IsTemp(action) == false) {
                     actionDropdown.Items.Add(action);
                 }
             }
@@ -232,8 +226,7 @@ namespace bradpad {
             customInputTextBox.Text = "Enter Keyboard Shortcut";
         }
 
-        private void NewAction(bool temp)
-        {
+        private void NewAction(bool temp) {
             string name = customInputTextBox.Text;
             string action = customInputTextBox.Text;
             app.AddAction(name, action, openAppCheckBox.IsChecked == true);
@@ -242,7 +235,7 @@ namespace bradpad {
             UpdateMainWindow();
             UpdateSettingsButtonsContent();
             FillDropDownActions();
-            
+
         }
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
@@ -250,7 +243,7 @@ namespace bradpad {
             ReturnToSettings(sender, e);
         }
 
-        private void SavePermanentButtonClick(object sender, RoutedEventArgs e){
+        private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
             NewAction(false);
             ReturnToSettings(sender, e);
         }

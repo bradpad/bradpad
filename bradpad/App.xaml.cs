@@ -70,7 +70,7 @@ namespace bradpad {
             internal string GetAction(Key key) {
                 return keyDict[key];
             }
-            
+
             internal string GetVal(Key key) {
                 return allActions[keyDict[key]].Item1;
             }
@@ -79,18 +79,15 @@ namespace bradpad {
                 return allActions[keyDict[key]].Item2;
             }
 
-            internal void AddTemp(string name, bool temp)
-            {
+            internal void AddTemp(string name, bool temp) {
                 tempActions[name] = temp;
             }
 
-            internal bool IsTemp(string s)
-            {
+            internal bool IsTemp(string s) {
                 return tempActions[s];
             }
 
-            internal void SetAction(Key key, string val)
-            {
+            internal void SetAction(Key key, string val) {
                 keyDict[key] = val;
             }
         }
@@ -115,13 +112,11 @@ namespace bradpad {
             return keyMap.GetAction(key);
         }
 
-        internal void AddTemp(string name, bool temp)
-        {
+        internal void AddTemp(string name, bool temp) {
             keyMap.AddTemp(name, temp);
         }
 
-        internal bool IsTemp(string s)
-        {
+        internal bool IsTemp(string s) {
             return keyMap.IsTemp(s);
         }
 
@@ -184,8 +179,7 @@ namespace bradpad {
         static IntPtr m_hhook;
         private static string currentApplication = "";
 
-        public static void SetUpApplicationDetector()
-        {
+        public static void SetUpApplicationDetector() {
             dele = new WinEventDelegate(WinEventProc);
             m_hhook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele, 0, 0, WINEVENT_OUTOFCONTEXT);
         }
@@ -193,25 +187,21 @@ namespace bradpad {
         public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
         {
             string newApplication = GetActiveProcessName();
-            if (newApplication == null)
-            {
+            if (newApplication == null) {
                 return;
             }
-            if (newApplication.Contains("-"))
-            {
+            if (newApplication.Contains("-")) {
                 string[] newApplicationSplit = newApplication.Split('-');
                 newApplication = newApplicationSplit[newApplicationSplit.Length - 1].Trim();
             }
-            if (newApplication != currentApplication)
-            {
+            if (newApplication != currentApplication) {
                 currentApplication = newApplication;
                 Console.WriteLine("Current app: " + currentApplication);
             }
             // some kind of switch function that will update buttons based on currentApplication
         }
 
-        private static string GetActiveProcessName()
-        {
+        private static string GetActiveProcessName() {
             const int nChars = 512;
             IntPtr handle = IntPtr.Zero;
             StringBuilder Buff = new StringBuilder(nChars);
