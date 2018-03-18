@@ -211,7 +211,11 @@ namespace bradpad {
             GetWindowThreadProcessId(handle, out pid);
             Process p = Process.GetProcessById((int)pid);
 
-            return p.MainModule.FileName;
+            try {
+                return p.MainModule.FileName;
+            } catch (System.ComponentModel.Win32Exception) {
+                return null;
+            }
         }
     }
 }
