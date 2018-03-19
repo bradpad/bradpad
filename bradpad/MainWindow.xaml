@@ -25,13 +25,15 @@
 
             <ComboBox Name="appDropdown"
                       HorizontalAlignment="Center"
+                      DropDownClosed="appDropdownClosed"
                       Grid.Row="0"
                       Margin="12"
                       VerticalContentAlignment="Center">
                 <ComboBoxItem Content="Select an Application"
                               IsSelected="True"
                               Visibility="Collapsed" />
-                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="C:\WINDOWS\Explorer.EXE"/>
+                <ComboBoxItem Content="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"/>
             </ComboBox>
 
             <Grid Grid.Row="1">
@@ -143,6 +145,7 @@
                         Margin="16"
                         Click="ActionSubmitButtonClicked"
                         Content="Save"
+                        IsEnabled="False"
                         Grid.Column="2" />
 
                 <Button Name="cancelButton"

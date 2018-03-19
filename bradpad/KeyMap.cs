@@ -33,22 +33,11 @@ namespace bradpad {
                 {"New Tab", Tuple.Create("^t", false)},
             };
 
-        Dictionary<string, bool> tempActions = new Dictionary<string, bool>()
-        {
-                {"Open Word", false},
-                {"Copy", false},
-                {"Paste", false },
-                {"Open Chrome", false},
-                {"New Tab", false},
-            };
+        List<string> tempActions = new List<string>();
 
         internal void AddAction(string name, string val, bool appFlag) {
             actions.Add(name);
             allActions[name] = Tuple.Create(val, appFlag);
-        }
-
-        internal bool ContainsKey(Key key) {
-            return key == App.F22 || key == App.F23 || key == App.F24;
         }
 
         internal string GetAction(Key key) {
@@ -56,7 +45,7 @@ namespace bradpad {
         }
 
         internal List<string> GetActions() {
-            return actions;
+            return actions.Except(tempActions).ToList();
         }
 
         internal string GetVal(Key key) {
@@ -67,16 +56,12 @@ namespace bradpad {
             return allActions[keyDict[key]].Item2;
         }
 
-        internal void AddTemp(string name, bool temp) {
-            tempActions[name] = temp;
+        internal void AddTempAction(string name, bool temp) {
+            tempActions.Add(name);
         }
 
-        internal bool IsTemp(string s) {
-            return tempActions[s];
-        }
-
-        internal void SetAction(Key key, string val) {
-            keyDict[key] = val;
+        internal void SetAction(Key key, string action) {
+            keyDict[key] = action;
         }
     }
 }

@@ -161,18 +161,22 @@ namespace bradpad {
             settingsConfigureFooter.Visibility = Visibility.Visible;
         }
 
+        private void appDropdownClosed(object sender, EventArgs e) {
+            // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
+            if (appDropdown.Text != "Select an Application") {
+                saveButton.IsEnabled = true;
+            }
+        }
+
         private void FillDropDownActions() {
             actionDropdown.Items.Clear();
-            ComboBoxItem selectAnAction = new ComboBoxItem();
-            selectAnAction.Content = "Select an Action";
-            selectAnAction.IsSelected = true;
-            selectAnAction.Visibility = Visibility.Collapsed;
-            actionDropdown.Items.Add(selectAnAction);
-            //((ComboBoxItem)actionDropdown.Items[0]).Visibility = Visibility.Collapsed;
+            actionDropdown.Items.Add(new ComboBoxItem {
+                Content = "Select an Action",
+                IsSelected = true,
+                Visibility = Visibility.Collapsed
+            });
             foreach (string action in app.GetActions()) {
-                if (app.IsTemp(action) == false) {
-                    actionDropdown.Items.Add(action);
-                }
+                actionDropdown.Items.Add(action);
             }
         }
 
@@ -213,10 +217,13 @@ namespace bradpad {
         }
 
         private void NewAction(bool temp) {
+            string actionApp = appDropdown.Text;
             string name = customInputTextBox.Text;
             string action = customInputTextBox.Text;
-            app.AddAction(name, action, openAppCheckBox.IsChecked == true);
-            app.AddTemp(name, temp);
+            app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true);
+            if (temp) {
+                app.AddTempAction(actionApp, name, temp);
+            }
             SetActionFromDropDown(name);
             UpdateMainWindow();
             UpdateSettingsButtonsContent();
@@ -234,17 +241,17 @@ namespace bradpad {
             ReturnToSettings(sender, e);
         }
 
-        private void SetActionFromDropDown(string s) {
+        private void SetActionFromDropDown(string action) {
             if (F22Settings.Opacity == 1) {
-                app.SetAction(App.F22, s);
+                app.SetAction(appDropdown.Text, App.F22, action);
             }
 
             if (F23Settings.Opacity == 1) {
-                app.SetAction(App.F23, s);
+                app.SetAction(appDropdown.Text, App.F23, action);
             }
 
             if (F24Settings.Opacity == 1) {
-                app.SetAction(App.F24, s);
+                app.SetAction(appDropdown.Text, App.F24, action);
             }
         }
     }

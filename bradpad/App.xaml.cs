@@ -23,14 +23,12 @@ namespace bradpad {
         internal const Key F23 = Key.F23;
         internal const Key F24 = Key.F24;
 
-        Dictionary<string, KeyMap> appActions = new Dictionary<string, KeyMap>() {
+        AppActions appActions = new AppActions(new Dictionary<string, KeyMap>() {
             {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
             {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
-        };
-        string currentApplication = @"C:\WINDOWS\Explorer.EXE";
-        KeyMap keyMap = new KeyMap();
+        });
+        //KeyMap keyMap = new KeyMap();
         KeyboardListener KListener = new KeyboardListener();
-        MainWindow mainWindow = ((MainWindow)Current.MainWindow);
 
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
@@ -38,34 +36,30 @@ namespace bradpad {
             SendKeyPress(key);
         }
 
-        internal void AddAction(string name, string val, bool appFlag) {
-            keyMap.AddAction(name, val, appFlag);
+        internal void AddAction(string app, string name, string val, bool appFlag) {
+            appActions.AddAction(app, name, val, appFlag);
         }
 
         internal string GetAction(Key key) {
-            return keyMap.GetAction(key);
+            return appActions.GetAction(key);
         }
 
         internal List<string> GetActions() {
-            return keyMap.GetActions();
+            return appActions.GetActions();
         }
 
-        internal void SetAction(Key key, string action) {
-            keyMap.SetAction(key, action);
+        internal void SetAction(string app, Key key, string action) {
+            appActions.SetAction(app, key, action);
         }
 
-        internal void AddTemp(string name, bool temp) {
-            keyMap.AddTemp(name, temp);
+        internal void AddTempAction(string app, string name, bool temp) {
+            appActions.AddTempAction(app, name, temp);
         }
 
-        internal bool IsTemp(string s) {
-            return keyMap.IsTemp(s);
-        }
-
-        internal void SetCurrentApplication(string currentApp) {
-            currentApplication = currentApp;
-            mainWindow.UpdateMainWindow();
-            mainWindow.UpdateSettingsButtonsContent();
+        internal void SetCurrentApplication(string currentApplicationIn) {
+            appActions.SetCurrentApplication(currentApplicationIn);
+            ((MainWindow)Current.MainWindow).UpdateMainWindow();
+            ((MainWindow)Current.MainWindow).UpdateSettingsButtonsContent();
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
@@ -80,27 +74,27 @@ namespace bradpad {
         private void KListenerKeyDown(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
 
-            if (keyMap.ContainsKey(args.Key)) {
-                mainWindow.HighlightButton(args.Key, true);
+            if (appActions.ContainsKey(args.Key)) {
+                ((MainWindow)Current.MainWindow).HighlightButton(args.Key, true);
                 SendKeyPress(args.Key);
             }
         }
 
         private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
-            if (keyMap.ContainsKey(args.Key)) {
-                mainWindow.HighlightButton(args.Key, false);
+            if (appActions.ContainsKey(args.Key)) {
+                ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
             }
         }
 
         private void SendKeyPress(Key key) {
-            if (keyMap.IsApp(key)) {
+            if (appActions.IsApp(key)) {
                 try {
-                    Process.Start(keyMap.GetVal(key));
+                    Process.Start(appActions.GetVal(key));
                 } catch {
                     Console.WriteLine("Application opening error.");
                 }
             } else {
-                System.Windows.Forms.SendKeys.SendWait(keyMap.GetVal(key));
+                System.Windows.Forms.SendKeys.SendWait(appActions.GetVal(key));
             }
         }
     }
