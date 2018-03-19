@@ -183,7 +183,7 @@ namespace bradpad {
             selectAnAction.Visibility = Visibility.Collapsed;
             actionDropdown.Items.Add(selectAnAction);
             //((ComboBoxItem)actionDropdown.Items[0]).Visibility = Visibility.Collapsed;
-            foreach (string action in App.ACTIONS) {
+            foreach (string action in app.GetActions()) {
                 if (app.IsTemp(action) == false) {
                     actionDropdown.Items.Add(action);
                 }
