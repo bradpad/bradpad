@@ -40,38 +40,12 @@ namespace bradpad {
                 "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
                 "5. The process can be repeated to change the desired application.";
 
-        public void UpdateMainWindow() {
-            F22.Content = app.GetAction(App.F22);
-            F23.Content = app.GetAction(App.F23);
-            F24.Content = app.GetAction(App.F24);
-        }
-
-        public void UpdateSettingsButtonsContent() {
-            F22Settings.Content = app.GetAction(App.F22);
-            F23Settings.Content = app.GetAction(App.F23);
-            F24Settings.Content = app.GetAction(App.F24);
-        }
-
         public MainWindow() {
             InitializeComponent();
+            ActiveAppDetector.SetUpApplicationDetector();
             foreGroundCheckBox.IsChecked = Topmost;
-            App.SetUpApplicationDetector();
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();
-        }
-
-        public void SetActionFromDropDown(string s) {
-            if (F22Settings.Opacity == 1) {
-                app.SetAction(App.F22, s);
-            }
-
-            if (F23Settings.Opacity == 1) {
-                app.SetAction(App.F23, s);
-            }
-
-            if (F24Settings.Opacity == 1) {
-                app.SetAction(App.F24, s);
-            }
         }
 
         internal void HighlightButton(Key button, bool setPressed) {
@@ -93,6 +67,18 @@ namespace bradpad {
 
             // Use reflection to make the button appear to be pressed on keypress.  Kind of hacky but I can't find a better way to do this.
             typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(pressedButton, new object[] { setPressed });
+        }
+
+        internal void UpdateMainWindow() {
+            F22.Content = app.GetAction(App.F22);
+            F23.Content = app.GetAction(App.F23);
+            F24.Content = app.GetAction(App.F24);
+        }
+
+        internal void UpdateSettingsButtonsContent() {
+            F22Settings.Content = app.GetAction(App.F22);
+            F23Settings.Content = app.GetAction(App.F23);
+            F24Settings.Content = app.GetAction(App.F24);
         }
 
         // Main Panel
@@ -246,6 +232,20 @@ namespace bradpad {
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
             NewAction(false);
             ReturnToSettings(sender, e);
+        }
+
+        private void SetActionFromDropDown(string s) {
+            if (F22Settings.Opacity == 1) {
+                app.SetAction(App.F22, s);
+            }
+
+            if (F23Settings.Opacity == 1) {
+                app.SetAction(App.F23, s);
+            }
+
+            if (F24Settings.Opacity == 1) {
+                app.SetAction(App.F24, s);
+            }
         }
     }
 }
