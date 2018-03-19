@@ -38,6 +38,7 @@ namespace bradpad {
         public static void SetUpApplicationDetector() {
             dele0 = new WinEventDelegate(WinEventProc);
             dele1 = new WinEventDelegate(WinEventProc);
+            dele2 = new WinEventDelegate(WinEventProc);
             m_hhook0 = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele0, 0, 0, WINEVENT_OUTOFCONTEXT);
             m_hhook1 = SetWinEventHook(EVENT_SYSTEM_MINIMIZEEND, EVENT_SYSTEM_MINIMIZEEND, IntPtr.Zero, dele1, 0, 0, WINEVENT_OUTOFCONTEXT);
             m_hhook2 = SetWinEventHook(EVENT_OBJECT_CREATE, EVENT_OBJECT_CREATE, IntPtr.Zero, dele2, 0, 0, WINEVENT_OUTOFCONTEXT);
