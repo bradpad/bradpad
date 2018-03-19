@@ -11,8 +11,9 @@ namespace bradpad {
     class ActiveAppDetector {
 
         private const uint WINEVENT_OUTOFCONTEXT = 0;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3;
-        private const uint EVENT_SYSTEM_MINIMIZEEND = 23;
+        private const uint EVENT_SYSTEM_FOREGROUND = 0x0003;
+        private const uint EVENT_SYSTEM_MINIMIZEEND = 0x0017;
+        private const uint EVENT_OBJECT_CREATE = 0x8000;
         private delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
         [DllImport("user32.dll")]
@@ -28,8 +29,10 @@ namespace bradpad {
 
         private static WinEventDelegate dele0 = null;
         private static WinEventDelegate dele1 = null;
+        private static WinEventDelegate dele2 = null;
         private static IntPtr m_hhook0;
         private static IntPtr m_hhook1;
+        private static IntPtr m_hhook2;
         private static string currentApplication = "";
 
         public static void SetUpApplicationDetector() {
@@ -37,6 +40,7 @@ namespace bradpad {
             dele1 = new WinEventDelegate(WinEventProc);
             m_hhook0 = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, IntPtr.Zero, dele0, 0, 0, WINEVENT_OUTOFCONTEXT);
             m_hhook1 = SetWinEventHook(EVENT_SYSTEM_MINIMIZEEND, EVENT_SYSTEM_MINIMIZEEND, IntPtr.Zero, dele1, 0, 0, WINEVENT_OUTOFCONTEXT);
+            m_hhook2 = SetWinEventHook(EVENT_OBJECT_CREATE, EVENT_OBJECT_CREATE, IntPtr.Zero, dele2, 0, 0, WINEVENT_OUTOFCONTEXT);
         }
 
         public static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime) //STATIC
