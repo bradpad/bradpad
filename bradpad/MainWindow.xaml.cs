@@ -142,6 +142,7 @@ namespace bradpad {
             settingsActionFooter.Visibility = Visibility.Visible;
             settingsFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
+            FillDropDownActions();
             //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }

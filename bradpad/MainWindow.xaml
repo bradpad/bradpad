@@ -97,14 +97,15 @@
                         Click="MainButtonClicked"
                         Content="Main"
                         Grid.Column="3" />
-
+                
+                <!--
                 <Button Name="applicationsButton"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         Margin="16"
                         Padding="8"
                         Content="Configure Applications" 
-                        />
+                        />-->
 
                 <CheckBox Name="foreGroundCheckBox"
                           HorizontalAlignment="Stretch"
