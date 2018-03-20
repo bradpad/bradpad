@@ -26,7 +26,7 @@ namespace bradpad {
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
-                "Welcome to the alpha release of bradpad! Right now, this product is designed to be able to open Microsoft Word and execute copy and paste instructions. The buttons on the Arduino hardware act as pedals. A step-by-step tutorial is below. In the upcoming releases, we hope to increase functionality and allow users to add custom commands. We hope you enjoy!\n\n" +
+                "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application.\n\n" +
                 "1. Plug the Arduino and pedal system into the computer.  The computer will detect them as a keyboard.\n" +
                 "2. Pressing the left pedal will open Microsoft Word.\n" +
                 "3. Pressing the middle pedal corresponds to a copy (CTRL + C shortcut) command.\n" +
@@ -166,6 +166,8 @@ namespace bradpad {
             // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
             if (appDropdown.Text != "Select an Application") {
                 saveButton.IsEnabled = true;
+                saveNewActionButton.IsEnabled = true;
+                savePermanentButton.IsEnabled = true;
             }
         }
 
