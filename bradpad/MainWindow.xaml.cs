@@ -168,6 +168,7 @@ namespace bradpad {
                 saveButton.IsEnabled = true;
                 saveNewActionButton.IsEnabled = true;
                 savePermanentButton.IsEnabled = true;
+                UpdateSettingsButtonsContent();
             }
         }
 
