@@ -191,13 +191,13 @@
                               Click="OpenAppCheckBoxClicked"
                               Content="Open App"
                               IsChecked="False" />
-
+<!--
                     <CheckBox Name="appSpecificCheckBox"
                               Grid.Row="1"
                               VerticalAlignment="Center"
                               Click="AppSpecificCheckBoxClicked"
                               Content="App Specific"
-                              IsChecked="False" />
+                              IsChecked="False" />-->
 
                 </Grid>
 
