@@ -44,6 +44,10 @@ namespace bradpad {
             return appActions.GetAction(key);
         }
 
+        internal string GetAction(string app, Key key) {
+            return appActions.GetAction(app, key);
+        }
+
         internal List<string> GetActions() {
             return appActions.GetActions();
         }

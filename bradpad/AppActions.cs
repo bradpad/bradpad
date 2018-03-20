@@ -33,6 +33,10 @@ namespace bradpad {
             return keyMaps[currentApplication].GetAction(key);
         }
 
+        internal string GetAction(string app, Key key) {
+            return keyMaps[app].GetAction(key);
+        }
+
         internal List<string> GetActions() {
             return keyMaps[currentApplication].GetActions();
         }
