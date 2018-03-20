@@ -26,9 +26,9 @@ namespace bradpad {
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
-                "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. Also, .For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application.\n\n" +
-                "1. Plug the Arduino and pedal system into the computer.  The computer will detect them as a keyboard.\n" +
-                "2. There are default commands provided (open word, copy, and paste).\n" +
+                "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. Also, we have internal active application recognizing capabilities- this will be used to add actions for each application. For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application. Additionally, we will work more with Brad to ensure that all the UI is easy to use.\n\n" +
+                "1. Plug the Arduino and pedal system into the computer.  The computer will detect this as a keyboard.\n" +
+                "2. There are default commands provided- open word, copy, and paste.\n" +
                 "3. \n" +
                 "4. Pressing the right pedal corresponds to a paste (CTRL + V shortcut) command.\n\n" +
                 "If you get lost, you can press the Help button in the Settings view to view these instructions again.\n\n" +
@@ -76,16 +76,9 @@ namespace bradpad {
         }
 
         internal void UpdateSettingsButtonsContent() {
-            if (appDropdown.Text == "Select an Application") {
-                F22Settings.Content = "";
-                F23Settings.Content = "";
-                F24Settings.Content = "";
-            } else {
-                string actionApp = appDropdown.Text;
-                F22Settings.Content = app.GetAction(actionApp, App.F22);
-                F23Settings.Content = app.GetAction(actionApp, App.F23);
-                F24Settings.Content = app.GetAction(actionApp, App.F24);
-            }
+            F22Settings.Content = app.GetAction(App.F22);
+            F23Settings.Content = app.GetAction(App.F23);
+            F24Settings.Content = app.GetAction(App.F24);
         }
 
         // Main Panel
