@@ -75,9 +75,16 @@ namespace bradpad {
         }
 
         internal void UpdateSettingsButtonsContent() {
-            F22Settings.Content = app.GetAction(App.F22);
-            F23Settings.Content = app.GetAction(App.F23);
-            F24Settings.Content = app.GetAction(App.F24);
+            if (appDropdown.Text == "Select an Application") {
+                F22Settings.Content = "";
+                F23Settings.Content = "";
+                F24Settings.Content = "";
+            } else {
+                string actionApp = appDropdown.Text;
+                F22Settings.Content = app.GetAction(actionApp, App.F22);
+                F23Settings.Content = app.GetAction(actionApp, App.F23);
+                F24Settings.Content = app.GetAction(actionApp, App.F24);
+            }
         }
 
         // Main Panel
@@ -167,6 +174,7 @@ namespace bradpad {
                 saveButton.IsEnabled = true;
                 saveNewActionButton.IsEnabled = true;
                 savePermanentButton.IsEnabled = true;
+                UpdateSettingsButtonsContent();
             }
         }
 
