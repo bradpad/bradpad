@@ -32,12 +32,15 @@ namespace bradpad {
                 "3. Pressing the pedals will trigger the corresponding action on the Main screen of bradpad.\n" +
                 "If you get lost, you can press the Help button in the Settings view to view these instructions again.\n\n" +
                 "The application also has the capability to customize the application that is mapped to the left pedal, but the UI is a undeveloped because this flow will be changed in the future.  This is a stretch goal implemented from our beta release goals.\n\n" +
-                "Opening an Application\n" +
-                "1. In the settings view, navigate to the applications view.\n" +
-                "2. Input a name for the application in the \"Enter Application Name\" field.\n" +
-                "3. Enter the application location. This can be found by opening the application location through file explorer, and right clicking the address. Copy this and paste it into the application where it says \"Enter Application Location\".\n" +
-                "4. Click the \"Enter\" button. This triggers the left pedal (or clicking the left panel on the main screen) to open the desired application.\n" +
-                "5. The process can be repeated to change the desired application.";
+                "Configuring bradpad\n" +
+                "1. Navigate to settings view by clicking Open button\n" +
+                "2. Click the top dropdown menu- the first option is for global applications except Chrome and the second option is for Chrome.\n" +
+                "3. Click a pedal button.\n" +
+                "4. Select an Action dropdown gives you options for that pedal.\n" +
+                "5. Click Add Action to add an action to the dropdown\n" +
+                "6. Check the checkbox Open App only if the input is an application.\n" +
+                "7. Enter the keyboard shortcut or the application executable.\n" +
+                "8. Click either Save to save this command temporarily or Save Permanent to add this command in future action dropboxes.\n";
 
         public MainWindow() {
             InitializeComponent();
