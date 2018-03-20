@@ -29,8 +29,7 @@ namespace bradpad {
                 "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. Also, we have internal active application recognizing capabilities- this will be used to add actions for each application. For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application. Additionally, we will work more with Brad to ensure that all the UI is easy to use.\n\n" +
                 "1. Plug the Arduino and pedal system into the computer.  The computer will detect this as a keyboard.\n" +
                 "2. There are default commands provided- open word, copy, and paste.\n" +
-                "3. \n" +
-                "4. Pressing the right pedal corresponds to a paste (CTRL + V shortcut) command.\n\n" +
+                "3. Pressing the pedals will trigger the corresponding action on the Main screen of bradpad.\n" +
                 "If you get lost, you can press the Help button in the Settings view to view these instructions again.\n\n" +
                 "The application also has the capability to customize the application that is mapped to the left pedal, but the UI is a undeveloped because this flow will be changed in the future.  This is a stretch goal implemented from our beta release goals.\n\n" +
                 "Opening an Application\n" +
@@ -168,7 +167,6 @@ namespace bradpad {
                 saveButton.IsEnabled = true;
                 saveNewActionButton.IsEnabled = true;
                 savePermanentButton.IsEnabled = true;
-                UpdateSettingsButtonsContent();
             }
         }
 
@@ -216,7 +214,7 @@ namespace bradpad {
 
         private void RestoreDefaultForConfigScreen() {
             openAppCheckBox.IsChecked = false;
-            appSpecificCheckBox.IsChecked = false;
+            //appSpecificCheckBox.IsChecked = false;
             customInputTextBox.Text = "Enter Keyboard Shortcut";
         }
 
