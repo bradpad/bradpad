@@ -26,10 +26,10 @@ namespace bradpad {
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
-                "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application.\n\n" +
+                "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. Also, .For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application.\n\n" +
                 "1. Plug the Arduino and pedal system into the computer.  The computer will detect them as a keyboard.\n" +
-                "2. Pressing the left pedal will open Microsoft Word.\n" +
-                "3. Pressing the middle pedal corresponds to a copy (CTRL + C shortcut) command.\n" +
+                "2. There are default commands provided (open word, copy, and paste).\n" +
+                "3. \n" +
                 "4. Pressing the right pedal corresponds to a paste (CTRL + V shortcut) command.\n\n" +
                 "If you get lost, you can press the Help button in the Settings view to view these instructions again.\n\n" +
                 "The application also has the capability to customize the application that is mapped to the left pedal, but the UI is a undeveloped because this flow will be changed in the future.  This is a stretch goal implemented from our beta release goals.\n\n" +
