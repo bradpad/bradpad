@@ -2,9 +2,11 @@
 
 Setup instructions:
 
-Open project in Visual Studio Community 2017
+Note: Requires Windows 10 and Visual Studio Community 2017
 
-Press start button in top menubar
+1. Open project in Visual Studio Community 2017
+
+2. Press start button in top menubar
 
 
 Credits:
