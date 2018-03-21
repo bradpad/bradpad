@@ -29,6 +29,11 @@ namespace bradpad {
         });
         //KeyMap keyMap = new KeyMap();
         KeyboardListener KListener = new KeyboardListener();
+        Dictionary<Key, bool> pressed = new Dictionary<Key, bool>() {
+            {F22, false},
+            {F23, false},
+            {F24, false}
+        };
 
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
@@ -62,8 +67,11 @@ namespace bradpad {
 
         internal void SetCurrentApplication(string currentApplicationIn) {
             appActions.SetCurrentApplication(currentApplicationIn);
-            ((MainWindow)Current.MainWindow).UpdateMainWindow();
-            ((MainWindow)Current.MainWindow).UpdateSettingsButtonsContent();
+            MainWindow mainWindow = (MainWindow)Current.MainWindow;
+            if (mainWindow != null) {
+                ((MainWindow)Current.MainWindow).UpdateMainWindow();
+                ((MainWindow)Current.MainWindow).UpdateSettingsButtonsContent();
+            }
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
@@ -78,14 +86,17 @@ namespace bradpad {
         private void KListenerKeyDown(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
 
-            if (appActions.ContainsKey(args.Key)) {
+            if (appActions.ContainsKey(args.Key) && !pressed[args.Key]) {
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, true);
+                pressed[args.Key] = true;
                 SendKeyPress(args.Key);
             }
         }
 
         private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
+            Console.WriteLine(args.Key.ToString());
             if (appActions.ContainsKey(args.Key)) {
+                pressed[args.Key] = false;
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
             }
         }
