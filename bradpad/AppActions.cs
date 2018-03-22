@@ -17,10 +17,6 @@ namespace bradpad {
             keyMaps = inKeyMaps;
         }
 
-        internal bool ContainsKey(Key key) {
-            return key == App.F22 || key == App.F23 || key == App.F24;
-        }
-
         internal void AddAction(string app, string name, string val, bool appFlag) {
             keyMaps[app].AddAction(name, val, appFlag);
         }

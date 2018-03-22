@@ -44,7 +44,6 @@ namespace bradpad {
 
         public MainWindow() {
             InitializeComponent();
-            ActiveAppDetector.SetUpApplicationDetector();
             foreGroundCheckBox.IsChecked = Topmost;
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();

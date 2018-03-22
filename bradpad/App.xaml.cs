@@ -75,6 +75,7 @@ namespace bradpad {
         }
 
         private void ApplicationStartup(object sender, StartupEventArgs e) {
+            ActiveAppDetector.SetUpApplicationDetector();
             KListener.KeyDown += new RawKeyEventHandler(KListenerKeyDown);
             KListener.KeyUp += new RawKeyEventHandler(KListenerKeyUp);
         }
@@ -83,10 +84,14 @@ namespace bradpad {
             KListener.Dispose();
         }
 
+        internal bool ContainsKey(Key key) {
+            return key == App.F22 || key == App.F23 || key == App.F24;
+        }
+
         private void KListenerKeyDown(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
 
-            if (appActions.ContainsKey(args.Key) && !pressed[args.Key]) {
+            if (ContainsKey(args.Key) && !pressed[args.Key]) {
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, true);
                 pressed[args.Key] = true;
                 SendKeyPress(args.Key);
@@ -95,7 +100,7 @@ namespace bradpad {
 
         private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
-            if (appActions.ContainsKey(args.Key)) {
+            if (ContainsKey(args.Key)) {
                 pressed[args.Key] = false;
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
             }
