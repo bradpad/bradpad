@@ -25,15 +25,16 @@
 
             <ComboBox Name="appDropdown"
                       HorizontalAlignment="Center"
-                      DropDownClosed="appDropdownClosed"
+                      SelectionChanged="AppDropdownSelectionChanged"
                       Grid.Row="0"
                       Margin="12"
                       VerticalContentAlignment="Center">
                 <ComboBoxItem Content="Select an Application"
+                              IsEnabled="False"
                               IsSelected="True"
                               Visibility="Collapsed" />
-                <ComboBoxItem Content="C:\WINDOWS\Explorer.EXE"/>
-                <ComboBoxItem Content="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"/>
+                <ComboBoxItem Content="C:\WINDOWS\Explorer.EXE" />
+                <ComboBoxItem Content="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" />
             </ComboBox>
 
             <Grid Grid.Row="1">
@@ -132,9 +133,10 @@
                         Margin="16"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Click="AddActionButtonClick"/>
+                        Click="AddActionButtonClick" />
 
                 <ComboBox Name="actionDropdown"
+                      SelectionChanged="ActionDropdownSelectionChanged"
                       HorizontalAlignment="Center"
                       Grid.Column="1"
                       Margin="16"
@@ -176,13 +178,13 @@
                         Content="Save Action Permanently"
                         Grid.Column="0" 
                         Click="SavePermanentButtonClick"
-                        IsEnabled="False"/>
+                        IsEnabled="False" />
 
                 <Grid Grid.Column="1">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height ="1*"/>
-                        <RowDefinition Height ="1*"/>
+                        <RowDefinition Height ="1*" />
+                        <RowDefinition Height ="1*" />
                     </Grid.RowDefinitions>
 
                     <CheckBox Name="openAppCheckBox"
@@ -216,13 +218,13 @@
                         Content="Save Action"
                         Grid.Column="3"
                         Click="SaveNewActionButtonClick"
-                        IsEnabled="False"/>
+                        IsEnabled="False" />
 
                 <Button Name="cancelNewActionButton"
                         Margin="16"
                         Content="Cancel"
                         Grid.Column="4"
-                        Click="CancelNewActionButtonClick"/>
+                        Click="CancelNewActionButtonClick" />
 
             </Grid>
 
@@ -275,7 +277,7 @@
                     Click="SettingsButtonClicked"
                     Content="Open Settings"
                     TextBlock.FontSize="20"
-                    DockPanel.Dock="Bottom"/>
+                    DockPanel.Dock="Bottom" />
 
             <!--Grid is the last child because last child fills the rest of the window in DockPanel - that means don't put Grid above Button.-->
             <Grid>

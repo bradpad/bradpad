@@ -30,7 +30,10 @@ namespace bradpad {
         }
 
         internal string GetAction(string app, Key key) {
-            return keyMaps[app].GetAction(key);
+            if (keyMaps.ContainsKey(app)) {
+                return keyMaps[app].GetAction(key);
+            }
+            return "";
         }
 
         internal List<string> GetActions() {

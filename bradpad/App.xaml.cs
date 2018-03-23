@@ -70,7 +70,6 @@ namespace bradpad {
             MainWindow mainWindow = (MainWindow)Current.MainWindow;
             if (mainWindow != null) {
                 ((MainWindow)Current.MainWindow).UpdateMainWindow();
-                ((MainWindow)Current.MainWindow).UpdateSettingsButtonsContent();
             }
         }
 

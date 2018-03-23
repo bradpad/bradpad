@@ -77,16 +77,16 @@ namespace bradpad {
         }
 
         internal void UpdateSettingsButtonsContent() {
-            if (appDropdown.Text == "Select an Application") {
-                F22Settings.Content = "";
-                F23Settings.Content = "";
-                F24Settings.Content = "";
-            } else {
-                string actionApp = appDropdown.Text;
-                F22Settings.Content = app.GetAction(actionApp, App.F22);
-                F23Settings.Content = app.GetAction(actionApp, App.F23);
-                F24Settings.Content = app.GetAction(actionApp, App.F24);
-            }
+            string actionApp = appDropdown.Text;
+            F22Settings.Content = app.GetAction(actionApp, App.F22);
+            F23Settings.Content = app.GetAction(actionApp, App.F23);
+            F24Settings.Content = app.GetAction(actionApp, App.F24);
+        }
+
+        internal void UpdateSettingsButtonsContent(string actionApp) {
+            F22Settings.Content = app.GetAction(actionApp, App.F22);
+            F23Settings.Content = app.GetAction(actionApp, App.F23);
+            F24Settings.Content = app.GetAction(actionApp, App.F24);
         }
 
         // Main Panel
@@ -107,10 +107,24 @@ namespace bradpad {
             settingsPanel.Visibility = Visibility.Visible;
             FillDropDownActions();
             UpdateSettingsButtonsContent();
+            saveNewActionButton.IsEnabled = false;
+            savePermanentButton.IsEnabled = false;
             //applicationsPanel.Visibility = Visibility.Hidden;
         }
 
         // Settings Panel
+        private void AppDropdownSelectionChanged(object sender, EventArgs e) {
+            if (IsInitialized && ((ComboBoxItem)appDropdown.SelectedItem).IsEnabled) {
+                // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
+                if (((ComboBoxItem)actionDropdown.SelectedItem).IsEnabled) {
+                    saveButton.IsEnabled = true;
+                }
+                saveNewActionButton.IsEnabled = true;
+                savePermanentButton.IsEnabled = true;
+                UpdateSettingsButtonsContent((string)((ComboBoxItem)((ComboBox)sender).SelectedItem).Content);
+            }
+        }
+
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 0.2;
@@ -159,7 +173,6 @@ namespace bradpad {
         private void ActionSubmitButtonClicked(object sender, RoutedEventArgs e) {
             string s = actionDropdown.Text;
             SetActionFromDropDown(s);
-            UpdateMainWindow();
             UpdateSettingsButtonsContent();
             ReturnToSettings(sender, e);
         }
@@ -170,13 +183,10 @@ namespace bradpad {
             settingsConfigureFooter.Visibility = Visibility.Visible;
         }
 
-        private void appDropdownClosed(object sender, EventArgs e) {
-            // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
-            if (appDropdown.Text != "Select an Application") {
+        private void ActionDropdownSelectionChanged(object sender, EventArgs e) {
+            ComboBoxItem selectedItem = (ComboBoxItem)actionDropdown.SelectedItem;
+            if (selectedItem != null && selectedItem.IsEnabled && ((ComboBoxItem)appDropdown.SelectedItem).IsEnabled) {
                 saveButton.IsEnabled = true;
-                saveNewActionButton.IsEnabled = true;
-                savePermanentButton.IsEnabled = true;
-                UpdateSettingsButtonsContent();
             }
         }
 
@@ -184,11 +194,16 @@ namespace bradpad {
             actionDropdown.Items.Clear();
             actionDropdown.Items.Add(new ComboBoxItem {
                 Content = "Select an Action",
+                IsEnabled = false,
                 IsSelected = true,
                 Visibility = Visibility.Collapsed
             });
+            // Disable save button because we're selecting "Select an Action"
+            saveButton.IsEnabled = false;
             foreach (string action in app.GetActions()) {
-                actionDropdown.Items.Add(action);
+                actionDropdown.Items.Add(new ComboBoxItem {
+                    Content = action
+                });
             }
         }
 
@@ -228,6 +243,7 @@ namespace bradpad {
             customInputTextBox.Text = "Enter Keyboard Shortcut";
         }
 
+        // TODO: only enable saving actions when user has selected application or entered keyboard shortcut
         private void NewAction(bool temp) {
             string actionApp = appDropdown.Text;
             string name = customInputTextBox.Text;
