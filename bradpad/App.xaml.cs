@@ -42,8 +42,8 @@ namespace bradpad {
             SendKeyPress(key);
         }
 
-        internal void AddAction(string app, string name, string val, bool appFlag) {
-            appActions.AddAction(app, name, val, appFlag);
+        internal void AddAction(string app, string name, string val, bool appFlag, bool temp) {
+            appActions.AddAction(app, name, val, appFlag, temp);
         }
 
         internal string GetAction(Key key) {
@@ -60,10 +60,6 @@ namespace bradpad {
 
         internal void SetAction(string app, Key key, string action) {
             appActions.SetAction(app, key, action);
-        }
-
-        internal void AddTempAction(string app, string name, bool temp) {
-            appActions.AddTempAction(app, name, temp);
         }
 
         internal void SetCurrentApplication(string currentApplicationIn) {

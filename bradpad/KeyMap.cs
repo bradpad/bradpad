@@ -35,9 +35,14 @@ namespace bradpad {
 
         HashSet<string> tempActions = new HashSet<string>();
 
-        internal void AddAction(string name, string val, bool appFlag) {
+        internal void AddAction(string name, string val, bool appFlag, bool temp) {
             actions.Add(name);
             allActions[name] = Tuple.Create(val, appFlag);
+            if (temp) {
+                tempActions.Add(name);
+            } else {
+                tempActions.Remove(name);
+            }
         }
 
         internal string GetAction(Key key) {
@@ -54,10 +59,6 @@ namespace bradpad {
 
         internal bool IsApp(Key key) {
             return allActions[keyDict[key]].Item2;
-        }
-
-        internal void AddTempAction(string name, bool temp) {
-            tempActions.Add(name);
         }
 
         internal void SetAction(Key key, string action) {

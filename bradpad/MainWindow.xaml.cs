@@ -113,9 +113,10 @@ namespace bradpad {
 
         // Settings Panel
         private void AppDropdownSelectionChanged(object sender, EventArgs e) {
-            if (IsLoaded && ((ComboBoxItem)appDropdown.SelectedItem).IsEnabled) {
+            ComboBoxItem selectedItem = (ComboBoxItem)((ComboBox)sender).SelectedItem;
+            if (IsLoaded && selectedItem.IsEnabled) {
                 // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
-                string actionApp = (string)((ComboBoxItem)((ComboBox)sender).SelectedItem).Content;
+                string actionApp = (string)selectedItem.Content;
                 ComboBoxItem actionItem = (ComboBoxItem)actionDropdown.SelectedItem;
                 if (actionItem != null && actionItem.IsEnabled) {
                     saveButton.IsEnabled = true;
@@ -250,10 +251,7 @@ namespace bradpad {
             string actionApp = appDropdown.Text;
             string name = customInputTextBox.Text;
             string action = customInputTextBox.Text;
-            app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true);
-            if (temp) {
-                app.AddTempAction(actionApp, name, temp);
-            }
+            app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
             SetActionFromDropDown(name);
             UpdateMainWindow();
             UpdateSettingsButtonsContent();

@@ -17,12 +17,8 @@ namespace bradpad {
             keyMaps = inKeyMaps;
         }
 
-        internal void AddAction(string app, string name, string val, bool appFlag) {
-            keyMaps[app].AddAction(name, val, appFlag);
-        }
-
-        internal void AddTempAction(string app, string name, bool temp) {
-            keyMaps[app].AddTempAction(name, temp);
+        internal void AddAction(string app, string name, string val, bool appFlag, bool temp) {
+            keyMaps[app].AddAction(name, val, appFlag, temp);
         }
 
         internal string GetAction(Key key) {
