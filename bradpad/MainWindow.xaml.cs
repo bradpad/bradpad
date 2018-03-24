@@ -105,7 +105,6 @@ namespace bradpad {
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
-            FillDropDownActions();
             UpdateSettingsButtonsContent();
             saveNewActionButton.IsEnabled = false;
             savePermanentButton.IsEnabled = false;
@@ -114,14 +113,17 @@ namespace bradpad {
 
         // Settings Panel
         private void AppDropdownSelectionChanged(object sender, EventArgs e) {
-            if (IsInitialized && ((ComboBoxItem)appDropdown.SelectedItem).IsEnabled) {
+            if (IsLoaded && ((ComboBoxItem)appDropdown.SelectedItem).IsEnabled) {
                 // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
-                if (((ComboBoxItem)actionDropdown.SelectedItem).IsEnabled) {
+                string actionApp = (string)((ComboBoxItem)((ComboBox)sender).SelectedItem).Content;
+                ComboBoxItem actionItem = (ComboBoxItem)actionDropdown.SelectedItem;
+                if (actionItem != null && actionItem.IsEnabled) {
                     saveButton.IsEnabled = true;
                 }
                 saveNewActionButton.IsEnabled = true;
                 savePermanentButton.IsEnabled = true;
-                UpdateSettingsButtonsContent((string)((ComboBoxItem)((ComboBox)sender).SelectedItem).Content);
+                UpdateSettingsButtonsContent(actionApp);
+                FillDropDownActions(actionApp);
             }
         }
 
@@ -164,7 +166,7 @@ namespace bradpad {
             settingsActionFooter.Visibility = Visibility.Visible;
             settingsFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
-            FillDropDownActions();
+            FillDropDownActions(appDropdown.Text);
             //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }
@@ -190,7 +192,7 @@ namespace bradpad {
             }
         }
 
-        private void FillDropDownActions() {
+        private void FillDropDownActions(string actionApp) {
             actionDropdown.Items.Clear();
             actionDropdown.Items.Add(new ComboBoxItem {
                 Content = "Select an Action",
@@ -200,7 +202,7 @@ namespace bradpad {
             });
             // Disable save button because we're selecting "Select an Action"
             saveButton.IsEnabled = false;
-            foreach (string action in app.GetActions()) {
+            foreach (string action in app.GetActions(actionApp)) {
                 actionDropdown.Items.Add(new ComboBoxItem {
                     Content = action
                 });
@@ -255,8 +257,7 @@ namespace bradpad {
             SetActionFromDropDown(name);
             UpdateMainWindow();
             UpdateSettingsButtonsContent();
-            FillDropDownActions();
-
+            FillDropDownActions(actionApp);
         }
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {

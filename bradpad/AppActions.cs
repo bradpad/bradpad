@@ -36,8 +36,17 @@ namespace bradpad {
             return "";
         }
 
-        internal List<string> GetActions() {
-            return keyMaps[currentApplication].GetActions();
+        internal List<string> GetActions(string app) {
+            IEnumerable<string> defaultActions = keyMaps[""].GetActions();
+            if (keyMaps.ContainsKey(app)) {
+                List<string> combinedActions = keyMaps[app].GetActions().Union(defaultActions).ToList();
+                combinedActions.Sort();
+                return combinedActions;
+            } else {
+                List<string> defaultActionsList = defaultActions.ToList();
+                defaultActionsList.Sort();
+                return defaultActionsList;
+            }
         }
 
         internal string GetVal(Key key) {

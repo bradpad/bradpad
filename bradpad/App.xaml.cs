@@ -24,6 +24,7 @@ namespace bradpad {
         internal const Key F24 = Key.F24;
 
         AppActions appActions = new AppActions(new Dictionary<string, KeyMap>() {
+            {"", new KeyMap()},
             {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
             {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
         });
@@ -53,8 +54,8 @@ namespace bradpad {
             return appActions.GetAction(app, key);
         }
 
-        internal List<string> GetActions() {
-            return appActions.GetActions();
+        internal List<string> GetActions(string app) {
+            return appActions.GetActions(app);
         }
 
         internal void SetAction(string app, Key key, string action) {

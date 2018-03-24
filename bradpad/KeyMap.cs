@@ -9,7 +9,7 @@ namespace bradpad {
     class KeyMap {
 
         // Stores actions to display TODO: load ACTIONS from disk
-        internal List<string> actions = new List<string>() {
+        internal HashSet<string> actions = new HashSet<string>() {
                 {"Open Word"},
                 {"Copy"},
                 {"Paste"},
@@ -33,7 +33,7 @@ namespace bradpad {
                 {"New Tab", Tuple.Create("^t", false)},
             };
 
-        List<string> tempActions = new List<string>();
+        HashSet<string> tempActions = new HashSet<string>();
 
         internal void AddAction(string name, string val, bool appFlag) {
             actions.Add(name);
@@ -44,8 +44,8 @@ namespace bradpad {
             return keyDict[key];
         }
 
-        internal List<string> GetActions() {
-            return actions.Except(tempActions).ToList();
+        internal IEnumerable<string> GetActions() {
+            return actions.Except(tempActions);
         }
 
         internal string GetVal(Key key) {
