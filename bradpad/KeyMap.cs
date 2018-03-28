@@ -8,6 +8,16 @@ using System.Windows.Input;
 namespace bradpad {
     class KeyMap {
 
+        internal class Action {
+            internal Action(string inAction, bool inIsApp) {
+                action = inAction;
+                isApp = inIsApp;
+            }
+
+            internal readonly string action;
+            internal readonly bool isApp;
+        }
+
         // Stores actions to display TODO: load ACTIONS from disk
         internal HashSet<string> actions = new HashSet<string>() {
                 {"Open Word"},
@@ -24,20 +34,20 @@ namespace bradpad {
             };
 
         // Action name, plus pair of action and whether it is an app
-        Dictionary<string, Tuple<string, bool>> allActions = new Dictionary<string, Tuple<string, bool>>()
+        Dictionary<string, Action> allActions = new Dictionary<string, Action>()
         {
-                {"Open Word", Tuple.Create("winword.exe", true)},
-                {"Copy", Tuple.Create("^c", false)},
-                {"Paste", Tuple.Create("^v", false)},
-                {"Open Chrome", Tuple.Create("chrome.exe", true)},
-                {"New Tab", Tuple.Create("^t", false)},
+                {"Open Word", new Action("winword.exe", true)},
+                {"Copy", new Action("^c", false)},
+                {"Paste", new Action("^v", false)},
+                {"Open Chrome", new Action("chrome.exe", true)},
+                {"New Tab", new Action("^t", false)},
             };
 
         HashSet<string> tempActions = new HashSet<string>();
 
         internal void AddAction(string name, string val, bool appFlag, bool temp) {
             actions.Add(name);
-            allActions[name] = Tuple.Create(val, appFlag);
+            allActions[name] = new Action(val, appFlag);
             if (temp) {
                 tempActions.Add(name);
             } else {
@@ -54,11 +64,11 @@ namespace bradpad {
         }
 
         internal string GetVal(Key key) {
-            return allActions[keyDict[key]].Item1;
+            return allActions[keyDict[key]].action;
         }
 
         internal bool IsApp(Key key) {
-            return allActions[keyDict[key]].Item2;
+            return allActions[keyDict[key]].isApp;
         }
 
         internal void SetAction(Key key, string action) {

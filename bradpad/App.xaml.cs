@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,7 +27,6 @@ namespace bradpad {
             {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
             {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
         });
-        //KeyMap keyMap = new KeyMap();
         KeyboardListener KListener = new KeyboardListener();
         Dictionary<Key, bool> pressed = new Dictionary<Key, bool>() {
             {F22, false},
@@ -44,6 +42,7 @@ namespace bradpad {
 
         internal void AddAction(string app, string name, string val, bool appFlag, bool temp) {
             appActions.AddAction(app, name, val, appFlag, temp);
+            SaveSettings();
         }
 
         internal string GetAction(Key key) {
@@ -60,12 +59,13 @@ namespace bradpad {
 
         internal void SetAction(string app, Key key, string action) {
             appActions.SetAction(app, key, action);
+            SaveSettings();
         }
 
         internal void SetCurrentApplication(string currentApplicationIn) {
             appActions.SetCurrentApplication(currentApplicationIn);
             MainWindow mainWindow = (MainWindow)Current.MainWindow;
-            if (mainWindow != null) {
+            if (mainWindow.IsLoaded) {
                 ((MainWindow)Current.MainWindow).UpdateMainWindow();
             }
         }
@@ -100,6 +100,9 @@ namespace bradpad {
                 pressed[args.Key] = false;
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
             }
+        }
+
+        private void SaveSettings() {
         }
 
         private void SendKeyPress(Key key) {
