@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using Newtonsoft.Json;
+
 namespace bradpad {
     class KeyMap {
 
@@ -18,8 +20,9 @@ namespace bradpad {
             internal readonly bool isApp;
         }
 
-        // Stores actions to display TODO: load ACTIONS from disk
-        internal HashSet<string> actions = new HashSet<string>() {
+        // Stores actions to display TODO: load actions from disk
+        [JsonProperty]
+        HashSet<string> actions = new HashSet<string>() {
                 {"Open Word"},
                 {"Copy"},
                 {"Paste"},
@@ -27,6 +30,7 @@ namespace bradpad {
                 {"New Tab"},
         };
 
+        [JsonProperty]
         Dictionary<Key, string> keyDict = new Dictionary<Key, string>() {
                 {App.F22, "Open Word"},
                 {App.F23, "Copy"},
@@ -34,6 +38,7 @@ namespace bradpad {
             };
 
         // Action name, plus pair of action and whether it is an app
+        [JsonProperty]
         Dictionary<string, Action> allActions = new Dictionary<string, Action>()
         {
                 {"Open Word", new Action("winword.exe", true)},
@@ -43,6 +48,7 @@ namespace bradpad {
                 {"New Tab", new Action("^t", false)},
             };
 
+        [JsonProperty]
         HashSet<string> tempActions = new HashSet<string>();
 
         internal void AddAction(string name, string val, bool appFlag, bool temp) {

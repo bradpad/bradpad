@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using System.Diagnostics;
 using System.Text;
 
+using Newtonsoft.Json;
 using Ownskit.Utils;
 
 namespace bradpad {
@@ -42,7 +44,6 @@ namespace bradpad {
 
         internal void AddAction(string app, string name, string val, bool appFlag, bool temp) {
             appActions.AddAction(app, name, val, appFlag, temp);
-            SaveSettings();
         }
 
         internal string GetAction(Key key) {
@@ -65,7 +66,7 @@ namespace bradpad {
         internal void SetCurrentApplication(string currentApplicationIn) {
             appActions.SetCurrentApplication(currentApplicationIn);
             MainWindow mainWindow = (MainWindow)Current.MainWindow;
-            if (mainWindow.IsLoaded) {
+            if (mainWindow != null && mainWindow.IsLoaded) {
                 ((MainWindow)Current.MainWindow).UpdateMainWindow();
             }
         }
@@ -103,6 +104,12 @@ namespace bradpad {
         }
 
         private void SaveSettings() {
+            JsonSerializer serializer = new JsonSerializer();
+            using (StreamWriter sw = new StreamWriter("settings/settings.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw)) {
+                writer.Formatting = Formatting.Indented;
+                serializer.Serialize(writer, appActions);
+            }
         }
 
         private void SendKeyPress(Key key) {

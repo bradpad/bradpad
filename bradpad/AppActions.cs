@@ -5,12 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using Newtonsoft.Json;
+
 namespace bradpad {
     class AppActions {
 
         private const string DEFAULT = @"C:\WINDOWS\Explorer.EXE";
 
         string currentApplication = DEFAULT;
+
+        [JsonProperty]
         Dictionary<string, KeyMap> keyMaps;
 
         internal AppActions(Dictionary<string, KeyMap> inKeyMaps) {
