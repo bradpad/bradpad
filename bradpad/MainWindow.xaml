@@ -28,14 +28,8 @@
                       SelectionChanged="AppDropdownSelectionChanged"
                       Grid.Row="0"
                       Margin="12"
-                      VerticalContentAlignment="Center">
-                <ComboBoxItem Content="Select an Application"
-                              IsEnabled="False"
-                              IsSelected="True"
-                              Visibility="Collapsed" />
-                <ComboBoxItem Content="C:\WINDOWS\Explorer.EXE" />
-                <ComboBoxItem Content="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" />
-            </ComboBox>
+                      SelectedValuePath="Tag"
+                      VerticalContentAlignment="Center" />
 
             <Grid Grid.Row="1">
 

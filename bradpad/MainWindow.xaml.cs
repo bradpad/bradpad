@@ -77,10 +77,7 @@ namespace bradpad {
         }
 
         internal void UpdateSettingsButtonsContent() {
-            string actionApp = appDropdown.Text;
-            F22Settings.Content = app.GetAction(actionApp, App.F22);
-            F23Settings.Content = app.GetAction(actionApp, App.F23);
-            F24Settings.Content = app.GetAction(actionApp, App.F24);
+            UpdateSettingsButtonsContent((string)appDropdown.SelectedValue);
         }
 
         internal void UpdateSettingsButtonsContent(string actionApp) {
@@ -105,6 +102,8 @@ namespace bradpad {
         private void SettingsButtonClicked(object sender, RoutedEventArgs e) {
             mainPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
+            // Make sure FillDropDownApps is called before UpdateSettingsButtonsContent or else app will crash
+            FillDropDownApps();
             UpdateSettingsButtonsContent();
             saveNewActionButton.IsEnabled = false;
             savePermanentButton.IsEnabled = false;
@@ -116,7 +115,7 @@ namespace bradpad {
             ComboBoxItem selectedItem = (ComboBoxItem)((ComboBox)sender).SelectedItem;
             if (IsLoaded && selectedItem.IsEnabled) {
                 // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
-                string actionApp = (string)selectedItem.Content;
+                string actionApp = (string)selectedItem.Tag;
                 ComboBoxItem actionItem = (ComboBoxItem)actionDropdown.SelectedItem;
                 if (actionItem != null && actionItem.IsEnabled) {
                     saveButton.IsEnabled = true;
@@ -149,6 +148,31 @@ namespace bradpad {
             ShowActionFooter();
         }
 
+        private void FillDropDownApps() {
+            appDropdown.Items.Clear();
+            appDropdown.Items.Add(new ComboBoxItem {
+                Content = "Select an Application",
+                IsEnabled = false,
+                IsSelected = true,
+                Tag = "",
+                Visibility = Visibility.Collapsed
+            });
+
+            // TODO: replace these with a loop that adds applications that Brad wants
+            appDropdown.Items.Add(new ComboBoxItem {
+                Content = "All Applications",
+                Tag = ""
+            });
+            appDropdown.Items.Add(new ComboBoxItem {
+                Content = "Windows Explorer",
+                Tag = @"C:\WINDOWS\Explorer.EXE"
+            });
+            appDropdown.Items.Add(new ComboBoxItem {
+                Content = "Google Chrome",
+                Tag = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+            });
+        }
+
         private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
             Topmost = (bool)foreGroundCheckBox.IsChecked;
         }
@@ -167,7 +191,7 @@ namespace bradpad {
             settingsActionFooter.Visibility = Visibility.Visible;
             settingsFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
-            FillDropDownActions(appDropdown.Text);
+            FillDropDownActions((string)appDropdown.SelectedValue);
             //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }
@@ -248,7 +272,7 @@ namespace bradpad {
 
         // TODO: only enable saving actions when user has selected application or entered keyboard shortcut
         private void NewAction(bool temp) {
-            string actionApp = appDropdown.Text;
+            string actionApp = (string)appDropdown.SelectedValue;
             string name = customInputTextBox.Text;
             string action = customInputTextBox.Text;
             app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
@@ -269,16 +293,18 @@ namespace bradpad {
         }
 
         private void SetActionFromDropDown(string action) {
+            string actionApp = (string)appDropdown.SelectedValue;
+
             if (F22Settings.Opacity == 1) {
-                app.SetAction(appDropdown.Text, App.F22, action);
+                app.SetAction(actionApp, App.F22, action);
             }
 
             if (F23Settings.Opacity == 1) {
-                app.SetAction(appDropdown.Text, App.F23, action);
+                app.SetAction(actionApp, App.F23, action);
             }
 
             if (F24Settings.Opacity == 1) {
-                app.SetAction(appDropdown.Text, App.F24, action);
+                app.SetAction(actionApp, App.F24, action);
             }
         }
     }
