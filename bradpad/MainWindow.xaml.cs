@@ -154,14 +154,14 @@ namespace bradpad {
                 Content = "Select an Application",
                 IsEnabled = false,
                 IsSelected = true,
-                Tag = "",
+                Tag = AppActions.DEFAULT,
                 Visibility = Visibility.Collapsed
             });
 
             // TODO: replace these with a loop that adds applications that Brad wants
             appDropdown.Items.Add(new ComboBoxItem {
                 Content = "All Applications",
-                Tag = ""
+                Tag = AppActions.DEFAULT
             });
             appDropdown.Items.Add(new ComboBoxItem {
                 Content = "Windows Explorer",

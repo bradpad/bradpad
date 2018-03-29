@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace bradpad {
     class AppActions {
 
-        private const string DEFAULT = @"C:\WINDOWS\Explorer.EXE";
+        internal const string DEFAULT = "ALL_APPLICATIONS";
 
         string currentApplication = DEFAULT;
 
@@ -39,8 +39,8 @@ namespace bradpad {
         }
 
         internal List<string> GetActions(string app) {
-            IEnumerable<string> defaultActions = keyMaps[""].GetActions();
-            if (app != "") {
+            IEnumerable<string> defaultActions = keyMaps[DEFAULT].GetActions();
+            if (app != DEFAULT) {
                 List<string> combinedActions = keyMaps[app].GetActions().Union(defaultActions).ToList();
                 combinedActions.Sort();
                 return combinedActions;

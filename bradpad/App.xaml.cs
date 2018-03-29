@@ -109,7 +109,7 @@ namespace bradpad {
                 }
             } else {
                 appActions = new AppActions(new Dictionary<string, KeyMap>() {
-                    {"", new KeyMap()},
+                    {AppActions.DEFAULT, new KeyMap()},
                     {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
                     {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
                 });
