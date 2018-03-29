@@ -14,6 +14,7 @@ namespace bradpad {
 
         string currentApplication = DEFAULT;
 
+        // Maps application name to KeyMap
         [JsonProperty]
         Dictionary<string, KeyMap> keyMaps;
 

@@ -10,58 +10,59 @@ using Newtonsoft.Json;
 namespace bradpad {
     class KeyMap {
 
-        internal class Action {
+        internal class ActionData {
 
             [JsonProperty]
-            internal readonly string action;
+            private readonly string action;
 
             [JsonProperty]
-            internal readonly bool isApp;
+            private readonly bool isApp;
 
             [JsonConstructor]
-            internal Action(string inAction, bool inIsApp) {
+            internal ActionData(string inAction, bool inIsApp) {
                 action = inAction;
                 isApp = inIsApp;
             }
+
+            internal string Action {
+                get {
+                    return action;
+                }
+            }
+
+            internal bool IsApp {
+                get {
+                    return isApp;
+                }
+            }
         }
 
-        // Stores actions to display
+        // Maps action name to ActionData.
         [JsonProperty]
-        HashSet<string> actions;
+        Dictionary<string, ActionData> allActions;
 
-        // Action name, plus pair of action and whether it is an app
-        [JsonProperty]
-        Dictionary<string, Action> allActions;
-
+        // Maps Key (pedal) to action name.
         [JsonProperty]
         Dictionary<Key, string> keyDict;
 
+        // Contains names of temporary actions.
         [JsonProperty]
         HashSet<string> tempActions = new HashSet<string>();
 
         [JsonConstructor]
-        internal KeyMap(HashSet<string> inActions, Dictionary<string, Action> inAllActions, Dictionary<Key, string> inKeyDict, HashSet<string> inTempActions) {
-            actions = inActions;
+        internal KeyMap(Dictionary<string, ActionData> inAllActions, Dictionary<Key, string> inKeyDict, HashSet<string> inTempActions) {
             allActions = inAllActions;
             keyDict = inKeyDict;
             tempActions = inTempActions;
         }
 
         internal KeyMap() {
-            actions = new HashSet<string>() {
-                {"Open Word"},
-                {"Copy"},
-                {"Paste"},
-                {"Open Chrome"},
-                {"New Tab"},
-            };
-
-            allActions = new Dictionary<string, Action>() {
-                {"Open Word", new Action("winword.exe", true)},
-                {"Copy", new Action("^c", false)},
-                {"Paste", new Action("^v", false)},
-                {"Open Chrome", new Action("chrome.exe", true)},
-                {"New Tab", new Action("^t", false)},
+            allActions = new Dictionary<string, ActionData>() {
+                {"Open Word", new ActionData("winword.exe", true)},
+                {"Copy", new ActionData("^c", false)},
+                {"Paste", new ActionData("^v", false)},
+                {"Open Chrome", new ActionData("chrome.exe", true)},
+                {"New Tab", new ActionData("^t", false)},
             };
 
             keyDict = new Dictionary<Key, string>() {
@@ -72,8 +73,7 @@ namespace bradpad {
         }
 
         internal void AddAction(string name, string val, bool appFlag, bool temp) {
-            actions.Add(name);
-            allActions[name] = new Action(val, appFlag);
+            allActions[name] = new ActionData(val, appFlag);
             if (temp) {
                 tempActions.Add(name);
             } else {
@@ -86,18 +86,24 @@ namespace bradpad {
         }
 
         internal IEnumerable<string> GetActions() {
-            return actions.Except(tempActions);
+            return allActions.Keys.Except(tempActions);
         }
 
         internal string GetVal(Key key) {
-            return allActions[keyDict[key]].action;
+            return allActions[keyDict[key]].Action;
         }
 
         internal bool IsApp(Key key) {
-            return allActions[keyDict[key]].isApp;
+            return allActions[keyDict[key]].IsApp;
         }
 
         internal void SetAction(Key key, string action) {
+            string prevAction = keyDict[key];
+            // Remove prevAction from dictionaries if it was temporary
+            if (tempActions.Contains(prevAction)) {
+                tempActions.Remove(prevAction);
+                allActions.Remove(prevAction);
+            }
             keyDict[key] = action;
         }
     }
