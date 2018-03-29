@@ -17,6 +17,7 @@ namespace bradpad {
         [JsonProperty]
         Dictionary<string, KeyMap> keyMaps;
 
+        [JsonConstructor]
         internal AppActions(Dictionary<string, KeyMap> inKeyMaps) {
             keyMaps = inKeyMaps;
         }

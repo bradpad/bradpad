@@ -24,11 +24,7 @@ namespace bradpad {
         internal const Key F23 = Key.F23;
         internal const Key F24 = Key.F24;
 
-        AppActions appActions = new AppActions(new Dictionary<string, KeyMap>() {
-            {"", new KeyMap()},
-            {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
-            {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
-        });
+        AppActions appActions;
         KeyboardListener KListener = new KeyboardListener();
         Dictionary<Key, bool> pressed = new Dictionary<Key, bool>() {
             {F22, false},
@@ -63,8 +59,8 @@ namespace bradpad {
             SaveSettings();
         }
 
-        internal void SetCurrentApplication(string currentApplicationIn) {
-            appActions.SetCurrentApplication(currentApplicationIn);
+        internal void SetCurrentApplication(string inCurrentApplication) {
+            appActions.SetCurrentApplication(inCurrentApplication);
             MainWindow mainWindow = (MainWindow)Current.MainWindow;
             if (mainWindow != null && mainWindow.IsLoaded) {
                 ((MainWindow)Current.MainWindow).UpdateMainWindow();
@@ -75,13 +71,14 @@ namespace bradpad {
             ActiveAppDetector.SetUpApplicationDetector();
             KListener.KeyDown += new RawKeyEventHandler(KListenerKeyDown);
             KListener.KeyUp += new RawKeyEventHandler(KListenerKeyUp);
+            LoadSettings();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e) {
             KListener.Dispose();
         }
 
-        internal bool ContainsKey(Key key) {
+        private bool ContainsKey(Key key) {
             return key == App.F22 || key == App.F23 || key == App.F24;
         }
 
@@ -97,15 +94,31 @@ namespace bradpad {
 
         private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
+
             if (ContainsKey(args.Key)) {
                 pressed[args.Key] = false;
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
             }
         }
 
+        private void LoadSettings() {
+            if (File.Exists("settings.json")) {
+                using (StreamReader file = File.OpenText("settings.json")) {
+                    JsonSerializer serializer = new JsonSerializer();
+                    appActions = (AppActions)serializer.Deserialize(file, typeof(AppActions));
+                }
+            } else {
+                appActions = new AppActions(new Dictionary<string, KeyMap>() {
+                    {"", new KeyMap()},
+                    {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
+                    {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
+                });
+            }
+        }
+
         private void SaveSettings() {
             JsonSerializer serializer = new JsonSerializer();
-            using (StreamWriter sw = new StreamWriter("settings/settings.json"))
+            using (StreamWriter sw = new StreamWriter("settings.json"))
             using (JsonWriter writer = new JsonTextWriter(sw)) {
                 writer.Formatting = Formatting.Indented;
                 serializer.Serialize(writer, appActions);
