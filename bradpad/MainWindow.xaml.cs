@@ -113,7 +113,7 @@ namespace bradpad {
         // Settings Panel
         private void AppDropdownSelectionChanged(object sender, EventArgs e) {
             ComboBoxItem selectedItem = (ComboBoxItem)((ComboBox)sender).SelectedItem;
-            if (IsLoaded && selectedItem.IsEnabled) {
+            if (selectedItem != null && selectedItem.IsEnabled) {
                 // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
                 string actionApp = (string)selectedItem.Tag;
                 ComboBoxItem actionItem = (ComboBoxItem)actionDropdown.SelectedItem;
@@ -154,7 +154,7 @@ namespace bradpad {
                 Content = "Select an Application",
                 IsEnabled = false,
                 IsSelected = true,
-                Tag = AppActions.DEFAULT,
+                Tag = AppActions.EMPTY,
                 Visibility = Visibility.Collapsed
             });
 

@@ -11,6 +11,7 @@ namespace bradpad {
     class AppActions {
 
         internal const string DEFAULT = "ALL_APPLICATIONS";
+        internal const string EMPTY = "";
 
         string currentApplication = DEFAULT;
 
@@ -35,7 +36,7 @@ namespace bradpad {
             if (keyMaps.ContainsKey(app)) {
                 return keyMaps[app].GetAction(key);
             }
-            return "";
+            return EMPTY;
         }
 
         internal List<string> GetActions(string app) {
