@@ -81,6 +81,19 @@ namespace bradpad {
             UpdateSettingsButtonsContent((string)appDropdown.SelectedValue);
         }
 
+        internal void FillAllCurrentApplications()
+        {
+            AllApplicationsList.Items.Clear();
+            Dictionary<string, string> allApps = app.GetApplications();
+            foreach(var i in allApps)
+            {
+                AllApplicationsList.Items.Add(new ListBoxItem {
+                    Content = i.Value,
+                    Tag = i.Key,
+                });
+            }
+        }
+
         internal void FillAvailableApplications()
         {
             AvailableApplications.Items.Clear();
@@ -215,7 +228,7 @@ namespace bradpad {
             */
 
             // TODO: replace these with a loop that adds applications that Brad wants
-            appDropdown.Items.Add(new ComboBoxItem {
+            /*appDropdown.Items.Add(new ComboBoxItem {
                 Content = "All Applications",
                 Tag = AppActions.DEFAULT,
                 IsSelected = true,
@@ -227,7 +240,28 @@ namespace bradpad {
             appDropdown.Items.Add(new ComboBoxItem {
                 Content = "Google Chrome",
                 Tag = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-            });
+            });*/
+            Dictionary<string, string> allApps = app.GetApplications();
+            foreach(var i in allApps)
+            {
+                if (i.Value == "All Applications")
+                {
+                    appDropdown.Items.Add(new ComboBoxItem
+                    {
+                        Content = i.Value,
+                        Tag = i.Key,
+                        IsSelected = true,
+                    });
+                }
+                else
+                {
+                    appDropdown.Items.Add(new ComboBoxItem
+                    {
+                        Content = i.Value,
+                        Tag = i.Key,
+                    });
+                }
+            }
         }
 
         private void SettingsButtonFromApplicationClicked(object sender, RoutedEventArgs e)
@@ -239,6 +273,7 @@ namespace bradpad {
         private void ConfigureAppsButtonClicked(object sender, RoutedEventArgs e)
         {
             FillAvailableApplications();
+            FillAllCurrentApplications();
             settingsPanel.Visibility = Visibility.Hidden;
             applicationsPanel.Visibility = Visibility.Visible;
         }

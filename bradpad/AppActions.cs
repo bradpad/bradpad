@@ -19,9 +19,16 @@ namespace bradpad {
         [JsonProperty]
         Dictionary<string, KeyMap> keyMaps;
 
+        // Maps from Application path to name
+        Dictionary<string, string> appNames;
+
         [JsonConstructor]
         internal AppActions(Dictionary<string, KeyMap> inKeyMaps) {
             keyMaps = inKeyMaps;
+            appNames = new Dictionary<string, string>();
+            appNames.Add(DEFAULT ,"All Applications");
+            appNames.Add(@"C:\WINDOWS\Explorer.EXE", "Windows Explorer");
+            appNames.Add(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome");
         }
 
         internal void AddAction(string app, string name, string val, bool appFlag, bool temp) {
@@ -69,6 +76,11 @@ namespace bradpad {
             } else {
                 currentApplication = DEFAULT;
             }
+        }
+
+        internal Dictionary<string, string> GetApplications()
+        {
+            return appNames;
         }
     }
 }

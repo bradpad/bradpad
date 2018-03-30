@@ -54,6 +54,11 @@ namespace bradpad {
             return appActions.GetActions(app);
         }
 
+        internal Dictionary<string, string> GetApplications()
+        {
+            return appActions.GetApplications();
+        }
+
         internal void SetAction(string app, Key key, string action) {
             appActions.SetAction(app, key, action);
             SaveSettings();
