@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace bradpad {
     /// <summary>
@@ -78,6 +79,60 @@ namespace bradpad {
 
         internal void UpdateSettingsButtonsContent() {
             UpdateSettingsButtonsContent((string)appDropdown.SelectedValue);
+        }
+
+        internal void FillAvailableApplications()
+        {
+            AvailableApplications.Items.Clear();
+            /*string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
+            {
+                foreach (string subkey_name in key.GetSubKeyNames())
+                {
+                    using (RegistryKey subkey = key.OpenSubKey(subkey_name))
+                    {
+                        AvailableApplications.Items.Add(new ComboBoxItem
+                        {
+                            Content = subkey.GetValue("DisplayName"),
+                        });
+                    }
+                }
+            }*/
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
+            Microsoft.Win32.RegistryKey subKey1 = regKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
+            string[] subKeyNames = subKey1.GetSubKeyNames();
+
+            foreach (string subKeyName in subKeyNames)
+            {
+                Microsoft.Win32.RegistryKey subKey2 = subKey1.OpenSubKey(subKeyName);
+
+                if (ValueNameExists(subKey2.GetValueNames(), "DisplayName") &&
+                ValueNameExists(subKey2.GetValueNames(), "DisplayVersion"))
+                {
+                    /*AvailableApplications.Items.Add(new ListViewItem(new string[]{
+                    subKey2.GetValue("DisplayName").ToString(),
+                        subKey2.GetValue("DisplayVersion").ToString()
+                    }));*/
+                    AvailableApplications.Items.Add(new ComboBoxItem
+                    {
+                        Content = subKey2.GetValue("DisplayName").ToString(),
+                    });
+                }
+
+                subKey2.Close();
+            }
+
+            subKey1.Close();
+        }
+
+        private bool ValueNameExists(string[] valueNames, string valueName)
+        {
+            foreach (string s in valueNames)
+            {
+                if (s.ToLower() == valueName.ToLower()) return true;
+            }
+
+            return false;
         }
 
         internal void UpdateSettingsButtonsContent(string actionApp) {
@@ -150,18 +205,20 @@ namespace bradpad {
 
         private void FillDropDownApps() {
             appDropdown.Items.Clear();
-            appDropdown.Items.Add(new ComboBoxItem {
+            /*appDropdown.Items.Add(new ComboBoxItem {
                 Content = "Select an Application",
                 IsEnabled = false,
                 IsSelected = true,
                 Tag = AppActions.EMPTY,
                 Visibility = Visibility.Collapsed
             });
+            */
 
             // TODO: replace these with a loop that adds applications that Brad wants
             appDropdown.Items.Add(new ComboBoxItem {
                 Content = "All Applications",
-                Tag = AppActions.DEFAULT
+                Tag = AppActions.DEFAULT,
+                IsSelected = true,
             });
             appDropdown.Items.Add(new ComboBoxItem {
                 Content = "Windows Explorer",
@@ -171,6 +228,24 @@ namespace bradpad {
                 Content = "Google Chrome",
                 Tag = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
             });
+        }
+
+        private void SettingsButtonFromApplicationClicked(object sender, RoutedEventArgs e)
+        {
+            applicationsPanel.Visibility = Visibility.Hidden;
+            settingsPanel.Visibility = Visibility.Visible;
+        }
+
+        private void ConfigureAppsButtonClicked(object sender, RoutedEventArgs e)
+        {
+            FillAvailableApplications();
+            settingsPanel.Visibility = Visibility.Hidden;
+            applicationsPanel.Visibility = Visibility.Visible;
+        }
+
+        private void AvailableApplicationsChanged(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {

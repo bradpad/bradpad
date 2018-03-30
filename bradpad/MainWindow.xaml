@@ -10,6 +10,35 @@
         Topmost="True">
 
     <Grid>
+        <Grid Name="applicationsPanel"
+              ScrollViewer.CanContentScroll="True"
+              Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <ComboBox Name="AvailableApplications"
+                          SelectionChanged="AvailableApplicationsChanged"
+                          Grid.Row="0">
+                    
+                </ComboBox>
+                <Button Name="SettingsButtonFromApplication"
+                        Click="SettingsButtonFromApplicationClicked"
+                        Content="Settings"
+                        Grid.Row="1"
+                        TextBlock.FontSize="32" />
+            </Grid>
+            <Grid Grid.Row="1">
+
+            </Grid>
+            
+        </Grid>
 
         <Grid Name="settingsPanel"
               ScrollViewer.CanContentScroll="True"
@@ -92,15 +121,16 @@
                         Click="MainButtonClicked"
                         Content="Main"
                         Grid.Column="3" />
-                
-                <!--
+
+
                 <Button Name="applicationsButton"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
                         Margin="16"
                         Padding="8"
+                        Click="ConfigureAppsButtonClicked"
                         Content="Configure Applications" 
-                        />-->
+                        />
 
                 <CheckBox Name="foreGroundCheckBox"
                           HorizontalAlignment="Stretch"
