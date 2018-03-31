@@ -50,10 +50,21 @@
                         Content="Edit and Remove Applications"/>
                 </Grid>
             </Grid>
-            <ListBox    Name = "AllApplicationsList"
-                        Grid.Column="2">
-                
-            </ListBox>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="All Applications"
+                           FontSize="28"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                <ListBox    Name = "AllApplicationsList"
+                            Grid.Row="1"/>
+
+            </Grid>
+            
             
         </Grid>
 

@@ -97,7 +97,7 @@ namespace bradpad {
         internal void FillAvailableApplications()
         {
             AvailableApplications.Items.Clear();
-            /*string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
             using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
             {
                 foreach (string subkey_name in key.GetSubKeyNames())
@@ -106,13 +106,13 @@ namespace bradpad {
                     {
                         AvailableApplications.Items.Add(new ComboBoxItem
                         {
-                            Content = subkey.GetValue("DisplayName"),
+                            Content = subkey.GetValue("Path"),
                         });
                     }
                 }
-            }*/
-            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
-            Microsoft.Win32.RegistryKey subKey1 = regKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall");
+            }
+           /* Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
+            Microsoft.Win32.RegistryKey subKey1 = regKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths");
             string[] subKeyNames = subKey1.GetSubKeyNames();
 
             foreach (string subKeyName in subKeyNames)
@@ -122,10 +122,10 @@ namespace bradpad {
                 if (ValueNameExists(subKey2.GetValueNames(), "DisplayName") &&
                 ValueNameExists(subKey2.GetValueNames(), "DisplayVersion"))
                 {
-                    /*AvailableApplications.Items.Add(new ListViewItem(new string[]{
+                    AvailableApplications.Items.Add(new ListViewItem(new string[]{
                     subKey2.GetValue("DisplayName").ToString(),
                         subKey2.GetValue("DisplayVersion").ToString()
-                    }));*/
+                    }));
                     AvailableApplications.Items.Add(new ComboBoxItem
                     {
                         Content = subKey2.GetValue("DisplayName").ToString(),
@@ -135,7 +135,7 @@ namespace bradpad {
                 subKey2.Close();
             }
 
-            subKey1.Close();
+            subKey1.Close();*/
         }
 
         private bool ValueNameExists(string[] valueNames, string valueName)
