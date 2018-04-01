@@ -173,8 +173,6 @@ namespace bradpad {
             // Make sure FillDropDownApps is called before UpdateSettingsButtonsContent or else app will crash
             FillDropDownApps();
             UpdateSettingsButtonsContent();
-            saveNewActionButton.IsEnabled = false;
-            savePermanentButton.IsEnabled = false;
             //applicationsPanel.Visibility = Visibility.Hidden;
         }
 
@@ -188,8 +186,6 @@ namespace bradpad {
                 if (actionItem != null && actionItem.IsEnabled) {
                     saveButton.IsEnabled = true;
                 }
-                saveNewActionButton.IsEnabled = true;
-                savePermanentButton.IsEnabled = true;
                 UpdateSettingsButtonsContent(actionApp);
                 FillDropDownActions(actionApp);
             }
@@ -353,55 +349,6 @@ namespace bradpad {
             F24Settings.Opacity = 1;
         }
 
-        // settingsConfigureFooter
-        private void AppSpecificCheckBoxClicked(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void CancelNewActionButtonClick(object sender, RoutedEventArgs e) {
-            ShowActionFooter();
-        }
-
-        private void CustomInputClick(object sender, RoutedEventArgs e) {
-            customInputTextBox.Text = "";
-        }
-
-        private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e) {
-            if (openAppCheckBox.IsChecked == true) {
-                customInputTextBox.Text = "Enter Application";
-            } else {
-                customInputTextBox.Text = "Enter Keyboard Shortcut";
-            }
-        }
-
-        private void RestoreDefaultForConfigScreen() {
-            openAppCheckBox.IsChecked = false;
-            //appSpecificCheckBox.IsChecked = false;
-            customInputTextBox.Text = "Enter Keyboard Shortcut";
-        }
-
-        // TODO: only enable saving actions when user has selected application or entered keyboard shortcut
-        private void NewAction(bool temp) {
-            string actionApp = (string)appDropdown.SelectedValue;
-            string name = customInputTextBox.Text;
-            string action = customInputTextBox.Text;
-            app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
-            SetActionFromDropDown(name);
-            UpdateMainWindow();
-            UpdateSettingsButtonsContent();
-            FillDropDownActions(actionApp);
-        }
-
-        private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
-            NewAction(true);
-            ReturnToSettings(sender, e);
-        }
-
-        private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
-            NewAction(false);
-            ReturnToSettings(sender, e);
-        }
-
         private void SetActionFromDropDown(string action) {
             string actionApp = (string)appDropdown.SelectedValue;
 
@@ -416,6 +363,189 @@ namespace bradpad {
             if (F24Settings.Opacity == 1) {
                 app.SetAction(actionApp, App.F24, action);
             }
+        }
+
+        // settingsConfigureFooter
+        private void AppSpecificCheckBoxClicked(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void CancelNewActionButtonClick(object sender, RoutedEventArgs e) {
+            ShowActionFooter();
+        }
+
+        private void CustomActionTextKeyDown(object sender, KeyEventArgs e) {
+            string displayVal = null;
+            string sendVal = null;
+            switch (e.Key) {
+                case Key.LeftAlt:
+                case Key.RightAlt:
+                case Key.System:
+                    displayVal = "Alt";
+                    sendVal = "%";
+                    break;
+                case Key.LeftCtrl:
+                case Key.RightCtrl:
+                    displayVal = "Ctrl";
+                    sendVal = "^";
+                    break;
+                case Key.LeftShift:
+                case Key.RightShift:
+                    displayVal = "Shift";
+                    sendVal = "+";
+                    break;
+                case Key.Back:
+                    displayVal = "Backspace";
+                    sendVal = "{BACKSPACE}";
+                    break;
+                // There seems to be a bug with caps lock that causes SendWait to enter caps lock twice so it doesn't do anything
+                //case Key.Capital:
+                //    displayVal = "Caps Lock";
+                //    sendVal = "{CAPSLOCK}";
+                //    break;
+                case Key.Delete:
+                    displayVal = "Delete";
+                    sendVal = "{DELETE}";
+                    break;
+                case Key.End:
+                    displayVal = "End";
+                    sendVal = "{END}";
+                    break;
+                case Key.Escape:
+                    displayVal = "ESC";
+                    sendVal = "{ESC}";
+                    break;
+                case Key k when k >= Key.F1 && k <= Key.F16:
+                    displayVal = k.ToString();
+                    sendVal = "{" + displayVal + "}";
+                    break;
+                case Key.Home:
+                    displayVal = "Home";
+                    sendVal = "{HOME}";
+                    break;
+                case Key.Oem1:
+                    displayVal = ";";
+                    sendVal = ";";
+                    break;
+                case Key.Oem3:
+                    displayVal = "`";
+                    sendVal = "`";
+                    break;
+                case Key.Oem5:
+                    displayVal = @"\";
+                    sendVal = @"\";
+                    break;
+                case Key.Oem6:
+                    displayVal = "]";
+                    sendVal = "{]}";
+                    break;
+                case Key.OemComma:
+                    displayVal = ",";
+                    sendVal = ",";
+                    break;
+                case Key.OemMinus:
+                    displayVal = "-";
+                    sendVal = "-";
+                    break;
+                case Key.OemOpenBrackets:
+                    displayVal = "[";
+                    sendVal = "{[}";
+                    break;
+                case Key.OemPeriod:
+                    displayVal = ".";
+                    sendVal = ".";
+                    break;
+                case Key.OemPlus:
+                    displayVal = "+";
+                    sendVal = "+";
+                    break;
+                case Key.OemQuestion:
+                    displayVal = "/";
+                    sendVal = "/";
+                    break;
+                case Key.OemQuotes:
+                    displayVal = "'";
+                    sendVal = "'";
+                    break;
+                case Key.Pause:
+                    displayVal = "Break";
+                    sendVal = "{BREAK}";
+                    break;
+                case Key.PageDown:
+                    displayVal = "Page Down";
+                    sendVal = "{PGDN}";
+                    break;
+                case Key.PageUp:
+                    displayVal = "Page Up";
+                    sendVal = "{PGUP}";
+                    break;
+                case Key.Return:
+                    displayVal = "Enter/Return";
+                    sendVal = "{ENTER}";
+                    break;
+                // There seems to be a bug with space that causes SendWait to enter space until it stack overflows
+                //case Key.Space:
+                //    displayVal = "Space";
+                //    sendVal = " ";
+                //    break;
+                case Key.Tab:
+                    displayVal = "Tab";
+                    sendVal = "{TAB}";
+                    break;
+                default:
+                    if ((e.Key >= Key.A && e.Key <= Key.Z) || (e.Key >= Key.D0 && e.Key <= Key.D9)) {
+                        KeyConverter keyConverter = new KeyConverter();
+                        displayVal = keyConverter.ConvertToString(e.Key);
+                        sendVal = keyConverter.ConvertToString(e.Key).ToLower();
+                    }
+                    break;
+            }
+            if (openAppCheckBox.IsChecked == false && displayVal != null && sendVal != null) {
+                if (customActionText.Text == "Enter Keyboard Shortcut") {
+                    customActionText.Text = displayVal;
+                    customActionText.Tag = sendVal;
+                } else if (customActionText.Text.Count(x => x == '+') < 2) {
+                    customActionText.Text = customActionText.Text + "+" + displayVal;
+                    customActionText.Tag = (string)customActionText.Tag + sendVal;
+                }
+                e.Handled = true;
+            }
+        }
+
+        // TODO: only enable saving actions when user has selected application or entered keyboard shortcut
+        private void NewAction(bool temp) {
+            string actionApp = (string)appDropdown.SelectedValue;
+            string name = customActionText.Text;
+            string action = (string)customActionText.Tag;
+            app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
+            SetActionFromDropDown(name);
+            UpdateMainWindow();
+            UpdateSettingsButtonsContent();
+            FillDropDownActions(actionApp);
+        }
+
+        private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e) {
+            if (openAppCheckBox.IsChecked == true) {
+                customActionText.Text = "Enter Application";
+            } else {
+                customActionText.Text = "Enter Keyboard Shortcut";
+            }
+        }
+
+        private void RestoreDefaultForConfigScreen() {
+            openAppCheckBox.IsChecked = false;
+            //appSpecificCheckBox.IsChecked = false;
+            customActionText.Text = "Enter Keyboard Shortcut";
+        }
+
+        private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
+            NewAction(true);
+            ReturnToSettings(sender, e);
+        }
+
+        private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
+            NewAction(false);
+            ReturnToSettings(sender, e);
         }
     }
 }

@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="bradpad"
         Height="350"
+        KeyDown="CustomActionTextKeyDown"
         Topmost="True">
 
     <Grid>
@@ -229,8 +230,7 @@
                         Margin="16"
                         Content="Save Action Permanently"
                         Grid.Column="0" 
-                        Click="SavePermanentButtonClick"
-                        IsEnabled="False" />
+                        Click="SavePermanentButtonClick" />
 
                 <Grid Grid.Column="1">
 
@@ -255,22 +255,19 @@
 
                 </Grid>
 
-                <TextBox Name="customInputTextBox"
+                <TextBlock Name="customActionText"
                            Grid.Column="2" 
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Stretch"
                            Margin="10, 30"
-                           Text="..."
                            TextAlignment="Center"
-                           FontSize="18"
-                           GotFocus="CustomInputClick" />
+                           FontSize="18" />
 
                 <Button Name="saveNewActionButton"
                         Margin="16"
                         Content="Save Action"
                         Grid.Column="3"
-                        Click="SaveNewActionButtonClick"
-                        IsEnabled="False" />
+                        Click="SaveNewActionButtonClick" />
 
                 <Button Name="cancelNewActionButton"
                         Margin="16"
