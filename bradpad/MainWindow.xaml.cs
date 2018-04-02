@@ -375,6 +375,11 @@ namespace bradpad {
         }
 
         private void CustomActionTextKeyDown(object sender, KeyEventArgs e) {
+            if(customActionTextName.Visibility == Visibility.Visible)
+            {
+                return;
+            }
+
             string displayVal = null;
             string sendVal = null;
             switch (e.Key) {
@@ -515,7 +520,8 @@ namespace bradpad {
         // TODO: only enable saving actions when user has selected application or entered keyboard shortcut
         private void NewAction(bool temp) {
             string actionApp = (string)appDropdown.SelectedValue;
-            string name = customActionText.Text;
+            //string name = customActionText.Text;
+            string name = customActionTextName.Text;
             string action = (string)customActionText.Tag;
             app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
             SetActionFromDropDown(name);
@@ -535,7 +541,19 @@ namespace bradpad {
         private void RestoreDefaultForConfigScreen() {
             openAppCheckBox.IsChecked = false;
             //appSpecificCheckBox.IsChecked = false;
+            //customActionText.Text = "Enter Keyboard Shortcut";
+            customActionTextName.Text = "Enter Action Name";
+            customActionText.Visibility = Visibility.Hidden;
+            saveNewActionButton.Visibility = Visibility.Hidden;
+        }
+
+        private void nextButtonToActionButtonClick(object sender, RoutedEventArgs e)
+        {
             customActionText.Text = "Enter Keyboard Shortcut";
+            nextButtonToActionButton.Visibility = Visibility.Hidden;
+            customActionTextName.Visibility = Visibility.Hidden;
+            customActionText.Visibility = Visibility.Visible;
+            saveNewActionButton.Visibility = Visibility.Visible;
         }
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
