@@ -100,13 +100,23 @@ namespace bradpad {
             string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
             using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
             {
+                
                 foreach (string subkey_name in key.GetSubKeyNames())
                 {
                     using (RegistryKey subkey = key.OpenSubKey(subkey_name))
                     {
+                        /**TEMP***/
+                        string[] allNames = subkey.GetValueNames();
+                        Console.WriteLine("begin loop");
+                        foreach (var a in allNames)
+                        {
+                            Console.WriteLine(a);
+                        }
+                        Console.WriteLine("end loop");
+                        /*****/
                         AvailableApplications.Items.Add(new ComboBoxItem
                         {
-                            Content = subkey.GetValue("Path"),
+                            Content = subkey.GetValue(null),
                         });
                     }
                 }
