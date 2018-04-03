@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Text;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Ownskit.Utils;
 
 namespace bradpad {
@@ -59,9 +60,37 @@ namespace bradpad {
             return appActions.GetApplications();
         }
 
+        internal void LoadSettings() {
+            if (File.Exists("settings.json")) {
+                string text = File.ReadAllText("settings.json");
+                JObject settings = JObject.Parse(text);
+                appActions = (AppActions)settings["AppActions"].ToObject(typeof(AppActions));
+                ((MainWindow)Current.MainWindow).Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
+            } else {
+                appActions = new AppActions(new Dictionary<string, KeyMap>() {
+                    {AppActions.DEFAULT, new KeyMap()},
+                    {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
+                    {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
+                });
+                ((MainWindow)Current.MainWindow).Topmost = true;
+            }
+        }
+
+        internal void SaveSettings() {
+            Dictionary<string, object> settings = new Dictionary<string, object> {
+                {"AppActions", appActions},
+                {"Foreground", ((MainWindow)Current.MainWindow).Topmost}
+            };
+            JsonSerializer serializer = new JsonSerializer();
+            using (StreamWriter sw = new StreamWriter("settings.json"))
+            using (JsonWriter writer = new JsonTextWriter(sw)) {
+                writer.Formatting = Formatting.Indented;
+                serializer.Serialize(writer, settings);
+            }
+        }
+
         internal void SetAction(string app, Key key, string action) {
             appActions.SetAction(app, key, action);
-            SaveSettings();
         }
 
         internal void SetCurrentApplication(string inCurrentApplication) {
@@ -76,7 +105,6 @@ namespace bradpad {
             ActiveAppDetector.SetUpApplicationDetector();
             KListener.KeyDown += new RawKeyEventHandler(KListenerKeyDown);
             KListener.KeyUp += new RawKeyEventHandler(KListenerKeyUp);
-            LoadSettings();
         }
 
         private void ApplicationExit(object sender, ExitEventArgs e) {
@@ -103,30 +131,6 @@ namespace bradpad {
             if (ContainsKey(args.Key)) {
                 pressed[args.Key] = false;
                 ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
-            }
-        }
-
-        private void LoadSettings() {
-            if (File.Exists("settings.json")) {
-                using (StreamReader file = File.OpenText("settings.json")) {
-                    JsonSerializer serializer = new JsonSerializer();
-                    appActions = (AppActions)serializer.Deserialize(file, typeof(AppActions));
-                }
-            } else {
-                appActions = new AppActions(new Dictionary<string, KeyMap>() {
-                    {AppActions.DEFAULT, new KeyMap()},
-                    {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
-                    {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
-                });
-            }
-        }
-
-        private void SaveSettings() {
-            JsonSerializer serializer = new JsonSerializer();
-            using (StreamWriter sw = new StreamWriter("settings.json"))
-            using (JsonWriter writer = new JsonTextWriter(sw)) {
-                writer.Formatting = Formatting.Indented;
-                serializer.Serialize(writer, appActions);
             }
         }
 

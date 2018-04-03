@@ -45,6 +45,7 @@ namespace bradpad {
 
         public MainWindow() {
             InitializeComponent();
+            app.LoadSettings();
             foreGroundCheckBox.IsChecked = Topmost;
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();
@@ -291,6 +292,7 @@ namespace bradpad {
 
         private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
             Topmost = (bool)foreGroundCheckBox.IsChecked;
+            app.SaveSettings();
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e) {
@@ -373,6 +375,8 @@ namespace bradpad {
             if (F24Settings.Opacity == 1) {
                 app.SetAction(actionApp, App.F24, action);
             }
+
+            app.SaveSettings();
         }
 
         // settingsConfigureFooter
