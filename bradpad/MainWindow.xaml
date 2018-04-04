@@ -261,6 +261,7 @@
                            VerticalAlignment="Stretch"
                            Margin="10, 30"
                            TextAlignment="Center"
+                           GotFocus="CustomActionNameGotFocus"
                            FontSize="18" />
 
                 <Button Name="nextButtonToActionButton"

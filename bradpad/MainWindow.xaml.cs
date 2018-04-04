@@ -326,6 +326,11 @@ namespace bradpad {
             RestoreDefaultForConfigScreen();
             settingsActionFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Visible;
+            nextButtonToActionButton.Visibility = Visibility.Visible;
+            customActionTextName.Visibility = Visibility.Visible;
+            nextButtonToActionButton.IsEnabled = false;
+            savePermanentButton.IsEnabled = false;
+            saveNewActionButton.IsEnabled = false;
         }
 
         private void ActionDropdownSelectionChanged(object sender, EventArgs e) {
@@ -523,6 +528,8 @@ namespace bradpad {
                 if (customActionText.Text == "Enter Keyboard Shortcut") {
                     customActionText.Text = displayVal;
                     customActionText.Tag = sendVal;
+                    savePermanentButton.IsEnabled = true;
+                    saveNewActionButton.IsEnabled = true;
                 } else if (customActionText.Text.Count(x => x == '+') < 2) {
                     customActionText.Text = customActionText.Text + "+" + displayVal;
                     customActionText.Tag = (string)customActionText.Tag + sendVal;
@@ -568,11 +575,18 @@ namespace bradpad {
             customActionTextName.Visibility = Visibility.Hidden;
             customActionText.Visibility = Visibility.Visible;
             saveNewActionButton.Visibility = Visibility.Visible;
+            //savePermanentButton.IsEnabled = true;
         }
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
             NewAction(true);
             ReturnToSettings(sender, e);
+        }
+
+        private void CustomActionNameGotFocus(object sender, RoutedEventArgs e)
+        {
+            customActionTextName.Text = string.Empty;
+            nextButtonToActionButton.IsEnabled = true;
         }
 
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
