@@ -8,6 +8,7 @@
         Title="bradpad"
         Height="350"
         KeyDown="CustomActionTextKeyDown"
+        TextBlock.FontSize="20"
         Topmost="True">
 
     <Grid>
@@ -102,6 +103,7 @@
                         VerticalAlignment="Stretch"
                         Background="#FF55B35A"
                         Click="F22SettingsClicked"
+                        Foreground="White"
                         Grid.Column="0" 
                         TextBlock.FontSize="32" />
 
@@ -109,8 +111,9 @@
                 <Button Name="F23Settings"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Background="#FF559DB3"
+                        Background="#732673"
                         Click="F23SettingsClicked"
+                        Foreground="White"
                         Grid.Column="1" 
                         TextBlock.FontSize="32" />
 
@@ -119,6 +122,7 @@
                         VerticalAlignment="Stretch"
                         Background="#FFB5B7B3"
                         Click="F24SettingsClicked"
+                        Foreground="White"
                         Grid.Column="2" 
                         TextBlock.FontSize="32" />
 
@@ -340,7 +344,6 @@
                     Height="68"
                     Click="SettingsButtonClicked"
                     Content="Open Settings"
-                    TextBlock.FontSize="20"
                     DockPanel.Dock="Bottom" />
 
             <!--Grid is the last child because last child fills the rest of the window in DockPanel - that means don't put Grid above Button.-->
@@ -357,14 +360,16 @@
                         VerticalAlignment="Stretch"
                         Background="#FF55B35A"
                         Click="F22ButtonClicked"
+                        Foreground="White"
                         Grid.Column="0" 
                         TextBlock.FontSize="32" />
 
                 <Button Name="F23"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Background="#FF559DB3"
+                        Background="#732673"
                         Click="F23ButtonClicked"
+                        Foreground="White"
                         Grid.Column="1" 
                         TextBlock.FontSize="32" />
 
@@ -373,6 +378,7 @@
                         VerticalAlignment="Stretch"
                         Background="#FFB5B7B3"
                         Click="F24ButtonClicked"
+                        Foreground="White"
                         Grid.Column="2"
                         TextBlock.FontSize="32" />
 
