@@ -25,6 +25,8 @@ namespace bradpad {
 
         private App app = ((App)Application.Current);
 
+        Dictionary<string, string> appToPath = new Dictionary<string, string>();
+
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
                 "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. Also, we have internal active application recognizing capabilities- this will be used to add actions for each application. For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application. Additionally, we will work more with Brad to ensure that all the UI is easy to use.\n\n" +
@@ -49,6 +51,7 @@ namespace bradpad {
             foreGroundCheckBox.IsChecked = Topmost;
             MessageBox.Show(tutorialText, tutorialCaption);
             UpdateMainWindow();
+            FillInAppToPath();
         }
 
         internal void HighlightButton(Key button, bool setPressed) {
@@ -78,6 +81,41 @@ namespace bradpad {
             F24.Content = app.GetAction(App.F24);
         }
 
+        internal void AddRegKeyToAppToPath(string regKey)
+        {
+            //string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
+            using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(regKey))
+            {
+
+                foreach (string subkey_name in key.GetSubKeyNames())
+                {
+                    using (RegistryKey subkey = key.OpenSubKey(subkey_name))
+                    {
+                        /*
+                        AvailableApplications.Items.Add(new ComboBoxItem
+                        {
+                            Content = subkey.GetValue(null),
+                        });*/
+                        string p = (string)subkey.GetValue(null);
+                        if (p != null)
+                        {
+                            string name = p.Substring(p.LastIndexOf('\\') + 1, p.Length - (p.LastIndexOf('\\') + 1) - 4);
+
+                            appToPath[name] = p;
+                        }
+                    }
+                }
+            }
+        }
+
+        internal void FillInAppToPath()
+        {
+            string regKey = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
+            AddRegKeyToAppToPath(regKey);
+            regKey = @"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\App Paths";
+            AddRegKeyToAppToPath(regKey);
+        }
+
         internal void UpdateSettingsButtonsContent() {
             UpdateSettingsButtonsContent((string)appDropdown.SelectedValue);
         }
@@ -98,7 +136,7 @@ namespace bradpad {
         internal void FillAvailableApplications()
         {
             AvailableApplications.Items.Clear();
-            string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
+            /*string registry_key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
             using (Microsoft.Win32.RegistryKey key = Registry.LocalMachine.OpenSubKey(registry_key))
             {
                 
@@ -106,47 +144,18 @@ namespace bradpad {
                 {
                     using (RegistryKey subkey = key.OpenSubKey(subkey_name))
                     {
-                        /**TEMP***/
-                        string[] allNames = subkey.GetValueNames();
-                        Console.WriteLine("begin loop");
-                        foreach (var a in allNames)
-                        {
-                            Console.WriteLine(a);
-                        }
-                        Console.WriteLine("end loop");
-                        /*****/
                         AvailableApplications.Items.Add(new ComboBoxItem
                         {
                             Content = subkey.GetValue(null),
                         });
                     }
                 }
-            }
-           /* Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.LocalMachine;
-            Microsoft.Win32.RegistryKey subKey1 = regKey.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths");
-            string[] subKeyNames = subKey1.GetSubKeyNames();
+            }*/
 
-            foreach (string subKeyName in subKeyNames)
+            foreach (var i in appToPath)
             {
-                Microsoft.Win32.RegistryKey subKey2 = subKey1.OpenSubKey(subKeyName);
-
-                if (ValueNameExists(subKey2.GetValueNames(), "DisplayName") &&
-                ValueNameExists(subKey2.GetValueNames(), "DisplayVersion"))
-                {
-                    AvailableApplications.Items.Add(new ListViewItem(new string[]{
-                    subKey2.GetValue("DisplayName").ToString(),
-                        subKey2.GetValue("DisplayVersion").ToString()
-                    }));
-                    AvailableApplications.Items.Add(new ComboBoxItem
-                    {
-                        Content = subKey2.GetValue("DisplayName").ToString(),
-                    });
-                }
-
-                subKey2.Close();
+                AvailableApplications.Items.Add(new ComboBoxItem { Content = i.Key, Tag = i.Value});
             }
-
-            subKey1.Close();*/
         }
 
         private bool ValueNameExists(string[] valueNames, string valueName)
