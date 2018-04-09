@@ -79,6 +79,7 @@ namespace bradpad {
             F22.Content = app.GetAction(App.F22);
             F23.Content = app.GetAction(App.F23);
             F24.Content = app.GetAction(App.F24);
+            CurrentApplicationDisplay.Text = "Current Application: " + app.GetApplication();
         }
 
         internal void AddRegKeyToAppToPath(string regKey)

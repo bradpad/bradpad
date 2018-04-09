@@ -310,12 +310,26 @@
 
         <DockPanel Name="mainPanel"
                    Visibility="Visible">
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <Button Name="settingsButton"
+                <TextBlock Name="CurrentApplicationDisplay"
+                           Grid.Column="0"
+                           TextAlignment="Left"
+                           VerticalAlignment="Center">
+                    
+                </TextBlock>
+                
+                <Button Name="settingsButton"
                     Height="68"
                     Click="SettingsButtonClicked"
                     Content="Open Settings"
-                    DockPanel.Dock="Bottom" />
+                    Grid.Column="2"/>
+            </Grid>
 
             <!--Grid is the last child because last child fills the rest of the window in DockPanel - that means don't put Grid above Button.-->
             <Grid>

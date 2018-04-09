@@ -60,6 +60,11 @@ namespace bradpad {
             return appActions.GetApplications();
         }
 
+        internal string GetApplication()
+        {
+            return appActions.GetApplication();
+        }
+
         internal void LoadSettings() {
             if (File.Exists("settings.json")) {
                 string text = File.ReadAllText("settings.json");

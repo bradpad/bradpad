@@ -66,6 +66,11 @@ namespace bradpad {
             return keyMaps[currentApplication].IsApp(key);
         }
 
+        internal string GetApplication()
+        {
+            return appNames[currentApplication];
+        }
+
         internal void SetAction(string app, Key key, string action) {
             keyMaps[app].SetAction(key, action);
         }
