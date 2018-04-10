@@ -18,6 +18,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 
+using Newtonsoft.Json.Linq;
+
 namespace bradpad {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -200,17 +202,22 @@ namespace bradpad {
         }
 
         // Settings Panel
-        private void AppDropdownSelectionChanged(object sender, EventArgs e) {
-            ComboBoxItem selectedItem = (ComboBoxItem)((ComboBox)sender).SelectedItem;
-            if (selectedItem != null && selectedItem.IsEnabled) {
-                // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
-                string actionApp = (string)selectedItem.Tag;
-                ComboBoxItem actionItem = (ComboBoxItem)actionDropdown.SelectedItem;
-                if (actionItem != null && actionItem.IsEnabled) {
-                    saveButton.IsEnabled = true;
+        private void Import_Click(object sender, RoutedEventArgs e) {
+            OpenFileDialog openFileDialog = new OpenFileDialog {
+                DefaultExt = "json",
+                Filter = "JSON|*.json"
+            };
+            if (openFileDialog.ShowDialog() == true) {
+                try {
+                    string text = File.ReadAllText(openFileDialog.FileName);
+                    JObject settings = JObject.Parse(text);
+                    app.LoadSettings((AppActions)settings["AppActions"].ToObject(typeof(AppActions)));
+                    Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
+                    foreGroundCheckBox.IsChecked = Topmost;
+                    UpdateSettingsButtonsContent();
+                } catch (NullReferenceException) {
+                    MessageBox.Show("Settings import failed.", "Import Failure");
                 }
-                UpdateSettingsButtonsContent(actionApp);
-                FillDropDownActions(actionApp);
             }
         }
 
@@ -225,6 +232,33 @@ namespace bradpad {
                 app.SaveSettings();
                 File.Copy("settings.json", saveFileDialog.FileName, true);
             }
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e) {
+            if (MessageBox.Show("Are you sure you want to reset settings?", "Reset Settings", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                File.Delete("settings.json");
+                app.LoadSettings();
+                UpdateSettingsButtonsContent();
+            }
+        }
+
+        private void AppDropdownSelectionChanged(object sender, EventArgs e) {
+            ComboBoxItem selectedItem = (ComboBoxItem)((ComboBox)sender).SelectedItem;
+            if (selectedItem != null && selectedItem.IsEnabled) {
+                // TODO: create FillDropDownApps that initializes saveButton.IsEnabled to false
+                string actionApp = (string)selectedItem.Tag;
+                ComboBoxItem actionItem = (ComboBoxItem)actionDropdown.SelectedItem;
+                if (actionItem != null && actionItem.IsEnabled) {
+                    saveButton.IsEnabled = true;
+                }
+                UpdateSettingsButtonsContent(actionApp);
+                FillDropDownActions(actionApp);
+            }
+        }
+
+        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
+            Topmost = (bool)foreGroundCheckBox.IsChecked;
+            app.SaveSettings();
         }
 
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
@@ -294,21 +328,6 @@ namespace bradpad {
                     });
                 }
             }
-        }
-
-        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
-            Topmost = (bool)foreGroundCheckBox.IsChecked;
-            app.SaveSettings();
-        }
-
-        private void Import_Click(object sender, RoutedEventArgs e) {
-
-        }
-
-        private void Reset_Click(object sender, RoutedEventArgs e) {
-            File.Delete("settings.json");
-            app.LoadSettings();
-            UpdateSettingsButtonsContent();
         }
 
         private void SettingsButtonFromApplicationClicked(object sender, RoutedEventArgs e)
