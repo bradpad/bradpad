@@ -66,18 +66,23 @@ namespace bradpad {
         }
 
         internal void LoadSettings() {
-            if (File.Exists("settings.json")) {
-                string text = File.ReadAllText("settings.json");
-                JObject settings = JObject.Parse(text);
-                appActions = (AppActions)settings["AppActions"].ToObject(typeof(AppActions));
-                ((MainWindow)Current.MainWindow).Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
-            } else {
+            if (!File.Exists("settings.json")) {
                 appActions = new AppActions(new Dictionary<string, KeyMap>() {
                     {AppActions.DEFAULT, new KeyMap()},
                     {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
                     {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
                 });
-                ((MainWindow)Current.MainWindow).Topmost = true;
+            } else {
+                try {
+                    ((MainWindow)Current.MainWindow).Topmost = true;
+                    string text = File.ReadAllText("settings.json");
+                    JObject settings = JObject.Parse(text);
+                    appActions = (AppActions)settings["AppActions"].ToObject(typeof(AppActions));
+                    ((MainWindow)Current.MainWindow).Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
+                } catch (NullReferenceException) {
+                    File.Delete("settings.json");
+                    LoadSettings();
+                }
             }
         }
 

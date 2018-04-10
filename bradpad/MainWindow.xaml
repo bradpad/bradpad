@@ -45,8 +45,7 @@
                 
                     <Button Name="AddNewApplicationButton"
                         Grid.Row="0"
-                        Content="Add Application"
-                        />
+                        Content="Add Application" />
                     <Button Name="EditOrRemoveApplicationButton"
                         Grid.Row="1"
                         Content="Edit and Remove Applications"/>
@@ -90,6 +89,34 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Name="Import"
+                            Click="Import_Click"
+                            Content="Import"
+                            Grid.Column="0"
+                            Margin="8" />
+
+                    <Button Name="Export"
+                            Click="Export_Click"
+                            Content="Export"
+                            Grid.Column="1"
+                            Margin="8" />
+
+                    <Button Name="Reset"
+                            Click="Reset_Click"
+                            Content="Reset"
+                            Grid.Column="2"
+                            Margin="8" />
+
+                </Grid>
+
                 <ComboBox Name="appDropdown"
                       HorizontalAlignment="Center"
                       SelectionChanged="AppDropdownSelectionChanged"
@@ -100,7 +127,7 @@
 
                 <CheckBox Name="foreGroundCheckBox"
                           HorizontalAlignment="Right"
-                          VerticalAlignment="Stretch"
+                          VerticalAlignment="Center"
                           Click="ForegroundCheckBoxClicked"
                           Content="bradpad Always In Foreground"
                           Grid.Column="2"
@@ -312,23 +339,23 @@
                    Visibility="Visible">
             <Grid DockPanel.Dock="Bottom">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Name="CurrentApplicationDisplay"
                            Grid.Column="0"
+                           Margin="16"
                            TextAlignment="Left"
-                           VerticalAlignment="Center">
-                    
-                </TextBlock>
-                
+                           VerticalAlignment="Center" />
+
                 <Button Name="settingsButton"
-                    Height="68"
+                    Height="48"
                     Click="SettingsButtonClicked"
                     Content="Open Settings"
-                    Grid.Column="2"/>
+                    Grid.Column="2"
+                    Margin="16" />
             </Grid>
 
             <!--Grid is the last child because last child fills the rest of the window in DockPanel - that means don't put Grid above Button.-->

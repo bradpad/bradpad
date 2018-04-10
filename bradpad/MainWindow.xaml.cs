@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -212,6 +213,10 @@ namespace bradpad {
             }
         }
 
+        private void Export_Click(object sender, RoutedEventArgs e) {
+
+        }
+
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 0.2;
@@ -281,6 +286,21 @@ namespace bradpad {
             }
         }
 
+        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
+            Topmost = (bool)foreGroundCheckBox.IsChecked;
+            app.SaveSettings();
+        }
+
+        private void Import_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e) {
+            File.Delete("settings.json");
+            app.LoadSettings();
+            UpdateSettingsButtonsContent();
+        }
+
         private void SettingsButtonFromApplicationClicked(object sender, RoutedEventArgs e)
         {
             applicationsPanel.Visibility = Visibility.Hidden;
@@ -298,11 +318,6 @@ namespace bradpad {
         private void AvailableApplicationsChanged(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void ForegroundCheckBoxClicked(object sender, RoutedEventArgs e) {
-            Topmost = (bool)foreGroundCheckBox.IsChecked;
-            app.SaveSettings();
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e) {
