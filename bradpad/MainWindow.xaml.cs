@@ -214,7 +214,16 @@ namespace bradpad {
         }
 
         private void Export_Click(object sender, RoutedEventArgs e) {
+            SaveFileDialog saveFileDialog = new SaveFileDialog {
+                FileName = "settings",
+                DefaultExt = "json",
+                Filter = "JSON|*.json"
+            };
 
+            if (saveFileDialog.ShowDialog() == true) {
+                app.SaveSettings();
+                File.Copy("settings.json", saveFileDialog.FileName, true);
+            }
         }
 
         private void F22SettingsClicked(object sender, RoutedEventArgs e) {
