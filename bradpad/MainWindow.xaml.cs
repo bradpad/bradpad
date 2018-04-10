@@ -305,9 +305,11 @@ namespace bradpad {
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e) {
-            File.Delete("settings.json");
-            app.LoadSettings();
-            UpdateSettingsButtonsContent();
+            if (MessageBox.Show("Are you sure you want to reset settings?", "Reset Settings", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+                File.Delete("settings.json");
+                app.LoadSettings();
+                UpdateSettingsButtonsContent();
+            }
         }
 
         private void SettingsButtonFromApplicationClicked(object sender, RoutedEventArgs e)
