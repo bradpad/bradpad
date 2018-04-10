@@ -100,8 +100,8 @@ namespace bradpad {
                         string p = (string)subkey.GetValue(null);
                         if (p != null)
                         {
-                            string name = p.Substring(p.LastIndexOf('\\') + 1, p.Length - (p.LastIndexOf('\\') + 1) - 4);
-
+                            //string name = p.Substring(p.LastIndexOf('\\') + 1, p.Length - (p.LastIndexOf('\\') + 1) - 4);
+                            string name = p.Substring(p.LastIndexOf('\\') + 1, p.LastIndexOf('.') - p.LastIndexOf('\\')-1);
                             appToPath[name] = p;
                         }
                     }
