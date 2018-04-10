@@ -86,6 +86,10 @@ namespace bradpad {
             }
         }
 
+        internal void LoadSettings(AppActions inAppActions) {
+            appActions = inAppActions;
+        }
+
         internal void SaveSettings() {
             Dictionary<string, object> settings = new Dictionary<string, object> {
                 {"AppActions", appActions},
