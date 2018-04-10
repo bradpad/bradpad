@@ -158,6 +158,7 @@ namespace bradpad {
             {
                 AvailableApplications.Items.Add(new ComboBoxItem { Content = i.Key, Tag = i.Value});
             }
+            AvailableApplications.Items.Add(new ComboBoxItem{Content = "Add New Application"});
         }
 
         private bool ValueNameExists(string[] valueNames, string valueName)
@@ -326,7 +327,17 @@ namespace bradpad {
 
         private void AvailableApplicationsChanged(object sender, RoutedEventArgs e)
         {
+            //Console.WriteLine(AvailableApplications.SelectedItem.);
+            ComboBoxItem item = AvailableApplications.SelectedItem as ComboBoxItem;
 
+            if (item != null && (string)item.Content == "Add New Application")
+            {
+                AddNewApplicationButton.Content = "Add New Application";
+            }
+            else
+            {
+                AddNewApplicationButton.Content = "Add Application";
+            }
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e) {
@@ -389,6 +400,11 @@ namespace bradpad {
                     Content = action
                 });
             }
+        }
+
+        private void AddNewAppButtonClick(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void ReturnToSettings(object sender, RoutedEventArgs e) {

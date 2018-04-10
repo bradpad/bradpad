@@ -16,9 +16,9 @@
               ScrollViewer.CanContentScroll="True"
               Visibility="Hidden">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width=".6*"/>
+                <ColumnDefinition Width=".6*"/>
+                <ColumnDefinition Width=".8*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
@@ -27,14 +27,19 @@
                 </Grid.RowDefinitions>
                 <ComboBox Name="AvailableApplications"
                           SelectionChanged="AvailableApplicationsChanged"
-                          Grid.Row="0">
+                          Grid.Row="0"
+                          Margin="8, 55"
+                          HorizontalContentAlignment="Left"
+                          VerticalContentAlignment="Center">
+
                     
                 </ComboBox>
                 <Button Name="SettingsButtonFromApplication"
                         Click="SettingsButtonFromApplicationClicked"
                         Content="Settings"
                         Grid.Row="1"
-                        TextBlock.FontSize="32" />
+                        TextBlock.FontSize="32" 
+                        Margin="65,50"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid>
@@ -45,10 +50,16 @@
                 
                     <Button Name="AddNewApplicationButton"
                         Grid.Row="0"
-                        Content="Add Application" />
+                        Content="Add Application" 
+                        Margin="55, 50"
+                        Click= "AddNewAppButtonClick"/>
                     <Button Name="EditOrRemoveApplicationButton"
                         Grid.Row="1"
-                        Content="Edit and Remove Applications"/>
+                        Margin="55, 50">
+                        <TextBlock Text = "Edit and Remove Applications" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+                            
+                        </TextBlock>
+                    </Button>
                 </Grid>
             </Grid>
             <Grid Grid.Column="2">
@@ -56,7 +67,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="All Applications"
+                <TextBlock Text="Applications Listed"
                            FontSize="28"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
