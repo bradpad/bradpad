@@ -708,9 +708,11 @@ namespace bradpad {
                 CancelAddNewApplicationButton.Visibility = Visibility.Visible;
                 EnterApplicationNameBox.Visibility = Visibility.Visible;
             }
-            else
+            else //new application
             {
-
+                //Add making sure application is valid
+                app.InsertApplication(EnterApplicationNameBox.Text, EnterApplicationPathBox.Text);
+                FillAllCurrentApplications();
             }
         }
     }
