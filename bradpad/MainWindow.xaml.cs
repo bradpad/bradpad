@@ -216,6 +216,7 @@ namespace bradpad {
                     Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
                     foreGroundCheckBox.IsChecked = Topmost;
                     UpdateSettingsButtonsContent();
+                    app.SaveSettings();
                 } catch (NullReferenceException) {
                     MessageBox.Show("Settings import failed.", "Import Failure");
                 }
