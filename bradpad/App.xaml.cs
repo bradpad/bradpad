@@ -159,5 +159,10 @@ namespace bradpad {
                 System.Windows.Forms.SendKeys.SendWait(appActions.GetVal(key));
             }
         }
+
+        internal void InsertApplication(string name, string path)
+        {
+            appActions.InsertApplication(name, path);
+        }
     }
 }

@@ -30,16 +30,33 @@
                           Grid.Row="0"
                           Margin="8, 55"
                           HorizontalContentAlignment="Left"
-                          VerticalContentAlignment="Center">
+                          VerticalContentAlignment="Center"
+                          Visibility="Visible"/>
+                <TextBox Name="EnterApplicationNameBox"
+                         Grid.Row="0"
+                         Margin="8,55"
+                         Visibility="Hidden"
+                         Text="Enter Application Name"
+                         TextAlignment="Center"
+                         GotFocus="EnterApplicationNameBoxGotFocus"
+                         />
 
-                    
-                </ComboBox>
+
+
                 <Button Name="SettingsButtonFromApplication"
                         Click="SettingsButtonFromApplicationClicked"
                         Content="Settings"
                         Grid.Row="1"
                         TextBlock.FontSize="32" 
-                        Margin="65,50"/>
+                        Margin="65,50"
+                        Visibility="Visible"/>
+                <TextBox Name="EnterApplicationPathBox"
+                         Grid.Row="1"
+                         Margin="8,55"
+                         Visibility="Hidden"
+                         Text="Enter Application Path"
+                         TextAlignment="Center"
+                         GotFocus="EnterApplicationPathBoxGotFocus"/>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid>
@@ -55,11 +72,18 @@
                         Click= "AddNewAppButtonClick"/>
                     <Button Name="EditOrRemoveApplicationButton"
                         Grid.Row="1"
-                        Margin="55, 50">
+                        Margin="55, 50"
+                        Visibility="Visible">
                         <TextBlock Text = "Edit and Remove Applications" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
                             
                         </TextBlock>
                     </Button>
+                    <Button Name="CancelAddNewApplicationButton"
+                            Grid.Row="1"
+                            Margin="55,50"
+                            Visibility="Hidden"
+                            Content="Cancel"
+                            Click="CancelAddNewApplicationButtonClick"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="2">

@@ -28,6 +28,7 @@ namespace bradpad {
 
         private App app = ((App)Application.Current);
 
+        //this maps from all application names to the path of that application
         Dictionary<string, string> appToPath = new Dictionary<string, string>();
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
@@ -334,6 +335,7 @@ namespace bradpad {
         {
             applicationsPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
+            FillDropDownApps();
         }
 
         private void ConfigureAppsButtonClicked(object sender, RoutedEventArgs e)
@@ -421,10 +423,7 @@ namespace bradpad {
             }
         }
 
-        private void AddNewAppButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void ReturnToSettings(object sender, RoutedEventArgs e) {
             settingsActionFooter.Visibility = Visibility.Hidden;
@@ -661,6 +660,58 @@ namespace bradpad {
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
             NewAction(false);
             ReturnToSettings(sender, e);
+        }
+
+        private void EnterApplicationNameBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (EnterApplicationNameBox.Text == "Enter Application Name") { 
+                EnterApplicationNameBox.Text = string.Empty;
+            }
+        }
+
+        private void EnterApplicationPathBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (EnterApplicationPathBox.Text == "Enter Application Path")
+            {
+                EnterApplicationPathBox.Text = string.Empty;
+            }
+        }
+
+        private void CancelAddNewApplicationButtonClick(object sender, RoutedEventArgs e)
+        {
+            EnterApplicationPathBox.Visibility = Visibility.Hidden;
+            CancelAddNewApplicationButton.Visibility = Visibility.Hidden;
+            EnterApplicationNameBox.Visibility = Visibility.Hidden;
+            AvailableApplications.Visibility = Visibility.Visible;
+            EditOrRemoveApplicationButton.Visibility = Visibility.Visible;
+            SettingsButtonFromApplication.Visibility = Visibility.Visible;
+            
+        }
+
+        private void AddNewAppButtonClick(object sender, RoutedEventArgs e)
+        {
+            if((string)AddNewApplicationButton.Content == "Add Application")
+            {
+                ComboBoxItem selectedItem = (ComboBoxItem)AvailableApplications.SelectedItem;
+
+                app.InsertApplication((string)selectedItem.Content, (string)selectedItem.Tag);
+                FillAllCurrentApplications();
+            }
+            else if(AvailableApplications.Visibility == Visibility.Visible)
+            {
+                EnterApplicationNameBox.Text = "Enter Application Name";
+                EnterApplicationPathBox.Text = "Enter Application Path";
+                AvailableApplications.Visibility = Visibility.Hidden;
+                EditOrRemoveApplicationButton.Visibility = Visibility.Hidden;
+                SettingsButtonFromApplication.Visibility = Visibility.Hidden;
+                EnterApplicationPathBox.Visibility = Visibility.Visible;
+                CancelAddNewApplicationButton.Visibility = Visibility.Visible;
+                EnterApplicationNameBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+
+            }
         }
     }
 }

@@ -36,6 +36,15 @@ namespace bradpad {
         }
 
         internal string GetAction(Key key) {
+            //HACKY FIX
+            //return keyMaps[currentApplication].GetAction(key);
+            foreach(var i in keyMaps)
+            {
+                if(i.Key.Equals(currentApplication, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return keyMaps[i.Key].GetAction(key);
+                }
+            }
             return keyMaps[currentApplication].GetAction(key);
         }
 
@@ -68,6 +77,15 @@ namespace bradpad {
 
         internal string GetApplication()
         {
+            //HACKY FIX
+            //return appNames[currentApplication];
+            foreach (var i in appNames)
+            {
+                if (i.Key.Equals(currentApplication, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return appNames[i.Key];
+                }
+            }
             return appNames[currentApplication];
         }
 
@@ -76,16 +94,34 @@ namespace bradpad {
         }
 
         internal void SetCurrentApplication(string currentApplicationIn) {
-            if (keyMaps.ContainsKey(currentApplicationIn)) {
+            /*if (keyMaps.ContainsKey(currentApplicationIn)) {
+                //Console.WriteLine("testtest" + currentApplicationIn);
                 currentApplication = currentApplicationIn;
             } else {
+                //Console.WriteLine("test" + currentApplicationIn);
                 currentApplication = DEFAULT;
+            }*/
+            foreach(var i in keyMaps)
+            {
+                if(i.Key.Equals(currentApplicationIn, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    currentApplication = currentApplicationIn;
+                    return;
+                }
             }
+            currentApplication = DEFAULT;
         }
 
         internal Dictionary<string, string> GetApplications()
         {
             return appNames;
+        }
+
+        internal void InsertApplication(string name, string path)
+        {
+            appNames[path] = name;
+            Console.WriteLine("word: " + path);
+            keyMaps[path] = new KeyMap();
         }
     }
 }
