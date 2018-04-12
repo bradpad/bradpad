@@ -51,9 +51,12 @@ namespace bradpad {
 
         public MainWindow() {
             InitializeComponent();
+            bool first = !File.Exists("settings.json");
             app.LoadSettings();
             foreGroundCheckBox.IsChecked = Topmost;
-            MessageBox.Show(tutorialText, tutorialCaption);
+            if (first) {
+                MessageBox.Show(tutorialText, tutorialCaption);
+            }
             UpdateMainWindow();
             FillInAppToPath();
         }
