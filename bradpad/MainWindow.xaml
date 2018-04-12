@@ -330,6 +330,11 @@
 
                 </Grid>
 
+                <ComboBox Name="applicationsAvailableToOpen"
+                          Grid.Column="2"
+                          Margin="10,20"
+                          SelectionChanged="applicationsAvailableToOpenChanged"/>
+
                 <TextBox Name="customActionTextName"
                            Grid.Column="2" 
                            HorizontalAlignment="Stretch"
@@ -341,7 +346,7 @@
 
                 <Button Name="nextButtonToActionButton"
                         Margin="16"
-                        Content="Next"
+                        Content="Submit"
                         Grid.Column="3"
                         Click="NextButtonToActionButtonClick" />
 

@@ -395,9 +395,12 @@ namespace bradpad {
             settingsConfigureFooter.Visibility = Visibility.Visible;
             nextButtonToActionButton.Visibility = Visibility.Visible;
             customActionTextName.Visibility = Visibility.Visible;
+            applicationsAvailableToOpen.Visibility = Visibility.Hidden;
             nextButtonToActionButton.IsEnabled = false;
             savePermanentButton.IsEnabled = false;
             saveNewActionButton.IsEnabled = false;
+            openAppCheckBox.IsEnabled = true;
+            openAppCheckBox.IsChecked = false;
         }
 
         private void ActionDropdownSelectionChanged(object sender, EventArgs e) {
@@ -609,6 +612,12 @@ namespace bradpad {
             //string name = customActionText.Text;
             string name = customActionTextName.Text;
             string action = (string)customActionText.Tag;
+            if(openAppCheckBox.IsChecked == true)
+            {
+                ComboBoxItem selected = (ComboBoxItem)applicationsAvailableToOpen.SelectedValue;
+                name = "Open " + (string) selected.Content;
+                action = (string)selected.Tag;
+            }
             app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
             SetActionFromDropDown(name);
             UpdateMainWindow();
@@ -618,9 +627,27 @@ namespace bradpad {
 
         private void OpenAppCheckBoxClicked(object sender, RoutedEventArgs e) {
             if (openAppCheckBox.IsChecked == true) {
-                customActionText.Text = "Enter Application";
+                //customActionText.Text = "Enter Application";
+                applicationsAvailableToOpen.Items.Clear();
+                Dictionary<string, string> allApps = app.GetApplications();
+                applicationsAvailableToOpen.Items.Add(new ComboBoxItem
+                {
+                    Content = "Select an application",
+                    IsSelected = true,
+                });
+                foreach (var i in allApps)
+                {
+                    applicationsAvailableToOpen.Items.Add(new ComboBoxItem
+                    {
+                        Content = i.Value,
+                        Tag = i.Key,
+                    });
+                }
+                applicationsAvailableToOpen.Visibility = Visibility.Visible;
+                customActionTextName.Visibility = Visibility.Hidden;
             } else {
-                customActionText.Text = "Enter Keyboard Shortcut";
+                //customActionText.Text = "Enter Keyboard Shortcut";
+                AddActionButtonClick(sender, e);
             }
         }
 
@@ -635,11 +662,19 @@ namespace bradpad {
 
         private void NextButtonToActionButtonClick(object sender, RoutedEventArgs e)
         {
+            if(openAppCheckBox.IsChecked == true)
+            {
+                //NewAction(true);
+                //ReturnToSettings(sender, e);
+                SaveNewActionButtonClick(sender, e);
+                return;
+            }
             customActionText.Text = "Enter Keyboard Shortcut";
             nextButtonToActionButton.Visibility = Visibility.Hidden;
             customActionTextName.Visibility = Visibility.Hidden;
             customActionText.Visibility = Visibility.Visible;
             saveNewActionButton.Visibility = Visibility.Visible;
+            openAppCheckBox.IsEnabled = false;
             //savePermanentButton.IsEnabled = true;
             KeyDown += CustomActionTextKeyDown;
         }
@@ -713,6 +748,22 @@ namespace bradpad {
                 //Add making sure application is valid
                 app.InsertApplication(EnterApplicationNameBox.Text, EnterApplicationPathBox.Text);
                 FillAllCurrentApplications();
+            }
+        }
+
+        private void applicationsAvailableToOpenChanged(object sender, RoutedEventArgs e)
+        {
+            ComboBoxItem selected = (ComboBoxItem)applicationsAvailableToOpen.SelectedValue;
+            if (selected == null) return;
+            if ((string)selected.Content == "Select an application")
+            {
+                nextButtonToActionButton.IsEnabled = false;
+                savePermanentButton.IsEnabled = false;
+            }
+            else
+            {
+                nextButtonToActionButton.IsEnabled = true;
+                savePermanentButton.IsEnabled = true;
             }
         }
     }
