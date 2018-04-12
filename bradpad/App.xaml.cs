@@ -23,7 +23,7 @@ namespace bradpad {
 
         internal const Key F22 = Key.F22;
         internal const Key F23 = Key.F23;
-        internal const Key F24 = Key.F44;
+        internal const Key F24 = Key.F24;
 
         AppActions appActions;
         KeyboardListener KListener = new KeyboardListener();
