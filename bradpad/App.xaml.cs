@@ -23,7 +23,7 @@ namespace bradpad {
 
         internal const Key F22 = Key.F22;
         internal const Key F23 = Key.F23;
-        internal const Key F24 = Key.F24;
+        internal const Key F24 = Key.F44;
 
         AppActions appActions;
         KeyboardListener KListener = new KeyboardListener();
@@ -72,6 +72,7 @@ namespace bradpad {
                     {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
                     {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
                 });
+                SaveSettings();
             } else {
                 try {
                     ((MainWindow)Current.MainWindow).Topmost = true;
