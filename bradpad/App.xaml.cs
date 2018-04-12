@@ -126,7 +126,7 @@ namespace bradpad {
         }
 
         private bool ContainsKey(Key key) {
-            return key == App.F22 || key == App.F23 || key == App.F24;
+            return key == F22 || key == F23 || key == F24;
         }
 
         private void KListenerKeyDown(object sender, RawKeyEventArgs args) {

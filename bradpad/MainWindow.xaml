@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="bradpad"
         Height="350"
-        KeyDown="CustomActionTextKeyDown"
         TextBlock.FontSize="20"
         Topmost="True">
 
@@ -344,7 +343,7 @@
                         Margin="16"
                         Content="Next"
                         Grid.Column="3"
-                        Click="nextButtonToActionButtonClick" />
+                        Click="NextButtonToActionButtonClick" />
 
                 <TextBlock Name="customActionText"
                            Grid.Column="2" 

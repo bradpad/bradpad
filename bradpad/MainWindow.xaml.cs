@@ -459,15 +459,11 @@ namespace bradpad {
         }
 
         private void CancelNewActionButtonClick(object sender, RoutedEventArgs e) {
+            KeyDown -= CustomActionTextKeyDown;
             ShowActionFooter();
         }
 
         private void CustomActionTextKeyDown(object sender, KeyEventArgs e) {
-            if(customActionTextName.Visibility == Visibility.Visible)
-            {
-                return;
-            }
-
             string displayVal = null;
             string sendVal = null;
             switch (e.Key) {
@@ -637,7 +633,7 @@ namespace bradpad {
             saveNewActionButton.Visibility = Visibility.Hidden;
         }
 
-        private void nextButtonToActionButtonClick(object sender, RoutedEventArgs e)
+        private void NextButtonToActionButtonClick(object sender, RoutedEventArgs e)
         {
             customActionText.Text = "Enter Keyboard Shortcut";
             nextButtonToActionButton.Visibility = Visibility.Hidden;
@@ -645,10 +641,12 @@ namespace bradpad {
             customActionText.Visibility = Visibility.Visible;
             saveNewActionButton.Visibility = Visibility.Visible;
             //savePermanentButton.IsEnabled = true;
+            KeyDown += CustomActionTextKeyDown;
         }
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
             NewAction(true);
+            KeyDown -= CustomActionTextKeyDown;
             ReturnToSettings(sender, e);
         }
 
@@ -660,6 +658,7 @@ namespace bradpad {
 
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
             NewAction(false);
+            KeyDown -= CustomActionTextKeyDown;
             ReturnToSettings(sender, e);
         }
 
