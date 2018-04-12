@@ -69,8 +69,8 @@ namespace bradpad {
             if (!File.Exists("settings.json")) {
                 appActions = new AppActions(new Dictionary<string, KeyMap>() {
                     {AppActions.DEFAULT, new KeyMap()},
-                    {@"C:\WINDOWS\Explorer.EXE", new KeyMap()},
-                    {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", new KeyMap()}
+                    {@"C:\WINDOWS\Explorer.EXE".ToLower(), new KeyMap()},
+                    {@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe".ToLower(), new KeyMap()}
                 });
                 SaveSettings();
             } else {
