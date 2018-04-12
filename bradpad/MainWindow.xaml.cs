@@ -26,6 +26,14 @@ namespace bradpad {
     /// </summary>
     public partial class MainWindow : Window {
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, int dwNewLong);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern int GetWindowLongPtr(IntPtr hWnd, int nIndex);
+
+        private const int GWL_EXSTYLE = -20;
+        private const int WS_EX_NOACTIVATE = 0x08000000;
+
         private App app = ((App)Application.Current);
 
         //this maps from all application names to the path of that application
@@ -57,6 +65,26 @@ namespace bradpad {
             UpdateMainWindow();
             FillInAppToPath();
         }
+
+        protected override void OnSourceInitialized(EventArgs e) {
+            base.OnSourceInitialized(e);
+            //Set the window style to noactivate.
+            System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(this);
+            SetWindowLongPtr(helper.Handle, GWL_EXSTYLE, GetWindowLongPtr(helper.Handle, GWL_EXSTYLE) | WS_EX_NOACTIVATE);
+            //var source = PresentationSource.FromVisual(this) as System.Windows.Interop.HwndSource;
+            //source.AddHook(WndProc);
+        }
+
+        // private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) {
+        //     if (msg == WM_MOUSEACTIVATE) {
+        //         handled = true;
+        //         return new IntPtr(MA_NOACTIVATE);
+        //     } else {
+        //         return IntPtr.Zero;
+        //     }
+        // }
+        // private const int WM_MOUSEACTIVATE = 0x0021;
+        // private const int MA_NOACTIVATE = 0x0003;
 
         internal void HighlightButton(Key button, bool setPressed) {
             Button pressedButton = null;
