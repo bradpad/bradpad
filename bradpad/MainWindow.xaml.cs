@@ -380,6 +380,7 @@ namespace bradpad {
             settingsFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
             FillDropDownActions((string)appDropdown.SelectedValue);
+            KeyDown -= CustomActionTextKeyDown;
             //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }
@@ -439,6 +440,7 @@ namespace bradpad {
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 1;
             F24Settings.Opacity = 1;
+            KeyDown -= CustomActionTextKeyDown;
         }
 
         private void SetActionFromDropDown(string action) {
@@ -465,7 +467,6 @@ namespace bradpad {
         }
 
         private void CancelNewActionButtonClick(object sender, RoutedEventArgs e) {
-            KeyDown -= CustomActionTextKeyDown;
             ShowActionFooter();
         }
 
@@ -684,7 +685,6 @@ namespace bradpad {
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
             NewAction(true);
-            KeyDown -= CustomActionTextKeyDown;
             ReturnToSettings(sender, e);
         }
 
@@ -696,7 +696,6 @@ namespace bradpad {
 
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
             NewAction(false);
-            KeyDown -= CustomActionTextKeyDown;
             ReturnToSettings(sender, e);
         }
 
