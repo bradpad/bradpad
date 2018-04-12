@@ -27,9 +27,9 @@ namespace bradpad {
     public partial class MainWindow : Window {
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, int dwNewLong);
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         static extern int GetWindowLongPtr(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, int dwNewLong);
 
         private const int GWL_EXSTYLE = -20;
         private const int WS_EX_NOACTIVATE = 0x08000000;
@@ -69,8 +69,10 @@ namespace bradpad {
         protected override void OnSourceInitialized(EventArgs e) {
             base.OnSourceInitialized(e);
             //Set the window style to noactivate.
-            System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(this);
-            SetWindowLongPtr(helper.Handle, GWL_EXSTYLE, GetWindowLongPtr(helper.Handle, GWL_EXSTYLE) | WS_EX_NOACTIVATE);
+            //System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(this);
+            //int exStyle = GetWindowLongPtr(helper.Handle, GWL_EXSTYLE);
+            //SetWindowLongPtr(helper.Handle, GWL_EXSTYLE, exStyle | WS_EX_NOACTIVATE);
+            //SetWindowLongPtr(helper.Handle, GWL_EXSTYLE, GetWindowLongPtr(helper.Handle, GWL_EXSTYLE) | WS_EX_NOACTIVATE);
             //var source = PresentationSource.FromVisual(this) as System.Windows.Interop.HwndSource;
             //source.AddHook(WndProc);
         }

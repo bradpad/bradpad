@@ -32,6 +32,7 @@ namespace bradpad {
             {F23, false},
             {F24, false}
         };
+        string x = @"C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\bin\Debug\bradpad.exe";
 
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
@@ -108,6 +109,9 @@ namespace bradpad {
         }
 
         internal void SetCurrentApplication(string inCurrentApplication) {
+            if (inCurrentApplication != @"C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\bin\Debug\bradpad.exe") {
+                x = inCurrentApplication;
+            }
             appActions.SetCurrentApplication(inCurrentApplication);
             MainWindow mainWindow = (MainWindow)Current.MainWindow;
             if (mainWindow != null && mainWindow.IsLoaded) {
@@ -142,11 +146,23 @@ namespace bradpad {
         private void KListenerKeyUp(object sender, RawKeyEventArgs args) {
             Console.WriteLine(args.Key.ToString());
 
-            if (ContainsKey(args.Key)) {
-                pressed[args.Key] = false;
-                ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
-            }
+            //if (ContainsKey(args.Key)) {
+            //    pressed[args.Key] = false;
+            //    ((MainWindow)Current.MainWindow).HighlightButton(args.Key, false);
+            //}
         }
+
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern IntPtr GetWindow(IntPtr hWnd, uint wCmd);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern IntPtr GetWindowThreadProcessId(IntPtr hWnd, out uint ProcessId);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern IntPtr SetForegroundWindow(IntPtr hWnd);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern IntPtr GetTopWindow(IntPtr hWnd);
 
         private void SendKeyPress(Key key) {
             if (appActions.IsApp(key)) {
@@ -156,6 +172,13 @@ namespace bradpad {
                     Console.WriteLine("Application opening error.");
                 }
             } else {
+                //GetWindowThreadProcessId(GetWindow(GetForegroundWindow(), 2), out uint id);
+                //Console.WriteLine(Process.GetProcessById((int)id).MainModule.FileName);
+                //GetWindowThreadProcessId(GetForegroundWindow(), out uint id1);
+                //if (Process.GetProcessById((int)id1).MainModule.FileName == @"C:\Users\ivorh\Desktop\School\EECS498\bradpad\bradpad\bin\Debug\bradpad.exe") {
+                //    Console.WriteLine(Process.GetProcessById((int)id1).MainModule.FileName);
+                //    SetForegroundWindow(Process.GetProcessesByName("chrome.exe").FirstOrDefault().MainWindowHandle);
+                //}
                 System.Windows.Forms.SendKeys.SendWait(appActions.GetVal(key));
             }
         }
