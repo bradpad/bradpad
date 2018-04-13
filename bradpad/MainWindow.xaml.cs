@@ -737,6 +737,22 @@ namespace bradpad {
             }
             else if(AvailableApplications.Visibility == Visibility.Visible)
             {
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    DefaultExt = "exe",
+                    Filter = "EXE|*.exe"
+                };
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        
+                    }
+                    catch (NullReferenceException)
+                    {
+                        MessageBox.Show("Settings import failed.", "Import Failure");
+                    }
+                }
                 EnterApplicationNameBox.Text = "Enter Application Name";
                 EnterApplicationPathBox.Text = "Enter Application Path";
                 AvailableApplications.Visibility = Visibility.Hidden;
