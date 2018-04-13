@@ -85,26 +85,28 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height=".6*"/>
+                        <RowDefinition Height=".8*"/>
                     </Grid.RowDefinitions>
                 
                     <Button Name="AddNewApplicationButton"
                         Grid.Row="0"
                         Content="Add Application" 
-                        Margin="55, 50"
+                        Margin="15, 20"
                         Click= "AddNewAppButtonClick"/>
-                    <Button Name="EditOrRemoveApplicationButton"
-                        Grid.Row="1"
-                        Margin="55, 50"
-                        Visibility="Visible"
-                        Click="EditOrRemoveApplicationButtonClick">
-                        <TextBlock Text = "Remove Application" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
-                            
-                        </TextBlock>
-                    </Button>
-                    <Button Name="CancelAddNewApplicationButton"
+<!---
+                    <Button Name="EditApplicationButton"
                             Grid.Row="1"
-                            Margin="55,50"
+                            Margin="15, 20"
+                            Click="EditApplicationButtonClick">
+                        <TextBlock Text="Edit Application" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                    </Button> -->
+                            
+
+                    
+                    <Button Name="CancelAddNewApplicationButton"
+                            Grid.Row="2"
+                            Margin="15,20"
                             Visibility="Hidden"
                             Content="Cancel"
                             Click="CancelAddNewApplicationButtonClick"/>
@@ -113,7 +115,8 @@
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Applications Listed"
                            FontSize="28"
@@ -122,6 +125,15 @@
 
                 <ListBox    Name = "AllApplicationsList"
                             Grid.Row="1"/>
+                <Button Name="EditOrRemoveApplicationButton"
+                        Grid.Row="2"
+                        Margin="15, 2"
+                        Visibility="Visible"
+                        Click="EditOrRemoveApplicationButtonClick">
+                    <TextBlock Text = "Remove Application" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+
+                    </TextBlock>
+                </Button>
 
             </Grid>
             

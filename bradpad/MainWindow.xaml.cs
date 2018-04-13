@@ -858,5 +858,21 @@ namespace bradpad {
                 savePermanentButton.IsEnabled = true;
             }
         }
+
+        /*private void EditApplicationButtonClick(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem selected = (ListBoxItem)AllApplicationsList.SelectedValue;
+            if (selected == null)
+            {
+                MessageBox.Show("Must Select An Application", "Error");
+                return;
+            }
+            if ((string)selected.Content == "All Applications")
+            {
+                MessageBox.Show("Cannot Edit All Applications", "Error");
+                return;
+            }
+            
+        }*/
     }
 }
