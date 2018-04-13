@@ -179,5 +179,10 @@ namespace bradpad {
         {
             appActions.InsertApplication(name, path);
         }
+
+        internal void RemoveApplication(string name, string path)
+        {
+            appActions.RemoveApplication(name, path);
+        }
     }
 }

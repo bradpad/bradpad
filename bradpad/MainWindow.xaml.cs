@@ -173,12 +173,13 @@ namespace bradpad {
                     }
                 }
             }*/
-
+            AvailableApplications.Items.Add(new ComboBoxItem { Content = "Select An Application", IsSelected = true });
+            AvailableApplications.Items.Add(new ComboBoxItem { Content = "Add New Application" });
             foreach (var i in appToPath)
             {
                 AvailableApplications.Items.Add(new ComboBoxItem { Content = i.Key, Tag = i.Value});
             }
-            AvailableApplications.Items.Add(new ComboBoxItem{Content = "Add New Application"});
+            
         }
 
         private bool ValueNameExists(string[] valueNames, string valueName)
@@ -364,6 +365,7 @@ namespace bradpad {
             FillAllCurrentApplications();
             settingsPanel.Visibility = Visibility.Hidden;
             applicationsPanel.Visibility = Visibility.Visible;
+            AddNewApplicationButton.IsEnabled = false;
             app.SetMode(Mode.Apps);
         }
 
@@ -371,7 +373,7 @@ namespace bradpad {
         {
             //Console.WriteLine(AvailableApplications.SelectedItem.);
             ComboBoxItem item = AvailableApplications.SelectedItem as ComboBoxItem;
-
+            if (item == null) return;
             if (item != null && (string)item.Content == "Add New Application")
             {
                 AddNewApplicationButton.Content = "Add New Application";
@@ -380,6 +382,14 @@ namespace bradpad {
             {
                 AddNewApplicationButton.Content = "Add Application";
             }
+            //if((string)item.Content != "Add An Application")
+            //{
+                AddNewApplicationButton.IsEnabled = (string)item.Content != "Select An Application";
+            //}
+            //else
+            //{
+            //    AddNewApplicationButton.IsEnabled = false;
+            //}
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e) {
@@ -659,11 +669,14 @@ namespace bradpad {
                 });
                 foreach (var i in allApps)
                 {
-                    applicationsAvailableToOpen.Items.Add(new ComboBoxItem
+                    if (i.Value != "All Applications")
                     {
-                        Content = i.Value,
-                        Tag = i.Key,
-                    });
+                        applicationsAvailableToOpen.Items.Add(new ComboBoxItem
+                        {
+                            Content = i.Value,
+                            Tag = i.Key,
+                        });
+                    }
                 }
                 applicationsAvailableToOpen.Visibility = Visibility.Visible;
                 customActionTextName.Visibility = Visibility.Hidden;
@@ -722,6 +735,10 @@ namespace bradpad {
             if (EnterApplicationNameBox.Text == "Enter Application Name") { 
                 EnterApplicationNameBox.Text = string.Empty;
             }
+            if(EnterApplicationPathBox.Text != "Enter Application Path")
+            {
+                AddNewApplicationButton.IsEnabled = true;
+            }
         }
 
         private void EnterApplicationPathBoxGotFocus(object sender, RoutedEventArgs e)
@@ -729,6 +746,10 @@ namespace bradpad {
             if (EnterApplicationPathBox.Text == "Enter Application Path")
             {
                 EnterApplicationPathBox.Text = string.Empty;
+            }
+            if(EnterApplicationNameBox.Text != "Enter Application Name")
+            {
+                AddNewApplicationButton.IsEnabled = true;
             }
         }
 
@@ -740,7 +761,8 @@ namespace bradpad {
             AvailableApplications.Visibility = Visibility.Visible;
             EditOrRemoveApplicationButton.Visibility = Visibility.Visible;
             SettingsButtonFromApplication.Visibility = Visibility.Visible;
-            
+            AddNewApplicationButton.IsEnabled = true;
+            ConfigureAppsButtonClicked(sender, e);
         }
 
         private void AddNewAppButtonClick(object sender, RoutedEventArgs e)
@@ -759,32 +781,49 @@ namespace bradpad {
                     DefaultExt = "exe",
                     Filter = "EXE|*.exe"
                 };
+                string text = "Enter Application Path";
                 if (openFileDialog.ShowDialog() == true)
                 {
                     try
                     {
-                        
+                        text = openFileDialog.FileName;
+                        Console.WriteLine("text: "+ text);
                     }
                     catch (NullReferenceException)
                     {
-                        MessageBox.Show("Settings import failed.", "Import Failure");
+                        //MessageBox.Show("Settings import failed.", "Import Failure");
                     }
                 }
                 EnterApplicationNameBox.Text = "Enter Application Name";
-                EnterApplicationPathBox.Text = "Enter Application Path";
+                EnterApplicationPathBox.Text = text;
                 AvailableApplications.Visibility = Visibility.Hidden;
                 EditOrRemoveApplicationButton.Visibility = Visibility.Hidden;
                 SettingsButtonFromApplication.Visibility = Visibility.Hidden;
                 EnterApplicationPathBox.Visibility = Visibility.Visible;
                 CancelAddNewApplicationButton.Visibility = Visibility.Visible;
                 EnterApplicationNameBox.Visibility = Visibility.Visible;
+                AddNewApplicationButton.IsEnabled = false;
             }
             else //new application
             {
                 //Add making sure application is valid
                 app.InsertApplication(EnterApplicationNameBox.Text, EnterApplicationPathBox.Text);
                 FillAllCurrentApplications();
+                CancelAddNewApplicationButtonClick(sender, e);
             }
+        }
+
+        private void EditOrRemoveApplicationButtonClick(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem selected = (ListBoxItem) AllApplicationsList.SelectedValue;
+            if (selected == null) return;
+            if((string)selected.Content == "All Applications")
+            {
+                MessageBox.Show("Cannot Delete All Applications", "Error");
+                return;
+            }
+            app.RemoveApplication((string)selected.Content, (string)selected.Tag);
+            ConfigureAppsButtonClicked(sender, e);
         }
 
         private void applicationsAvailableToOpenChanged(object sender, RoutedEventArgs e)

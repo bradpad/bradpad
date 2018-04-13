@@ -72,8 +72,9 @@
                     <Button Name="EditOrRemoveApplicationButton"
                         Grid.Row="1"
                         Margin="55, 50"
-                        Visibility="Visible">
-                        <TextBlock Text = "Edit and Remove Applications" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+                        Visibility="Visible"
+                        Click="EditOrRemoveApplicationButtonClick">
+                        <TextBlock Text = "Remove Application" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
                             
                         </TextBlock>
                     </Button>

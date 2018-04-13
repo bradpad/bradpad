@@ -120,8 +120,14 @@ namespace bradpad {
         internal void InsertApplication(string name, string path)
         {
             appNames[path.ToLower()] = name;
-            Console.WriteLine("word: " + path);
+            //Console.WriteLine("word: " + path);
             keyMaps[path.ToLower()] = new KeyMap();
+        }
+
+        internal void RemoveApplication(string name, string path)
+        {
+            appNames.Remove(path.ToLower());
+            keyMaps.Remove(path.ToLower());
         }
     }
 }
