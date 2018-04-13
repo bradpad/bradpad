@@ -378,6 +378,8 @@ namespace bradpad {
             FillAllCurrentApplications();
             settingsPanel.Visibility = Visibility.Hidden;
             applicationsPanel.Visibility = Visibility.Visible;
+            SelectedApplicationPathBlock.Visibility = Visibility.Visible;
+            SelectedApplicationPathBlock.Text = "Path: ";
             AddNewApplicationButton.IsEnabled = false;
             app.SetMode(Mode.Apps);
         }
@@ -395,14 +397,9 @@ namespace bradpad {
             {
                 AddNewApplicationButton.Content = "Add Application";
             }
-            //if((string)item.Content != "Add An Application")
-            //{
-                AddNewApplicationButton.IsEnabled = (string)item.Content != "Select An Application";
-            //}
-            //else
-            //{
-            //    AddNewApplicationButton.IsEnabled = false;
-            //}
+            SelectedApplicationPathBlock.Text = "Path: " + (string)item.Tag;
+            AddNewApplicationButton.IsEnabled = (string)item.Content != "Select An Application";
+            
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e) {
@@ -771,6 +768,7 @@ namespace bradpad {
             EnterApplicationPathBox.Visibility = Visibility.Hidden;
             CancelAddNewApplicationButton.Visibility = Visibility.Hidden;
             EnterApplicationNameBox.Visibility = Visibility.Hidden;
+            SelectedApplicationPathBlock.Visibility = Visibility.Visible;
             AvailableApplications.Visibility = Visibility.Visible;
             EditOrRemoveApplicationButton.Visibility = Visibility.Visible;
             SettingsButtonFromApplication.Visibility = Visibility.Visible;
@@ -786,6 +784,7 @@ namespace bradpad {
 
                 app.InsertApplication((string)selectedItem.Content, (string)selectedItem.Tag);
                 FillAllCurrentApplications();
+                CancelAddNewApplicationButtonClick(sender, e);
             }
             else if(AvailableApplications.Visibility == Visibility.Visible)
             {
@@ -812,6 +811,7 @@ namespace bradpad {
                 AvailableApplications.Visibility = Visibility.Hidden;
                 EditOrRemoveApplicationButton.Visibility = Visibility.Hidden;
                 SettingsButtonFromApplication.Visibility = Visibility.Hidden;
+                SelectedApplicationPathBlock.Visibility = Visibility.Hidden; //***//
                 EnterApplicationPathBox.Visibility = Visibility.Visible;
                 CancelAddNewApplicationButton.Visibility = Visibility.Visible;
                 EnterApplicationNameBox.Visibility = Visibility.Visible;
@@ -829,8 +829,12 @@ namespace bradpad {
         private void EditOrRemoveApplicationButtonClick(object sender, RoutedEventArgs e)
         {
             ListBoxItem selected = (ListBoxItem) AllApplicationsList.SelectedValue;
-            if (selected == null) return;
-            if((string)selected.Content == "All Applications")
+            if (selected == null)
+            {
+                MessageBox.Show("Must Select An Application", "Error");
+                return;
+            }
+            if ((string)selected.Content == "All Applications")
             {
                 MessageBox.Show("Cannot Delete All Applications", "Error");
                 return;

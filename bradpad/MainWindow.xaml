@@ -34,44 +34,49 @@
               ScrollViewer.CanContentScroll="True"
               Visibility="Hidden">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".6*"/>
-                <ColumnDefinition Width=".6*"/>
+                <ColumnDefinition Width=".75*"/>
+                <ColumnDefinition Width=".55*"/>
                 <ColumnDefinition Width=".8*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height=".6*"/>
+                    <RowDefinition Height=".8*"/>
                 </Grid.RowDefinitions>
                 <ComboBox Name="AvailableApplications"
                           SelectionChanged="AvailableApplicationsChanged"
                           Grid.Row="0"
-                          Margin="8, 55"
+                          Margin="8, 35"
                           HorizontalContentAlignment="Left"
                           VerticalContentAlignment="Center"
                           Visibility="Visible"/>
                 <TextBox Name="EnterApplicationNameBox"
                          Grid.Row="0"
-                         Margin="8,55"
+                         Margin="8,35"
                          Visibility="Hidden"
                          Text="Enter Application Name"
                          TextAlignment="Center"
                          GotFocus="EnterApplicationNameBoxGotFocus"
                          />
-
+                <TextBlock Name="SelectedApplicationPathBlock"
+                           TextWrapping="Wrap"
+                           FontSize="17"
+                           Grid.Row="1"/>
 
 
                 <Button Name="SettingsButtonFromApplication"
                         Click="SettingsButtonFromApplicationClicked"
                         Content="Settings"
-                        Grid.Row="1"
+                        Grid.Row="2"
                         TextBlock.FontSize="32" 
-                        Margin="65,50"
+                        Margin="65,15"
                         Visibility="Visible"/>
                 <TextBox Name="EnterApplicationPathBox"
-                         Grid.Row="1"
-                         Margin="8,55"
+                         Grid.Row="2"
+                         Margin="8,35"
                          Visibility="Hidden"
+                         TextWrapping="Wrap"
                          Text="Enter Application Path"
                          TextAlignment="Center"
                          GotFocus="EnterApplicationPathBoxGotFocus"/>
