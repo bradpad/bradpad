@@ -62,24 +62,37 @@ namespace bradpad {
         }
 
         internal void HighlightButton(Key button, bool setPressed) {
-            Button pressedButton = null;
-            switch (button) {
-                case App.F22:
-                    pressedButton = F22;
-                    break;
-                case App.F23:
-                    pressedButton = F23;
-                    break;
-                case App.F24:
-                    pressedButton = F24;
-                    break;
-                default:
-                    // We should never enter this state.
-                    throw new Exception();
+            if (setPressed) {
+                switch (button) {
+                    case App.F22:
+                        F22.Background = new SolidColorBrush(Color.FromArgb(255, 196, 229, 246));
+                        break;
+                    case App.F23:
+                        F23.Background = new SolidColorBrush(Color.FromArgb(255, 196, 229, 246));
+                        break;
+                    case App.F24:
+                        F24.Background = new SolidColorBrush(Color.FromArgb(255, 196, 229, 246));
+                        break;
+                    default:
+                        // We should never enter this state.
+                        throw new Exception();
+                }
+            } else {
+                switch (button) {
+                    case App.F22:
+                        F22.Background = new SolidColorBrush(Color.FromArgb(255, 85, 179, 90));
+                        break;
+                    case App.F23:
+                        F23.Background = new SolidColorBrush(Color.FromArgb(255, 115, 38, 115));
+                        break;
+                    case App.F24:
+                        F24.Background = new SolidColorBrush(Color.FromArgb(255, 181, 183, 179));
+                        break;
+                    default:
+                        // We should never enter this state.
+                        throw new Exception();
+                }
             }
-
-            // Use reflection to make the button appear to be pressed on keypress.  Kind of hacky but I can't find a better way to do this.
-            typeof(Button).GetMethod("set_IsPressed", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(pressedButton, new object[] { setPressed });
         }
 
         internal void UpdateMainWindow() {

@@ -10,6 +10,25 @@
         TextBlock.FontSize="20"
         Topmost="True">
 
+    <Window.Resources>
+        <Style x:Key="FButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <!--<ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#c4e5f6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>-->
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid Name="applicationsPanel"
               ScrollViewer.CanContentScroll="True"
@@ -414,7 +433,8 @@
                         Click="F22ButtonClicked"
                         Foreground="White"
                         Grid.Column="0" 
-                        TextBlock.FontSize="32" />
+                        TextBlock.FontSize="32"
+                        Style="{StaticResource FButton}" />
 
                 <Button Name="F23"
                         HorizontalAlignment="Stretch"
@@ -422,8 +442,9 @@
                         Background="#732673"
                         Click="F23ButtonClicked"
                         Foreground="White"
-                        Grid.Column="1" 
-                        TextBlock.FontSize="32" />
+                        Grid.Column="1"
+                        TextBlock.FontSize="32"
+                        Style="{StaticResource FButton}" />
 
                 <Button Name="F24"
                         HorizontalAlignment="Stretch"
@@ -432,7 +453,8 @@
                         Click="F24ButtonClicked"
                         Foreground="White"
                         Grid.Column="2"
-                        TextBlock.FontSize="32" />
+                        TextBlock.FontSize="32"
+                        Style="{StaticResource FButton}" />
 
             </Grid>
 
