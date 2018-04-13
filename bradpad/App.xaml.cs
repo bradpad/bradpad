@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using Ownskit.Utils;
 
 namespace bradpad {
+    internal enum Mode { Apps, Main, Settings }
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -32,6 +33,7 @@ namespace bradpad {
             {F23, false},
             {F24, false}
         };
+        Mode mode = Mode.Main;
 
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
@@ -116,6 +118,10 @@ namespace bradpad {
             }
         }
 
+        internal void SetMode(Mode inMode) {
+            mode = inMode;
+        }
+
         private void ApplicationStartup(object sender, StartupEventArgs e) {
             ActiveAppDetector.SetUpApplicationDetector();
             KListener.KeyDown += new RawKeyEventHandler(KListenerKeyDown);
@@ -134,9 +140,17 @@ namespace bradpad {
             Console.WriteLine(args.Key.ToString());
 
             if (ContainsKey(args.Key) && !pressed[args.Key]) {
-                ((MainWindow)Current.MainWindow).HighlightButton(args.Key, true);
+                MainWindow mainWindow = ((MainWindow)Current.MainWindow);
+                mainWindow.HighlightButton(args.Key, true);
                 pressed[args.Key] = true;
-                SendKeyPress(args.Key);
+                switch(mode) {
+                    case Mode.Main:
+                        SendKeyPress(args.Key);
+                        break;
+                    case Mode.Settings:
+                        mainWindow.SettingsPedalPress(args.Key);
+                        break;
+                }
             }
         }
 

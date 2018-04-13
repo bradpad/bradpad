@@ -124,6 +124,20 @@ namespace bradpad {
             AddRegKeyToAppToPath(regKey);
         }
 
+        internal void SettingsPedalPress(Key key) {
+            switch(key) {
+                case App.F22:
+                    F22SettingsClicked(null, null);
+                    break;
+                case App.F23:
+                    F23SettingsClicked(null, null);
+                    break;
+                case App.F24:
+                    F24SettingsClicked(null, null);
+                    break;
+            }
+        }
+
         internal void UpdateSettingsButtonsContent() {
             UpdateSettingsButtonsContent((string)appDropdown.SelectedValue);
         }
@@ -202,6 +216,7 @@ namespace bradpad {
             // Make sure FillDropDownApps is called before UpdateSettingsButtonsContent or else app will crash
             FillDropDownApps();
             UpdateSettingsButtonsContent();
+            app.SetMode(Mode.Settings);
             //applicationsPanel.Visibility = Visibility.Hidden;
         }
 
@@ -340,6 +355,7 @@ namespace bradpad {
             applicationsPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
             FillDropDownApps();
+            app.SetMode(Mode.Settings);
         }
 
         private void ConfigureAppsButtonClicked(object sender, RoutedEventArgs e)
@@ -348,6 +364,7 @@ namespace bradpad {
             FillAllCurrentApplications();
             settingsPanel.Visibility = Visibility.Hidden;
             applicationsPanel.Visibility = Visibility.Visible;
+            app.SetMode(Mode.Apps);
         }
 
         private void AvailableApplicationsChanged(object sender, RoutedEventArgs e)
@@ -373,6 +390,7 @@ namespace bradpad {
             mainPanel.Visibility = Visibility.Visible;
             settingsPanel.Visibility = Visibility.Hidden;
             UpdateMainWindow();
+            app.SetMode(Mode.Main);
         }
 
         private void ShowActionFooter() {
@@ -380,6 +398,7 @@ namespace bradpad {
             settingsFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
             FillDropDownActions((string)appDropdown.SelectedValue);
+            KeyDown -= CustomActionTextKeyDown;
             //settingsRowFButtons.Height = new GridLength(2, GridUnitType.Star);
             //settingsRowFooter.Height = new GridLength(7, GridUnitType.Star);
         }
@@ -439,6 +458,7 @@ namespace bradpad {
             F22Settings.Opacity = 1;
             F23Settings.Opacity = 1;
             F24Settings.Opacity = 1;
+            KeyDown -= CustomActionTextKeyDown;
         }
 
         private void SetActionFromDropDown(string action) {
@@ -465,7 +485,6 @@ namespace bradpad {
         }
 
         private void CancelNewActionButtonClick(object sender, RoutedEventArgs e) {
-            KeyDown -= CustomActionTextKeyDown;
             ShowActionFooter();
         }
 
@@ -684,7 +703,6 @@ namespace bradpad {
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
             NewAction(true);
-            KeyDown -= CustomActionTextKeyDown;
             ReturnToSettings(sender, e);
         }
 
@@ -696,7 +714,6 @@ namespace bradpad {
 
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
             NewAction(false);
-            KeyDown -= CustomActionTextKeyDown;
             ReturnToSettings(sender, e);
         }
 
