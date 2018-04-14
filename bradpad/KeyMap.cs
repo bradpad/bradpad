@@ -73,12 +73,12 @@ namespace bradpad {
         }
 
         internal void AddAction(string name, string val, bool appFlag, bool temp) {
-            allActions[name] = new ActionData(val, appFlag);
-            if (temp) {
+            if (temp && !allActions.ContainsKey(name)) {
                 tempActions.Add(name);
             } else {
                 tempActions.Remove(name);
             }
+            allActions[name] = new ActionData(val, appFlag);
         }
 
         internal string GetAction(Key key) {
