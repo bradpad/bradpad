@@ -784,6 +784,7 @@ namespace bradpad {
                 app.InsertApplication(EnterApplicationNameBox.Text, EnterApplicationPathBox.Text);
                 FillAllCurrentApplications();
                 CancelAddNewApplicationButtonClick(sender, e);
+                app.SaveSettings();
                 return;
             }
             AddNewApplicationButton.Content = "Save";
