@@ -26,6 +26,8 @@ namespace bradpad {
     /// </summary>
     public partial class MainWindow : Window {
 
+        const string ADD_NEW_APPLICATION = "Add New Application";
+
         private App app = ((App)Application.Current);
 
         //this maps from all application names to the path of that application
@@ -183,7 +185,7 @@ namespace bradpad {
                 IsSelected = true,
                 Visibility = Visibility.Collapsed
             });
-            AvailableApplications.Items.Add(new ComboBoxItem { Content = "Add New Application" });
+            AvailableApplications.Items.Add(new ComboBoxItem { Content = "Add Other Application", Tag = ADD_NEW_APPLICATION });
             foreach (var i in appToPath) {
                 AvailableApplications.Items.Add(new ComboBoxItem { Content = i.Key, Tag = i.Value });
             }
@@ -351,6 +353,13 @@ namespace bradpad {
             }
         }
 
+        private void AvailableApplicationsDropDownOpened(object sender, EventArgs e) {
+            if (((ComboBoxItem)((ComboBox)sender).SelectedItem).IsEnabled) {
+                return;
+            }
+            ((ComboBox)sender).SelectedIndex = 1;
+        }
+
         private void SettingsButtonFromApplicationClicked(object sender, RoutedEventArgs e) {
             applicationsPanel.Visibility = Visibility.Hidden;
             settingsPanel.Visibility = Visibility.Visible;
@@ -373,14 +382,14 @@ namespace bradpad {
             //Console.WriteLine(AvailableApplications.SelectedItem.);
             ComboBoxItem item = AvailableApplications.SelectedItem as ComboBoxItem;
             if (item == null) return;
-            if (item != null && (string)item.Content == "Add New Application") {
-                AddNewApplicationButton.Content = "Add New Application";
+            if (item != null && (string)item.Tag == ADD_NEW_APPLICATION) {
+                AddNewApplicationButton.Content = "Browse...";
+                SelectedApplicationPathBlock.Text = "Path: N/A";
             } else {
                 AddNewApplicationButton.Content = "Add Application";
+                SelectedApplicationPathBlock.Text = "Path: " + (string)item.Tag;
             }
-            SelectedApplicationPathBlock.Text = "Path: " + (string)item.Tag;
             AddNewApplicationButton.IsEnabled = (string)item.Content != "Select An Application";
-
         }
 
         private void HelpButtonClicked(object sender, RoutedEventArgs e) {
@@ -761,9 +770,12 @@ namespace bradpad {
                         text = openFileDialog.FileName;
                         Console.WriteLine("text: " + text);
                     } catch (NullReferenceException) {
-                        //MessageBox.Show("Settings import failed.", "Import Failure");
+                        return;
                     }
+                } else {
+                    return;
                 }
+                AddNewApplicationButton.Content = "Save";
                 EnterApplicationNameBox.Text = "Enter Application Name";
                 EnterApplicationPathBox.Text = text;
                 AvailableApplications.Visibility = Visibility.Hidden;

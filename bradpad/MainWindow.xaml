@@ -42,44 +42,50 @@
         <Grid Name="applicationsPanel"
               ScrollViewer.CanContentScroll="True"
               Visibility="Hidden">
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width=".75*"/>
-                <ColumnDefinition Width=".55*"/>
-                <ColumnDefinition Width=".8*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
+
             <Grid Grid.Column="0">
+
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height=".6*"/>
-                    <RowDefinition Height=".8*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
+
                 <ComboBox Name="AvailableApplications"
+                          DropDownOpened="AvailableApplicationsDropDownOpened"
                           SelectionChanged="AvailableApplicationsChanged"
                           Grid.Row="0"
                           Margin="16"
                           HorizontalContentAlignment="Left"
                           VerticalContentAlignment="Center"
-                          Visibility="Visible"/>
+                          Visibility="Visible" />
+
                 <TextBox Name="EnterApplicationNameBox"
                          Grid.Row="0"
                          Margin="16"
                          Visibility="Hidden"
                          Text="Enter Application Name"
                          TextAlignment="Center"
-                         GotFocus="EnterApplicationNameBoxGotFocus"
-                         />
+                         GotFocus="EnterApplicationNameBoxGotFocus" />
+
                 <TextBlock Name="SelectedApplicationPathBlock"
                            TextWrapping="Wrap"
-                           FontSize="17"
-                           Grid.Row="1"/>
-
+                           Margin="16,0"
+                           Grid.Row="1" />
 
                 <Button Name="SettingsButtonFromApplication"
                         Click="SettingsButtonFromApplicationClicked"
-                        Content="Settings"
+                        Content="Return to Settings"
                         Grid.Row="2"
                         Margin="16"
-                        Visibility="Visible"/>
+                        Visibility="Visible" />
+
                 <TextBox Name="EnterApplicationPathBox"
                          Grid.Row="2"
                          Margin="16"
@@ -87,21 +93,24 @@
                          TextWrapping="Wrap"
                          Text="Enter Application Path"
                          TextAlignment="Center"
-                         GotFocus="EnterApplicationPathBoxGotFocus"/>
+                         GotFocus="EnterApplicationPathBoxGotFocus" />
+
             </Grid>
+
             <Grid Grid.Column="1">
+
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height=".6*"/>
-                        <RowDefinition Height=".8*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
                 
                     <Button Name="AddNewApplicationButton"
                         Grid.Row="0"
                         Content="Add Application" 
                         Margin="16"
-                        Click= "AddNewAppButtonClick"/>
+                        Click= "AddNewAppButtonClick" />
 <!---
                     <Button Name="EditApplicationButton"
                             Grid.Row="1"
@@ -111,37 +120,35 @@
                     </Button> -->
                             
 
-                    
                     <Button Name="CancelAddNewApplicationButton"
                             Grid.Row="2"
                             Margin="16"
                             Visibility="Hidden"
                             Content="Cancel"
-                            Click="CancelAddNewApplicationButtonClick"/>
+                            Click="CancelAddNewApplicationButtonClick" />
                 </Grid>
+
             </Grid>
+
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="4*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Applications Listed"
-                           FontSize="28"
+                <TextBlock Text="Applications"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
 
-                <ListBox    Name = "AllApplicationsList"
-                            Grid.Row="1"/>
-                <Button Name="EditOrRemoveApplicationButton"
-                        Grid.Row="2"
-                        Margin="15, 2"
-                        Visibility="Visible"
-                        Click="EditOrRemoveApplicationButtonClick">
-                    <TextBlock Text = "Remove Application" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center">
+                <ListBox Name = "AllApplicationsList"
+                         Grid.Row="1"/>
 
-                    </TextBlock>
-                </Button>
+                <Button Name="EditOrRemoveApplicationButton"
+                        Content="Remove Application"
+                        Grid.Row="2"
+                        Margin="16"
+                        Visibility="Visible"
+                        Click="EditOrRemoveApplicationButtonClick" />
 
             </Grid>
             
