@@ -27,7 +27,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="FSettingsButton" TargetType="Button">
+        <Style x:Key="WrapButton" TargetType="Button">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -245,7 +245,7 @@
                         Foreground="White"
                         Grid.Column="0" 
                         TextBlock.FontSize="32"
-                        Style="{StaticResource FSettingsButton}" />
+                        Style="{StaticResource WrapButton}" />
 
 
                 <Button Name="F23Settings"
@@ -256,7 +256,7 @@
                         Foreground="White"
                         Grid.Column="1" 
                         TextBlock.FontSize="32"
-                        Style="{StaticResource FSettingsButton}" />
+                        Style="{StaticResource WrapButton}" />
 
                 <Button Name="F24Settings"
                         HorizontalAlignment="Stretch"
@@ -266,7 +266,7 @@
                         Foreground="White"
                         Grid.Column="2" 
                         TextBlock.FontSize="32"
-                        Style="{StaticResource FSettingsButton}" />
+                        Style="{StaticResource WrapButton}" />
 
             </Grid>
 
@@ -367,7 +367,8 @@
                         Margin="16"
                         Content="Save Action Permanently"
                         Grid.Column="0" 
-                        Click="SavePermanentButtonClick" />
+                        Click="SavePermanentButtonClick"
+                        Style="{StaticResource WrapButton}"/>
 
                 <Grid Grid.Column="1">
 
