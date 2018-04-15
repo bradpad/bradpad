@@ -781,14 +781,15 @@ namespace bradpad {
         private void EditOrRemoveApplicationButtonClick(object sender, RoutedEventArgs e) {
             ListBoxItem selected = (ListBoxItem)AllApplicationsList.SelectedValue;
             if (selected == null) {
-                MessageBox.Show("Must Select An Application", "Error");
+                MessageBox.Show("You must select an application.", "Error");
                 return;
             }
             if ((string)selected.Content == "All Applications") {
-                MessageBox.Show("Cannot Delete All Applications", "Error");
+                MessageBox.Show("You cannot delete \"All Applications\".", "Error");
                 return;
             }
             app.RemoveApplication((string)selected.Content, (string)selected.Tag);
+            app.SaveSettings();
             ConfigureAppsButtonClicked(sender, e);
         }
 

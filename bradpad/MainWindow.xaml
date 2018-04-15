@@ -144,10 +144,12 @@
 
                 <TextBlock Text="Applications"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Margin="16, 0" />
 
                 <ListBox Name = "AllApplicationsList"
-                         Grid.Row="1"/>
+                         Grid.Row="1"
+                         Margin="16" />
 
                 <Button Name="EditOrRemoveApplicationButton"
                         Content="Remove Application"
