@@ -63,10 +63,11 @@ namespace bradpad {
                 {"Paste", new ActionData("^v", false)},
                 {"Open Chrome", new ActionData("chrome.exe", true)},
                 {"New Tab", new ActionData("^t", false)},
+                {"Backspace", new ActionData("{BACKSPACE}", false)},
             };
 
             keyDict = new Dictionary<Key, string>() {
-                {App.F22, "Open Word"},
+                {App.F22, "Backspace"},
                 {App.F23, "Copy"},
                 {App.F24, "Paste"},
             };
