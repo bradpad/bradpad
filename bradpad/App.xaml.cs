@@ -57,13 +57,11 @@ namespace bradpad {
             return appActions.GetActions(app);
         }
 
-        internal Dictionary<string, string> GetApplications()
-        {
+        internal List<KeyValuePair<string, string>> GetApplications() {
             return appActions.GetApplications();
         }
 
-        internal string GetApplication()
-        {
+        internal string GetApplication() {
             return appActions.GetApplication();
         }
 
@@ -150,7 +148,7 @@ namespace bradpad {
                 MainWindow mainWindow = ((MainWindow)Current.MainWindow);
                 mainWindow.HighlightButton(args.Key, true);
                 pressed[args.Key] = true;
-                switch(mode) {
+                switch (mode) {
                     case Mode.Main:
                         SendKeyPress(args.Key);
                         break;
@@ -182,13 +180,11 @@ namespace bradpad {
             }
         }
 
-        internal void InsertApplication(string name, string path)
-        {
+        internal void InsertApplication(string name, string path) {
             appActions.InsertApplication(name, path);
         }
 
-        internal void RemoveApplication(string name, string path)
-        {
+        internal void RemoveApplication(string name, string path) {
             appActions.RemoveApplication(name, path);
         }
     }

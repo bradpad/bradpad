@@ -34,16 +34,7 @@ namespace bradpad {
         }
 
         internal string GetAction(Key key) {
-           
             return keyMaps[currentApplication.ToLower()].GetAction(key);
-            /*foreach(var i in keyMaps)
-            {
-                if(i.Key.Equals(currentApplication, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return keyMaps[i.Key].GetAction(key);
-                }
-            }
-            return keyMaps[currentApplication].GetAction(key);*/
         }
 
         internal string GetAction(string app, Key key) {
@@ -55,7 +46,7 @@ namespace bradpad {
 
         internal List<string> GetActions(string app) {
             IEnumerable<string> defaultActions = keyMaps[DEFAULT].GetActions();
-            if (app != DEFAULT) {
+            if (app.ToLower() != DEFAULT) {
                 List<string> combinedActions = keyMaps[app.ToLower()].GetActions().Union(defaultActions).ToList();
                 combinedActions.Sort();
                 return combinedActions;
@@ -66,24 +57,15 @@ namespace bradpad {
         }
 
         internal string GetVal(Key key) {
-            return keyMaps[currentApplication.ToLower()].GetVal(key);
+            return keyMaps[currentApplication].GetVal(key);
         }
 
         internal bool IsApp(Key key) {
-            return keyMaps[currentApplication.ToLower()].IsApp(key);
+            return keyMaps[currentApplication].IsApp(key);
         }
 
-        internal string GetApplication()
-        {
-            return appNames[currentApplication.ToLower()];
-            /*foreach (var i in appNames)
-            {
-                if (i.Key.Equals(currentApplication, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return appNames[i.Key];
-                }
-            }
-            return appNames[currentApplication];*/
+        internal string GetApplication() {
+            return appNames[currentApplication];
         }
 
         internal void SetAction(string app, Key key, string action) {
@@ -92,38 +74,36 @@ namespace bradpad {
 
         internal void SetCurrentApplication(string currentApplicationIn) {
             if (keyMaps.ContainsKey(currentApplicationIn.ToLower())) {
-                //Console.WriteLine("testtest" + currentApplicationIn);
-                currentApplication = currentApplicationIn;
+                currentApplication = currentApplicationIn.ToLower();
             } else {
-                //Console.WriteLine("test" + currentApplicationIn);
                 currentApplication = DEFAULT;
             }
-            /*
-            foreach(var i in keyMaps)
-            {
-                if(i.Key.Equals(currentApplicationIn, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    currentApplication = currentApplicationIn;
-                    return;
+        }
+
+        internal List<KeyValuePair<string, string>> GetApplications() {
+            List<KeyValuePair<string, string>> output = appNames.ToList();
+            output.Sort((x, y) => x.Value.CompareTo(y.Value));
+            for (int i = 0; i < output.Count; ++i) {
+                if (output[i].Key == DEFAULT) {
+                    KeyValuePair<string, string> item = output[i];
+                    for (int j = i; j > 0; --j) {
+                        output[j] = output[j - 1];
+                    }
+                    output[0] = item;
+                    return output;
                 }
             }
-            currentApplication = DEFAULT;*/
+            // Should never be able to remove All Applications from appNames
+            throw new Exception();
         }
 
-        internal Dictionary<string, string> GetApplications()
-        {
-            return appNames;
-        }
-
-        internal void InsertApplication(string name, string path)
-        {
+        internal void InsertApplication(string name, string path) {
             appNames[path.ToLower()] = name;
             //Console.WriteLine("word: " + path);
             keyMaps[path.ToLower()] = new KeyMap();
         }
 
-        internal void RemoveApplication(string name, string path)
-        {
+        internal void RemoveApplication(string name, string path) {
             appNames.Remove(path.ToLower());
             keyMaps.Remove(path.ToLower());
         }

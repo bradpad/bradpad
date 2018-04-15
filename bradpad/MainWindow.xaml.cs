@@ -154,8 +154,7 @@ namespace bradpad {
 
         internal void FillAllCurrentApplications() {
             AllApplicationsList.Items.Clear();
-            Dictionary<string, string> allApps = app.GetApplications();
-            foreach (var i in allApps) {
+            foreach (var i in app.GetApplications()) {
                 AllApplicationsList.Items.Add(new ListBoxItem {
                     Content = i.Value,
                     Tag = i.Key,
@@ -314,31 +313,7 @@ namespace bradpad {
 
         private void FillDropDownApps() {
             appDropdown.Items.Clear();
-            /*appDropdown.Items.Add(new ComboBoxItem {
-                Content = "Select an Application",
-                IsEnabled = false,
-                IsSelected = true,
-                Tag = AppActions.EMPTY,
-                Visibility = Visibility.Collapsed
-            });
-            */
-
-            // TODO: replace these with a loop that adds applications that Brad wants
-            /*appDropdown.Items.Add(new ComboBoxItem {
-                Content = "All Applications",
-                Tag = AppActions.DEFAULT,
-                IsSelected = true,
-            });
-            appDropdown.Items.Add(new ComboBoxItem {
-                Content = "Windows Explorer",
-                Tag = @"C:\WINDOWS\Explorer.EXE"
-            });
-            appDropdown.Items.Add(new ComboBoxItem {
-                Content = "Google Chrome",
-                Tag = @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
-            });*/
-            Dictionary<string, string> allApps = app.GetApplications();
-            foreach (var i in allApps) {
+            foreach (var i in app.GetApplications()) {
                 if (i.Value == "All Applications") {
                     appDropdown.Items.Add(new ComboBoxItem {
                         Content = i.Value,
@@ -661,12 +636,11 @@ namespace bradpad {
             if (openAppCheckBox.IsChecked == true) {
                 //customActionText.Text = "Enter Application";
                 applicationsAvailableToOpen.Items.Clear();
-                Dictionary<string, string> allApps = app.GetApplications();
                 applicationsAvailableToOpen.Items.Add(new ComboBoxItem {
                     Content = "Select an application",
                     IsSelected = true,
                 });
-                foreach (var i in allApps) {
+                foreach (var i in app.GetApplications()) {
                     if (i.Value != "All Applications") {
                         applicationsAvailableToOpen.Items.Add(new ComboBoxItem {
                             Content = i.Value,
