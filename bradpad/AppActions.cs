@@ -33,7 +33,7 @@ namespace bradpad {
             keyMaps[app.ToLower()].AddAction(name, val, appFlag, temp);
         }
 
-        internal bool ContainsAction(string app, string name) {
+        internal byte ContainsAction(string app, string name) {
             return keyMaps[app.ToLower()].ContainsAction(name);
         }
 
@@ -64,6 +64,10 @@ namespace bradpad {
             return keyMaps[currentApplication].GetVal(key);
         }
 
+        internal bool IsActiveAction(string app, string action) {
+            return keyMaps[app.ToLower()].IsActiveAction(action);
+        }
+
         internal bool IsApp(Key key) {
             return keyMaps[currentApplication].IsApp(key);
         }
@@ -74,6 +78,10 @@ namespace bradpad {
 
         internal void SetAction(string app, Key key, string action) {
             keyMaps[app.ToLower()].SetAction(key, action);
+        }
+
+        internal void RemoveAction(string app, string action) {
+            keyMaps[app.ToLower()].RemoveAction(action);
         }
 
         internal void SetCurrentApplication(string currentApplicationIn) {

@@ -435,6 +435,17 @@ namespace bradpad {
             }
         }
 
+        private void RemoveActionButtonClicked(object sender, RoutedEventArgs e) {
+            string actionApp = (string)appDropdown.SelectedValue;
+            string action = actionDropdown.Text;
+            if (!app.IsActiveAction(actionApp, action)) {
+                app.RemoveAction(actionApp, action);
+                FillDropDownActions(actionApp);
+            } else {
+                MessageBox.Show("You must unbind this action from all pedals before you can remove it.", "Error");
+            }
+        }
+
         private void ReturnToSettings(object sender, RoutedEventArgs e) {
             settingsActionFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
@@ -623,6 +634,11 @@ namespace bradpad {
                 name = "Open " + (string)selected.Content;
                 action = (string)selected.Tag;
             }
+            byte containsAction = app.ContainsAction(actionApp, name);
+            if (containsAction == 2 || (containsAction == 1 && temp)) {
+                MessageBox.Show("An action with the same name already exists. Please enter another name.", "Error");
+                throw new Exception();
+            }
             app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
             SetActionFromDropDown(name); // saves setting
             UpdateMainWindow();
@@ -670,10 +686,6 @@ namespace bradpad {
                 SaveNewActionButtonClick(sender, e);
                 return;
             }
-            if (app.ContainsAction((string)appDropdown.SelectedValue, customActionTextName.Text)) {
-                MessageBox.Show("An action with the same name already exists. Please enter another name.", "Error");
-                return;
-            }
             customActionText.Text = "Enter Keyboard Shortcut";
             nextButtonToActionButton.Visibility = Visibility.Hidden;
             customActionTextName.Visibility = Visibility.Hidden;
@@ -685,7 +697,13 @@ namespace bradpad {
         }
 
         private void SaveNewActionButtonClick(object sender, RoutedEventArgs e) {
-            NewAction(true);
+            try {
+                NewAction(true);
+            } catch {
+                KeyDown -= CustomActionTextKeyDown;
+                AddActionButtonClick(sender, e);
+                return;
+            }
             ReturnToSettings(sender, e);
         }
 
@@ -703,7 +721,13 @@ namespace bradpad {
         }
 
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
-            NewAction(false);
+            try {
+                NewAction(false);
+            } catch {
+                KeyDown -= CustomActionTextKeyDown;
+                AddActionButtonClick(sender, e);
+                return;
+            }
             ReturnToSettings(sender, e);
         }
 

@@ -81,8 +81,14 @@ namespace bradpad {
             allActions[name] = new ActionData(val, appFlag);
         }
 
-        internal bool ContainsAction(string name) {
-            return allActions.ContainsKey(name);
+        internal byte ContainsAction(string name) {
+            // Returns 0 if does not contain action, 1 if contains action as temp, and 2 if contains action permanently
+            if (tempActions.Contains(name)) {
+                return 1;
+            } else if (allActions.ContainsKey(name)) {
+                return 2;
+            }
+            return 0;
         }
 
         internal string GetAction(Key key) {
@@ -97,6 +103,10 @@ namespace bradpad {
             return allActions[keyDict[key]].Action;
         }
 
+        internal bool IsActiveAction(string action) {
+            return keyDict.ContainsValue(action);
+        }
+
         internal bool IsApp(Key key) {
             return allActions[keyDict[key]].IsApp;
         }
@@ -109,6 +119,11 @@ namespace bradpad {
                 allActions.Remove(prevAction);
             }
             keyDict[key] = action;
+        }
+        
+        internal void RemoveAction(string action) {
+            allActions.Remove(action);
+            tempActions.Remove(action);
         }
     }
 }

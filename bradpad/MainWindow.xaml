@@ -312,15 +312,25 @@
                   Visibility="Hidden">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="0.5*" />
                     <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
 
+                <Button Name="removeActionButton"
+                        Content="Remove Action"
+                        Margin="16"
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Click="RemoveActionButtonClicked" />
+
                 <Button Name="addActionButton"
                         Content="Add Action"
                         Margin="16"
+                        Grid.Column="1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Click="AddActionButtonClick" />
@@ -328,7 +338,7 @@
                 <ComboBox Name="actionDropdown"
                       SelectionChanged="ActionDropdownSelectionChanged"
                       HorizontalAlignment="Center"
-                      Grid.Column="1"
+                      Grid.Column="2"
                       Margin="16"
                       VerticalContentAlignment="Center" />
 
@@ -339,7 +349,7 @@
                         Click="ActionSubmitButtonClicked"
                         Content="Save"
                         IsEnabled="False"
-                        Grid.Column="2" />
+                        Grid.Column="3" />
 
                 <Button Name="cancelButton"
                         HorizontalAlignment="Stretch"
@@ -347,7 +357,7 @@
                         Margin="16"
                         Click="ReturnToSettings"
                         Content="Cancel"
-                        Grid.Column="3" />
+                        Grid.Column="4" />
 
             </Grid>
 

@@ -45,7 +45,7 @@ namespace bradpad {
             appActions.AddAction(app, name, val, appFlag, temp);
         }
 
-        internal bool ContainsAction(string app, string name) {
+        internal byte ContainsAction(string app, string name) {
             return appActions.ContainsAction(app, name);
         }
 
@@ -67,6 +67,10 @@ namespace bradpad {
 
         internal string GetApplication() {
             return appActions.GetApplication();
+        }
+
+        internal bool IsActiveAction(string app, string action) {
+            return appActions.IsActiveAction(app, action);
         }
 
         internal void LoadSettings() {
@@ -117,6 +121,10 @@ namespace bradpad {
 
         internal void SetAction(string app, Key key, string action) {
             appActions.SetAction(app, key, action);
+        }
+
+        internal void RemoveAction(string app, string action) {
+            appActions.RemoveAction(app, action);
         }
 
         internal void SetCurrentApplication(string inCurrentApplication) {
