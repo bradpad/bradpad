@@ -186,7 +186,12 @@ namespace bradpad {
                     }
                 }
             }*/
-            AvailableApplications.Items.Add(new ComboBoxItem { Content = "Select An Application", IsSelected = true });
+            AvailableApplications.Items.Add(new ComboBoxItem {
+                Content = "Select an Application",
+                IsEnabled = false,
+                IsSelected = true,
+                Visibility = Visibility.Collapsed
+            });
             AvailableApplications.Items.Add(new ComboBoxItem { Content = "Add New Application" });
             foreach (var i in appToPath)
             {
