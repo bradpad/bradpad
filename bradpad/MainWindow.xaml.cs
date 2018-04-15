@@ -26,6 +26,7 @@ namespace bradpad {
     /// </summary>
     public partial class MainWindow : Window {
 
+        const string ADD_APPLICATION = "Add Application";
         const string ADD_NEW_APPLICATION = "Add New Application";
 
         private App app = ((App)Application.Current);
@@ -386,7 +387,7 @@ namespace bradpad {
                 AddNewApplicationButton.Content = "Browse...";
                 SelectedApplicationPathBlock.Text = "Path: N/A";
             } else {
-                AddNewApplicationButton.Content = "Add Application";
+                AddNewApplicationButton.Content = ADD_APPLICATION;
                 SelectedApplicationPathBlock.Text = "Path: " + (string)item.Tag;
             }
             AddNewApplicationButton.IsEnabled = (string)item.Content != "Select An Application";
@@ -753,45 +754,50 @@ namespace bradpad {
         }
 
         private void AddNewAppButtonClick(object sender, RoutedEventArgs e) {
-            if ((string)AddNewApplicationButton.Content == "Add Application") {
+            string name = null;
+            string path = null;
+            if ((string)AddNewApplicationButton.Content == ADD_APPLICATION) {
                 ComboBoxItem selectedItem = (ComboBoxItem)AvailableApplications.SelectedItem;
-
-                app.InsertApplication((string)selectedItem.Content, (string)selectedItem.Tag);
-                FillAllCurrentApplications();
-                CancelAddNewApplicationButtonClick(sender, e);
+                name = (string)selectedItem.Content;
+                path = (string)selectedItem.Tag;
+                //app.InsertApplication((string)selectedItem.Content, (string)selectedItem.Tag);
+                //FillAllCurrentApplications();
+                //CancelAddNewApplicationButtonClick(sender, e);
             } else if (AvailableApplications.Visibility == Visibility.Visible) {
                 OpenFileDialog openFileDialog = new OpenFileDialog {
                     DefaultExt = "exe",
                     Filter = "EXE|*.exe"
                 };
-                string text = "Enter Application Path";
                 if (openFileDialog.ShowDialog() == true) {
                     try {
-                        text = openFileDialog.FileName;
-                        Console.WriteLine("text: " + text);
+                        path = openFileDialog.FileName;
+                        Console.WriteLine("text: " + path);
                     } catch (NullReferenceException) {
                         return;
                     }
                 } else {
                     return;
                 }
-                AddNewApplicationButton.Content = "Save";
-                EnterApplicationNameBox.Text = "Enter Application Name";
-                EnterApplicationPathBox.Text = text;
-                AvailableApplications.Visibility = Visibility.Hidden;
-                EditOrRemoveApplicationButton.Visibility = Visibility.Hidden;
-                SettingsButtonFromApplication.Visibility = Visibility.Hidden;
-                SelectedApplicationPathBlock.Visibility = Visibility.Hidden; //***//
-                EnterApplicationPathBox.Visibility = Visibility.Visible;
-                CancelAddNewApplicationButton.Visibility = Visibility.Visible;
-                EnterApplicationNameBox.Visibility = Visibility.Visible;
-                AddNewApplicationButton.IsEnabled = false;
-            } else //new application
-              {
+            } else {
+                // New application
                 //Add making sure application is valid
                 app.InsertApplication(EnterApplicationNameBox.Text, EnterApplicationPathBox.Text);
                 FillAllCurrentApplications();
                 CancelAddNewApplicationButtonClick(sender, e);
+                return;
+            }
+            AddNewApplicationButton.Content = "Save";
+            EnterApplicationNameBox.Text = name ?? "Enter Application Name";
+            EnterApplicationPathBox.Text = path;
+            AvailableApplications.Visibility = Visibility.Hidden;
+            EditOrRemoveApplicationButton.Visibility = Visibility.Hidden;
+            SettingsButtonFromApplication.Visibility = Visibility.Hidden;
+            SelectedApplicationPathBlock.Visibility = Visibility.Hidden;
+            EnterApplicationPathBox.Visibility = Visibility.Visible;
+            CancelAddNewApplicationButton.Visibility = Visibility.Visible;
+            EnterApplicationNameBox.Visibility = Visibility.Visible;
+            if (name == "Enter Application Name") {
+                AddNewApplicationButton.IsEnabled = false;
             }
         }
 
