@@ -410,6 +410,7 @@
                          TextAlignment="Center"
                          TextWrapping="Wrap"
                          GotFocus="CustomActionNameGotFocus"
+                         TextChanged="CustomActionTextNameTextChanged"
                          FontSize="18" />
 
                 <Button Name="nextButtonToActionButton"

@@ -45,6 +45,10 @@ namespace bradpad {
             appActions.AddAction(app, name, val, appFlag, temp);
         }
 
+        internal bool ContainsAction(string app, string name) {
+            return appActions.ContainsAction(app, name);
+        }
+
         internal string GetAction(Key key) {
             return appActions.GetAction(key);
         }

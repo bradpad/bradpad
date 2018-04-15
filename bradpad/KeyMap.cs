@@ -81,6 +81,10 @@ namespace bradpad {
             allActions[name] = new ActionData(val, appFlag);
         }
 
+        internal bool ContainsAction(string name) {
+            return allActions.ContainsKey(name);
+        }
+
         internal string GetAction(Key key) {
             return keyDict[key];
         }

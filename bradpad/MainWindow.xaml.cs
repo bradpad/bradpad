@@ -435,8 +435,6 @@ namespace bradpad {
             }
         }
 
-
-
         private void ReturnToSettings(object sender, RoutedEventArgs e) {
             settingsActionFooter.Visibility = Visibility.Hidden;
             settingsConfigureFooter.Visibility = Visibility.Hidden;
@@ -626,7 +624,7 @@ namespace bradpad {
                 action = (string)selected.Tag;
             }
             app.AddAction(actionApp, name, action, openAppCheckBox.IsChecked == true, temp);
-            SetActionFromDropDown(name);
+            SetActionFromDropDown(name); // saves setting
             UpdateMainWindow();
             UpdateSettingsButtonsContent();
             FillDropDownActions(actionApp);
@@ -669,9 +667,11 @@ namespace bradpad {
 
         private void NextButtonToActionButtonClick(object sender, RoutedEventArgs e) {
             if (openAppCheckBox.IsChecked == true) {
-                //NewAction(true);
-                //ReturnToSettings(sender, e);
                 SaveNewActionButtonClick(sender, e);
+                return;
+            }
+            if (app.ContainsAction((string)appDropdown.SelectedValue, customActionTextName.Text)) {
+                MessageBox.Show("An action with the same name already exists. Please enter another name.", "Error");
                 return;
             }
             customActionText.Text = "Enter Keyboard Shortcut";
@@ -691,7 +691,15 @@ namespace bradpad {
 
         private void CustomActionNameGotFocus(object sender, RoutedEventArgs e) {
             customActionTextName.Text = string.Empty;
-            nextButtonToActionButton.IsEnabled = true;
+        }
+
+        private void CustomActionTextNameTextChanged(object sender, TextChangedEventArgs e) {
+            string name = ((TextBox)sender).Text;
+            if (name != "") {
+                nextButtonToActionButton.IsEnabled = true;
+            } else {
+                nextButtonToActionButton.IsEnabled = false;
+            }
         }
 
         private void SavePermanentButtonClick(object sender, RoutedEventArgs e) {
@@ -796,7 +804,7 @@ namespace bradpad {
         private void applicationsAvailableToOpenChanged(object sender, RoutedEventArgs e) {
             ComboBoxItem selected = (ComboBoxItem)applicationsAvailableToOpen.SelectedValue;
             if (selected == null) return;
-            if ((string)selected.Content == "Select an application") {
+            if ((string)selected.Content == "Select an Application") {
                 nextButtonToActionButton.IsEnabled = false;
                 savePermanentButton.IsEnabled = false;
             } else {
