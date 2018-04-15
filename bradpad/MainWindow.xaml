@@ -68,6 +68,8 @@
 
                 <TextBox Name="EnterApplicationNameBox"
                          Grid.Row="0"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
                          Margin="16"
                          Visibility="Hidden"
                          Text="Enter Application Name"
@@ -88,6 +90,8 @@
 
                 <TextBox Name="EnterApplicationPathBox"
                          Grid.Row="2"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
                          Margin="16"
                          Visibility="Hidden"
                          TextWrapping="Wrap"
@@ -131,11 +135,13 @@
             </Grid>
 
             <Grid Grid.Column="2">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="6*"/>
                     <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
+
                 <TextBlock Text="Applications"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
@@ -151,8 +157,7 @@
                         Click="EditOrRemoveApplicationButtonClick" />
 
             </Grid>
-            
-            
+
         </Grid>
 
         <Grid Name="settingsPanel"
@@ -387,17 +392,22 @@
 
                 <ComboBox Name="applicationsAvailableToOpen"
                           Grid.Column="2"
-                          Margin="10,20"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          Margin="16"
                           SelectionChanged="applicationsAvailableToOpenChanged"/>
 
                 <TextBox Name="customActionTextName"
-                           Grid.Column="2" 
-                           HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch"
-                           Margin="10, 30"
-                           TextAlignment="Center"
-                           GotFocus="CustomActionNameGotFocus"
-                           FontSize="18" />
+                         Grid.Column="2" 
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Stretch"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
+                         Margin="16"
+                         TextAlignment="Center"
+                         TextWrapping="Wrap"
+                         GotFocus="CustomActionNameGotFocus"
+                         FontSize="18" />
 
                 <Button Name="nextButtonToActionButton"
                         Margin="16"

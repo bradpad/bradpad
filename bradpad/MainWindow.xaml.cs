@@ -637,8 +637,10 @@ namespace bradpad {
                 //customActionText.Text = "Enter Application";
                 applicationsAvailableToOpen.Items.Clear();
                 applicationsAvailableToOpen.Items.Add(new ComboBoxItem {
-                    Content = "Select an application",
+                    Content = "Select an Application",
+                    IsEnabled = false,
                     IsSelected = true,
+                    Visibility = Visibility.Collapsed
                 });
                 foreach (var i in app.GetApplications()) {
                     if (i.Value != "All Applications") {
