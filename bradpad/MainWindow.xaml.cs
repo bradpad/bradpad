@@ -240,7 +240,6 @@ namespace bradpad {
                     string text = File.ReadAllText(openFileDialog.FileName);
                     JObject settings = JObject.Parse(text);
                     app.LoadSettings((AppActions)settings["AppActions"].ToObject(typeof(AppActions)));
-                    foreGroundCheckBox.IsChecked = Topmost;
                     Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
                     foreGroundCheckBox.IsChecked = Topmost;
                     UpdateSettingsButtonsContent();
@@ -259,7 +258,6 @@ namespace bradpad {
             };
 
             if (saveFileDialog.ShowDialog() == true) {
-                app.SaveSettings();
                 File.Copy("settings.json", saveFileDialog.FileName, true);
             }
         }
