@@ -268,6 +268,8 @@ namespace bradpad {
                 File.Delete("settings.json");
                 app.LoadSettings();
                 UpdateSettingsButtonsContent();
+                ComboBoxItem item = (ComboBoxItem)appDropdown.SelectedItem;
+                FillDropDownActions((string)item.Tag);
             }
         }
 
