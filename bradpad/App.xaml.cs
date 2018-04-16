@@ -38,6 +38,7 @@ namespace bradpad {
 
         // This function will be called from MainWindow to send keypresses when the buttons are clicked on the screen.
         internal void ButtonClickedKeyPress(Key key) {
+            return;
             SendKeyPress(key);
         }
 
