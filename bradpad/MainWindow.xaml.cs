@@ -440,6 +440,12 @@ namespace bradpad {
         private void RemoveActionButtonClicked(object sender, RoutedEventArgs e) {
             string actionApp = (string)appDropdown.SelectedValue;
             string action = actionDropdown.Text;
+            Console.WriteLine(action);
+            if (action == "Select an Action")
+            {
+                MessageBox.Show("You must select an action.", "Error");
+                return;
+            }
             if (!app.IsActiveAction(actionApp, action)) {
                 app.RemoveAction(actionApp, action);
                 FillDropDownActions(actionApp);
