@@ -49,15 +49,16 @@ namespace bradpad {
         }
 
         internal List<string> GetActions(string app) {
-            IEnumerable<string> defaultActions = keyMaps[DEFAULT].GetActions();
-            if (app.ToLower() != DEFAULT) {
-                List<string> combinedActions = keyMaps[app.ToLower()].GetActions().Union(defaultActions).ToList();
-                combinedActions.Sort();
-                return combinedActions;
-            }
-            List<string> defaultActionsList = defaultActions.ToList();
-            defaultActionsList.Sort();
-            return defaultActionsList;
+            //IEnumerable<string> defaultActions = keyMaps[DEFAULT].GetActions();
+            //if (app.ToLower() != DEFAULT) {
+            //    List<string> combinedActions = keyMaps[app.ToLower()].GetActions().Union(defaultActions).ToList();
+            //    combinedActions.Sort();
+            //    return combinedActions;
+            //}
+            //List<string> defaultActionsList = defaultActions.ToList();
+            //defaultActionsList.Sort();
+            //return defaultActionsList;
+            return keyMaps[app.ToLower()].GetActions().ToList();
         }
 
         internal string GetVal(Key key) {
