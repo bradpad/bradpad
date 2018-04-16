@@ -240,6 +240,7 @@ namespace bradpad {
                     string text = File.ReadAllText(openFileDialog.FileName);
                     JObject settings = JObject.Parse(text);
                     app.LoadSettings((AppActions)settings["AppActions"].ToObject(typeof(AppActions)));
+                    foreGroundCheckBox.IsChecked = Topmost;
                     Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
                     foreGroundCheckBox.IsChecked = Topmost;
                     UpdateSettingsButtonsContent();
@@ -267,6 +268,7 @@ namespace bradpad {
             if (MessageBox.Show("Are you sure you want to reset settings?", "Reset Settings", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
                 File.Delete("settings.json");
                 app.LoadSettings();
+                foreGroundCheckBox.IsChecked = Topmost;
                 UpdateSettingsButtonsContent();
                 ComboBoxItem item = (ComboBoxItem)appDropdown.SelectedItem;
                 FillDropDownActions((string)item.Tag);

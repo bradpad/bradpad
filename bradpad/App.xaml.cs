@@ -87,10 +87,10 @@ namespace bradpad {
                         { @"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe".ToLower(), "Google Chrome" }
                     }
                 );
+                ((MainWindow)Current.MainWindow).Topmost = true;
                 SaveSettings();
             } else {
                 try {
-                    ((MainWindow)Current.MainWindow).Topmost = true;
                     string text = File.ReadAllText("settings.json");
                     JObject settings = JObject.Parse(text);
                     appActions = (AppActions)settings["AppActions"].ToObject(typeof(AppActions));
