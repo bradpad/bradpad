@@ -36,22 +36,28 @@ namespace bradpad {
 
         private string tutorialCaption = "bradpad Help Screen and Tutorial";
         private string tutorialText =
-                "Welcome to the beta release of bradpad! Right now, this product is designed to be able to execute desired commands based off a few provided default commands, as well as being able to configure pedal to user-specific commands. Also, we have internal active application recognizing capabilities- this will be used to add actions for each application. For the omega release, we hope to be able to save state after application closure, as well as build upon our application recognizing capabilities to have commands specific for each application. Additionally, we will work more with Brad to ensure that all the UI is easy to use.\n\n" +
+                "Welcome to bradpad! bradpad is a foot pedal system that allows the user to execute keyboard commands at the press of a pedal. It is simple to use, and customizable, and adapts to the active application. We hope you enjoy our product! Below are detailed steps on how to use the system.\n\n" +
                 "1. Plug the Arduino and pedal system into the computer.  The computer will detect this as a keyboard.\n" +
-                "2. There are default commands provided- open word, copy, and paste.\n" +
-                "3. Pressing the pedals will trigger the corresponding action on the Main screen of bradpad.\n" +
+                "2. Pressing the pedals will trigger the corresponding action on the Main screen of bradpad.\n" +
                 "If you get lost, you can press the Help button in the Settings view to view these instructions again.\n\n" +
                 "The application also has the capability to customize the application that is mapped to the left pedal, but the UI is a undeveloped because this flow will be changed in the future.  This is a stretch goal implemented from our beta release goals.\n\n" +
                 "Configuring bradpad\n" +
                 "1. Navigate to settings view by clicking Open button\n" +
-                "2. Click the top dropdown menu- the first option is for global applications except Chrome and the second option is for Chrome.\n" +
+                "2. Click the top dropdown menu- the first option-\"All Applications\"- is for all applications except applications that appear in the dropdown.\n" +
                 "3. Click a pedal button.\n" +
                 "4. Select an Action dropdown gives you options for that pedal.\n" +
                 "5. Click Add Action to add an action to the dropdown\n" +
                 "6. Check the checkbox Open App only if the input is an application.\n" +
-                "7. Enter the keyboard shortcut or the application executable.\n" +
-                "8. Click either Save to save this command temporarily or Save Permanent to add this command in future action dropboxes.\n";
-
+                "7. Enter the keyboard shortcut if adding an action or select the application from the dropdown.\n" +
+                "8. Click either Save to save this command temporarily or Save Permanent to add this command in future action dropboxes.\n" +
+                "9. You can remove an application by selecting an application then clicking the \"Remove Application\" button.\n" +
+                "To Add an application to bradpad: \n" +
+                "1. Navigate to the Applications window." +
+                "2. Click \"Add an Application\"." +
+                "3. Select an application in the dropdown, or click \"Add other application\" if it is not there." +
+                "4. If you decide to use \"Add other application\", find the executable of the desired application after clicking browse. Enter a name for the application." +
+                "5. Submit this application." +
+                "6. To delete an application, select an application in the list on the right, and click \"Remove Application\".";
         public MainWindow() {
             InitializeComponent();
             bool first = !File.Exists("settings.json");
