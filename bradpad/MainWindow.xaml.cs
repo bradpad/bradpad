@@ -248,8 +248,11 @@ namespace bradpad {
                     app.LoadSettings((AppActions)settings["AppActions"].ToObject(typeof(AppActions)));
                     Topmost = (bool)settings["Foreground"].ToObject(typeof(bool));
                     foreGroundCheckBox.IsChecked = Topmost;
-                    UpdateSettingsButtonsContent();
                     app.SaveSettings();
+                    FillDropDownApps();
+                    ComboBoxItem item = (ComboBoxItem)appDropdown.SelectedItem;
+                    FillDropDownActions((string)item.Tag);
+                    UpdateSettingsButtonsContent();
                 } catch (NullReferenceException) {
                     MessageBox.Show("Settings import failed.", "Import Failure");
                 }
@@ -273,9 +276,10 @@ namespace bradpad {
                 File.Delete("settings.json");
                 app.LoadSettings();
                 foreGroundCheckBox.IsChecked = Topmost;
-                UpdateSettingsButtonsContent();
+                FillDropDownApps();
                 ComboBoxItem item = (ComboBoxItem)appDropdown.SelectedItem;
                 FillDropDownActions((string)item.Tag);
+                UpdateSettingsButtonsContent();
             }
         }
 
