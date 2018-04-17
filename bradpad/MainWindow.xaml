@@ -74,7 +74,8 @@
                          Visibility="Hidden"
                          Text="Enter Application Name"
                          TextAlignment="Center"
-                         GotFocus="EnterApplicationNameBoxGotFocus" />
+                         GotFocus="EnterApplicationNameBoxGotFocus"
+                         TextChanged="EnterApplicationNameBoxTextChanged" />
 
                 <TextBlock Name="SelectedApplicationPathBlock"
                            TextWrapping="Wrap"

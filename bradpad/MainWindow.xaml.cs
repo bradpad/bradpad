@@ -52,12 +52,12 @@ namespace bradpad {
                 "8. Click either Save to save this command temporarily or Save Permanent to add this command in future action dropboxes.\n" +
                 "9. You can remove an application by selecting an application then clicking the \"Remove Application\" button.\n" +
                 "To Add an application to bradpad: \n" +
-                "1. Navigate to the Applications window." +
-                "2. Click \"Add an Application\"." +
-                "3. Select an application in the dropdown, or click \"Add other application\" if it is not there." +
-                "4. If you decide to use \"Add other application\", find the executable of the desired application after clicking browse. Enter a name for the application." +
-                "5. Submit this application." +
-                "6. To delete an application, select an application in the list on the right, and click \"Remove Application\".";
+                "1. Navigate to the Applications window.\n" +
+                "2. Click \"Add an Application\".\n" +
+                "3. Select an application in the dropdown, or click \"Add other application\" if it is not there.\n" +
+                "4. If you decide to use \"Add other application\", find the executable of the desired application after clicking browse. Enter a name for the application.\n" +
+                "5. Submit this application.\n" +
+                "6. To delete an application, select an application in the list on the right, and click \"Remove Application\".\n";
         public MainWindow() {
             InitializeComponent();
             bool first = !File.Exists("settings.json");
@@ -745,11 +745,23 @@ namespace bradpad {
             ReturnToSettings(sender, e);
         }
 
+        private void EnterApplicationNameBoxTextChanged(object sender, TextChangedEventArgs e) {
+            if (AddNewApplicationButton == null) {
+                return;
+            }
+            string name = ((TextBox)sender).Text;
+            if (name != "") {
+                AddNewApplicationButton.IsEnabled = true;
+            } else {
+                AddNewApplicationButton.IsEnabled = false;
+            }
+        }
+
         private void EnterApplicationNameBoxGotFocus(object sender, RoutedEventArgs e) {
             if (EnterApplicationNameBox.Text == "Enter Application Name") {
                 EnterApplicationNameBox.Text = string.Empty;
             }
-            if (EnterApplicationPathBox.Text != "Enter Application Path") {
+            if (EnterApplicationPathBox.Text != "Enter Application Path" && EnterApplicationNameBox.Text != "") {
                 AddNewApplicationButton.IsEnabled = true;
             }
         }
@@ -819,7 +831,7 @@ namespace bradpad {
             EnterApplicationPathBox.Visibility = Visibility.Visible;
             CancelAddNewApplicationButton.Visibility = Visibility.Visible;
             EnterApplicationNameBox.Visibility = Visibility.Visible;
-            if (name == "Enter Application Name") {
+            if (EnterApplicationNameBox.Text == "Enter Application Name") {
                 AddNewApplicationButton.IsEnabled = false;
             }
         }
