@@ -5,6 +5,7 @@ Setup instructions:
 1. Launch bradpad application/bradpad.exe
 
 
+
 Building from source:
 
 Note: Requires Windows 10 and Visual Studio Community 2017
